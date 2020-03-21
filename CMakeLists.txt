@@ -1,7 +1,8 @@
 cmake_minimum_required(VERSION 3.15)
 project(21_particle_system)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}")
 
 include_directories(
 	project)
@@ -21,4 +22,21 @@ link_libraries(
 	GLFW
 	GLEW)
 
-add_executable(21_particle_system project/main.cpp)
+set(MAIN
+	project/main.cpp)
+
+set(TOOLS
+	project/tools/exception.cpp
+	project/tools/read_file.cpp)
+
+set(ENGINE
+	project/engine/core/core.cpp
+	project/engine/shader/shader.cpp
+	project/engine/program/program.cpp
+	project/engine/buffer/buffer.cpp
+	project/engine/renderer/renderer.cpp)
+
+add_executable(21_particle_system
+	${MAIN}
+	${TOOLS}
+	${ENGINE})
