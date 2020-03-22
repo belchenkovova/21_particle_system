@@ -7,20 +7,20 @@ class 				engine::vao
 {
 private :
 
-	using			a_vbo = engine::vbo::interface;
-	using			a_vbo_ptr = std::shared_ptr<a_vbo>;
-	using			a_vbo_vector = std::vector<a_vbo_ptr>;
+	using				alias_vbo = engine::vbo::interface;
+	using				alias_vbo_ptr = std::shared_ptr<alias_vbo>;
+	using				alias_vbo_vector = std::vector<alias_vbo_ptr>;
 
 public :
 
-					vao();
-					~vao();
+						vao();
+						~vao();
 
-	void 			bind(const bool& state);
-	void 			add_attribute(const a_vbo_ptr &vbo);
+	void 				bind(const bool& state);
+	void 				add_attribute(const alias_vbo_ptr &vbo);
 
 private :
 
-	GLuint			object{0};
-	a_vbo_vector	attributes;
+	GLuint				object{0};
+	alias_vbo_vector	attributes;
 };

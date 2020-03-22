@@ -37,7 +37,11 @@ set(ENGINE
 	project/engine/buffer/buffer.cpp
 	project/engine/renderer/renderer.cpp)
 
+set(COMPUTER
+	project/computer/computer.cpp)
+
 add_executable(21_particle_system
 	${MAIN}
 	${TOOLS}
-	${ENGINE})
+	${ENGINE}
+	${COMPUTER})
