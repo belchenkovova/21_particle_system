@@ -21,7 +21,7 @@ namespace							engine::vbo
 			glGenBuffers(1, &object);
 		}
 
-									~interface()
+		virtual						~interface()
 		{
 			glDeleteBuffers(1, &object);
 		}
@@ -41,9 +41,16 @@ namespace							engine::vbo
 	};
 
 	template						<typename t_type, int t_group, memory_management t_management>
-	class							implementation final : private interface, private std::vector<t_type>
+	class							implementation final : public interface, private std::vector<t_type>
 	{
 	public :
+									implementation() = default;
+									~implementation() override = default;
+
+		std::vector<t_type>			&as_vector()
+		{
+			return (*this);
+		}
 
 		GLuint						read_group() override
 		{

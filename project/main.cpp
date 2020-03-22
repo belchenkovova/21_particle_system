@@ -11,6 +11,7 @@ void 					main_unsafe()
 
 	engine::core		core;
 //	engine::renderer	renderer;
+	engine::buffer		buffer;
 
 	GLfloat				vertices[] =
 	{
@@ -19,19 +20,25 @@ void 					main_unsafe()
 		0.0f,  0.5f, 0.0f
 	};
 
-	GLuint VAO;
-	glGenVertexArrays(1, &VAO);
-	glBindVertexArray(VAO);
+	for (const auto &item : vertices)
+		buffer.read_points().push_back(item);
 
-	GLuint VBO;
-	glGenBuffers(1, &VBO);
-	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+	buffer.upload_points();
+	buffer.bind(true);
 
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
-	glEnableVertexAttribArray(0);
-
-	glBindVertexArray(0);
+//	GLuint VAO;
+//	glGenVertexArrays(1, &VAO);
+//	glBindVertexArray(VAO);
+//
+//	GLuint VBO;
+//	glGenBuffers(1, &VBO);
+//	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+//	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+//
+//	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
+//	glEnableVertexAttribArray(0);
+//
+//	glBindVertexArray(0);
 
 	engine::shader vertex_shader{engine::shader::type::vertex, "project/resources/OpenGL/vertex.glsl"};
 	engine::shader fragment_shader{engine::shader::type::fragment, "project/resources/OpenGL/fragment.glsl"};
@@ -52,7 +59,7 @@ void 					main_unsafe()
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	glBindVertexArray(VAO);
+//	glBindVertexArray(VAO);
 	glDrawArrays(GL_POINTS, 0, 3);
 	glBindVertexArray(0);
 
