@@ -13,7 +13,8 @@ using namespace		engine;
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
-	glfwWindowHint(GLFW_SAMPLES, 4);
+	if (use_multisampling)
+		glfwWindowHint(GLFW_SAMPLES, 4);
 
 	window = glfwCreateWindow(window_width, window_height, window_name.c_str(), nullptr, nullptr);
 	if (window == nullptr)
@@ -26,6 +27,17 @@ using namespace		engine;
 
 	glfwGetFramebufferSize(window, &width, &height);
 	glViewport(0, 0, width, height);
+
+	glPointSize(point_size);
+	if (use_depth_test)
+		glEnable(GL_DEPTH_TEST);
+	if (use_blending)
+	{
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	}
+	if (use_multisampling)
+		glEnable(GL_MULTISAMPLE);
 }
 
 					core::~core()

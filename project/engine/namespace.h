@@ -11,6 +11,8 @@
 
 #include "tools/tools.h"
 
+#define GL_TEST if (glGetError()) std::cerr << "We have a problem, captain" << std::endl;
+
 namespace			engine
 {
 	class 			core;

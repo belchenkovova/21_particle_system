@@ -17,7 +17,7 @@ void 			vao::bind(const bool& state)
 	glBindVertexArray(state ? object : 0);
 }
 
-void 			vao::add_attribute(const a_vbo_ptr &vbo)
+void 			vao::add_attribute(const alias_vbo_ptr &vbo)
 {
 	bind(true);
 	vbo->bind(true);
@@ -26,7 +26,7 @@ void 			vao::add_attribute(const a_vbo_ptr &vbo)
 		vbo->read_group(),
 		vbo->read_type(),
 		GL_FALSE,
-		vbo->read_size(),
+		vbo->read_step(),
 		nullptr);
 	glEnableVertexAttribArray(attributes.size());
 	vbo->bind(false);

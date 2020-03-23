@@ -3,18 +3,15 @@
 using namespace			engine;
 
 						buffer::buffer() :
-						vao()
+						vao(),
+						local_size(size)
 {
-	points = a_vbo_point_ptr(new a_vbo_point);
-	vao::add_attribute(std::dynamic_pointer_cast<a_vbo_interface>(points));
+	points = alias_vbo_point_ptr(new alias_vbo_point);
+	points->resize(local_size);
+	vao::add_attribute(std::dynamic_pointer_cast<alias_vbo_interface>(points));
 }
 
-std::vector<GLfloat>	&buffer::read_points()
+buffer::alias_vbo_point	&buffer::receive_points()
 {
-	return (points->as_vector());
-}
-
-void					buffer::upload_points()
-{
-	points->upload();
+	return (*points);
 }

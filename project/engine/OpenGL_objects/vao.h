@@ -3,7 +3,7 @@
 #include "engine/namespace.h"
 #include "vbo.h"
 
-class 				engine::vao
+class 					engine::vao
 {
 private :
 

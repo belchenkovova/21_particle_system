@@ -5,71 +5,32 @@ void 					main_unsafe()
 	engine::core::window_width = 1280;
 	engine::core::window_height = 720;
 	engine::core::window_name = "";
+	engine::core::use_depth_test = false;
+	engine::core::point_size = 6;
 
-	engine::renderer::vertex_source = "";
-	engine::renderer::fragment_source = "";
+	engine::renderer::vertex_source = "project/resources/OpenGL/vertex.glsl";
+	engine::renderer::fragment_source = "project/resources/OpenGL/fragment.glsl";
+	engine::renderer::background = glm::vec3(0.2f, 0.3f, 0.3f);
 
-	engine::core		core;
-//	engine::renderer	renderer;
-	engine::buffer		buffer;
+	engine::buffer::size = 9;
+
+	engine::renderer	renderer;
+	auto 				&buffer = renderer.receive_buffer();
+	auto 				&points = buffer.receive_points();
 
 	GLfloat				vertices[] =
 	{
-		-0.5f, -0.5f, 0.0f,
-		0.5f, -0.5f, 0.0f,
-		0.0f,  0.5f, 0.0f
+		0.f, 0.f, 0.f,
+		0.5f, 0.f, 0.f,
+		-0.5f, 0.f, 0.f
 	};
 
-	for (const auto &item : vertices)
-		buffer.read_points().push_back(item);
+	for (int i = 0; i < 9; i++)
+		points[i] = vertices[i];
+	points.upload();
 
-	buffer.upload_points();
-	buffer.bind(true);
-
-//	GLuint VAO;
-//	glGenVertexArrays(1, &VAO);
-//	glBindVertexArray(VAO);
-//
-//	GLuint VBO;
-//	glGenBuffers(1, &VBO);
-//	glBindBuffer(GL_ARRAY_BUFFER, VBO);
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-//
-//	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(GLfloat), nullptr);
-//	glEnableVertexAttribArray(0);
-//
-//	glBindVertexArray(0);
-
-	engine::shader vertex_shader{engine::shader::type::vertex, "project/resources/OpenGL/vertex.glsl"};
-	engine::shader fragment_shader{engine::shader::type::fragment, "project/resources/OpenGL/fragment.glsl"};
-
-	engine::program	program;
-	program.attach(vertex_shader);
-	program.attach(fragment_shader);
-	program.link();
-
-	glPointSize(5);
-	glDisable(GL_DEPTH_TEST);
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glEnable(GL_MULTISAMPLE);
-
-	glUseProgram(program.object);
-
-	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT);
-
-//	glBindVertexArray(VAO);
-	glDrawArrays(GL_POINTS, 0, 3);
-	glBindVertexArray(0);
-
-	int i = 0;
-	while (!glfwWindowShouldClose(core.window))
-	{
-		glfwPollEvents();
-		if (not i++)
-			glfwSwapBuffers(core.window);
-	}
+	renderer.request_render();
+	renderer.loop();
 }
 
 int					main()

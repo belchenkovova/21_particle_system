@@ -36,6 +36,7 @@ namespace							engine::vbo
 		virtual GLuint				read_group() = 0;
 		virtual GLuint				read_type() = 0;
 		virtual GLuint				read_size() = 0;
+		virtual GLuint				read_step() = 0;
 
 		GLuint						object{0};
 	};
@@ -43,14 +44,27 @@ namespace							engine::vbo
 	template						<typename t_type, int t_group, memory_management t_management>
 	class							implementation final : public interface, private std::vector<t_type>
 	{
+		friend class 				engine::buffer;
+
 	public :
 									implementation() = default;
 									~implementation() override = default;
 
-		std::vector<t_type>			&as_vector()
+		using						std::vector<t_type>::operator[];
+		using						std::vector<t_type>::push_back;
+
+		void						upload()
 		{
-			return (*this);
+			bind(true);
+			glBufferData(
+				GL_ARRAY_BUFFER,
+				read_size(),
+				std::vector<t_type>::data(),
+				static_cast<GLuint>(memory_management));
+			bind(false);
 		}
+
+	private :
 
 		GLuint						read_group() override
 		{
@@ -61,9 +75,9 @@ namespace							engine::vbo
 		{
 
 			if (std::is_same<t_type, unsigned int>::value)
-				 return (GL_UNSIGNED_INT);
+				return (GL_UNSIGNED_INT);
 			else if (std::is_same<t_type, float>::value)
-				 return (GL_FLOAT);
+				return (GL_FLOAT);
 			else
 				throw (tools::exception("Engine, VBO : Bad data type"));
 		}
@@ -73,21 +87,12 @@ namespace							engine::vbo
 			return (sizeof(t_type) * std::vector<t_type>::size());
 		}
 
-		void						upload()
+		GLuint						read_step() override
 		{
-			bind(true);
-			glBufferData(
-				GL_ARRAY_BUFFER,
-				sizeof(t_type) * std::vector<t_type>::size(),
-				std::vector<t_type>::data(),
-				static_cast<GLuint>(memory_management));
-			bind(false);
+			return (sizeof(t_type) * t_group);
 		}
 
-		using						std::vector<t_type>::push_back;
-		using						std::vector<t_type>::operator[];
-
-	private :
+		using						std::vector<t_type>::resize;
 
 		const memory_management		memory_management{t_management};
 		const int					group{t_group};

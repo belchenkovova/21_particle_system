@@ -9,13 +9,13 @@ class						engine::program
 
 public :
 							program();
-							~program();
+	virtual					~program();
 
 	void					attach(const shader &shader);
 	void 					link();
+	void					use(const bool &state);
 
-//private :
-public :
+private :
 
 	GLuint					object{0};
 };

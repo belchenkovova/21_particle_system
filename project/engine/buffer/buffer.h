@@ -8,32 +8,37 @@ class						engine::buffer : private engine::vao
 {
 private :
 
-	using 					a_memory_management = engine::vbo::memory_management;
+	using 					alias_memory_management = engine::vbo::memory_management;
 
-	using 					a_vbo_interface = engine::vbo::interface;
+	using 					alias_vbo_interface = engine::vbo::interface;
 
-	template				<typename t_type, int t_group, a_memory_management t_management>
-	using					a_vbo = engine::vbo::implementation<t_type, t_group, t_management>;
-	template				<typename t_type, int t_group, a_memory_management t_management>
-	using					a_vbo_ptr = std::shared_ptr<a_vbo<t_type, t_group, t_management>>;
+	template				<typename t_type, int t_group, alias_memory_management t_management>
+	using					alias_vbo = engine::vbo::implementation<t_type, t_group, t_management>;
+	template				<typename t_type>
+	using					alias_ptr = std::shared_ptr<t_type>;
 
-	using					a_vbo_point = a_vbo<GLfloat, 3, a_memory_management::stream>;
-	using					a_vbo_point_ptr = a_vbo_ptr<GLfloat, 3, a_memory_management::stream>;
+	using					alias_vbo_point = alias_vbo<GLfloat, 3, alias_memory_management::stream>;
+	using					alias_vbo_point_ptr = alias_ptr<alias_vbo_point>;
 
 public :
 
+	inline static int		size{0};
+
 							buffer();
-							~buffer() = default;
+	virtual					~buffer() = default;
 
 	using					vao::bind;
 
-	std::vector<GLfloat>	&read_points();
+	[[nodiscard]]
+	alias_vbo_point			&receive_points();
 
-	void					upload_points();
+protected :
+
+	int 					local_size{0};
 
 private :
 
-	a_vbo_point_ptr			points{nullptr};
+	alias_vbo_point_ptr		points{nullptr};
 	vao						vao;
 };
 
