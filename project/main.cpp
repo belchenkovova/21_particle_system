@@ -8,11 +8,13 @@ void 					main_unsafe()
 	engine::core::use_depth_test = false;
 	engine::core::point_size = 6;
 
+	engine::buffer::size = 9;
+
+	engine::camera::start_position = glm::vec3(0.f, 0.f, 5.f);
+
 	engine::renderer::vertex_source = "project/resources/OpenGL/vertex.glsl";
 	engine::renderer::fragment_source = "project/resources/OpenGL/fragment.glsl";
 	engine::renderer::background = glm::vec3(0.2f, 0.3f, 0.3f);
-
-	engine::buffer::size = 9;
 
 	engine::renderer	renderer;
 	auto 				&buffer = renderer.receive_buffer();
@@ -20,9 +22,9 @@ void 					main_unsafe()
 
 	GLfloat				vertices[] =
 	{
-		0.f, 0.f, 0.f,
-		0.5f, 0.f, 0.f,
-		-0.5f, 0.f, 0.f
+		0.f, 0.5f, 0.f,
+		0.5f, -0.5f, 0.f,
+		-0.5f, -0.5f, 0.f
 	};
 
 	for (int i = 0; i < 9; i++)

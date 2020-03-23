@@ -4,11 +4,13 @@
 #include "engine/core/core.h"
 #include "engine/program/program.h"
 #include "engine/buffer/buffer.h"
+#include "engine/camera/camera.h"
 
 class							engine::renderer :
 								engine::core,
 								engine::program,
-								engine::buffer
+								engine::buffer,
+								engine::camera
 {
 public :
 

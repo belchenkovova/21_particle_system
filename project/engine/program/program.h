@@ -15,6 +15,12 @@ public :
 	void 					link();
 	void					use(const bool &state);
 
+	[[deprecated]]
+	int 					read_object()
+	{
+		return (object);
+	}
+
 private :
 
 	GLuint					object{0};

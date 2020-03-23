@@ -34,10 +34,17 @@ void				renderer::render()
 	program::use(true);
 	buffer::bind(true);
 
+	glUniformMatrix4fv(
+		glGetUniformLocation(program::read_object(), "uniform_projection"),
+		1, GL_FALSE, glm::value_ptr(receive_projection_matrix()));
+	glUniformMatrix4fv(
+		glGetUniformLocation(program::read_object(), "uniform_view"),
+		1, GL_FALSE, glm::value_ptr(receive_view_matrix()));
+
 	glClearColor(background.r, background.g, background.b, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glClear(GL_DEPTH_BUFFER_BIT);
-	glDrawArrays(GL_POINTS, 0, buffer::local_size / 3);
+	glDrawArrays(GL_TRIANGLES, 0, buffer::local_size / 3);
 	glfwSwapBuffers(core::window);
 
 	program::use(false);
