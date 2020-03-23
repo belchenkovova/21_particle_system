@@ -35,6 +35,7 @@ set(ENGINE
 	project/engine/program/program.cpp
 	project/engine/OpenGL_objects/vao.cpp
 	project/engine/buffer/buffer.cpp
+	project/engine/camera/camera.cpp
 	project/engine/renderer/renderer.cpp)
 
 set(COMPUTER

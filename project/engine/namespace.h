@@ -30,5 +30,20 @@ namespace			engine
 	class 			vao;
 	class 			buffer;
 
+	enum class		axis
+	{
+		x,
+		y,
+		z
+	};
+
+	enum class		sign : int
+	{
+		negative = -1,
+		positive = 1
+	};
+
+	class			camera;
+
 	class 			renderer;
 };
