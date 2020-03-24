@@ -14,8 +14,7 @@ void				camera::move(const axis &axis, const sign &sign)
 	else if (axis == axis::y)
 		position += up * movement_speed * (float)sign;
 	else if (axis == axis::z)
-		position += front * movement_speed * (float)sign;
-	update();
+		position += front * movement_speed * -1.f * (float)sign;
 }
 
 void				camera::rotate(const axis &axis, const sign &sign)

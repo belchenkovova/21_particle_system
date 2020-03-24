@@ -11,17 +11,17 @@ namespace							engine::vbo
 		stream = GL_STREAM_DRAW
 	};
 
-	class							interface
+	class							abstract
 	{
 		friend class 				engine::vao;
 
 	public :
-									interface()
+									abstract()
 		{
 			glGenBuffers(1, &object);
 		}
 
-		virtual						~interface()
+		virtual						~abstract()
 		{
 			glDeleteBuffers(1, &object);
 		}
@@ -42,16 +42,15 @@ namespace							engine::vbo
 	};
 
 	template						<typename t_type, int t_group, memory_management t_management>
-	class							implementation final : public interface, private std::vector<t_type>
+	class							real final : public abstract, private std::vector<t_type>
 	{
 		friend class 				engine::buffer;
 
 	public :
-									implementation() = default;
-									~implementation() override = default;
+									real() = default;
+									~real() override = default;
 
 		using						std::vector<t_type>::operator[];
-		using						std::vector<t_type>::push_back;
 
 		void						upload()
 		{

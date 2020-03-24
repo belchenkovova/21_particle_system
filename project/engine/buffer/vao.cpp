@@ -17,19 +17,19 @@ void 			vao::bind(const bool& state)
 	glBindVertexArray(state ? object : 0);
 }
 
-void 			vao::add_attribute(const alias_vbo_ptr &vbo)
+void 			vao::add_attribute(const reference<vbo::abstract> &vbo)
 {
 	bind(true);
-	vbo->bind(true);
+	vbo.get().bind(true);
 	glVertexAttribPointer(
 		attributes.size(),
-		vbo->read_group(),
-		vbo->read_type(),
+		vbo.get().read_group(),
+		vbo.get().read_type(),
 		GL_FALSE,
-		vbo->read_step(),
+		vbo.get().read_step(),
 		nullptr);
 	glEnableVertexAttribArray(attributes.size());
-	vbo->bind(false);
+	vbo.get().bind(false);
 	bind(false);
 	attributes.push_back(vbo);
 }

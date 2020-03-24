@@ -8,13 +8,16 @@
 #include "glm/gtc/type_ptr.hpp"
 #include "glm/gtx/euler_angles.hpp"
 #include <vector>
-
+#include <any>
 #include "tools/tools.h"
-
-#define GL_TEST if (glGetError()) std::cerr << "We have a problem, captain" << std::endl;
 
 namespace			engine
 {
+	template		<typename t_type>
+	using			vector = std::vector<t_type>;
+	template		<typename t_type>
+	using			reference = std::reference_wrapper<t_type>;
+
 	class 			core;
 
 	class 			shader;
@@ -23,9 +26,9 @@ namespace			engine
 	namespace		vbo
 	{
 		enum class	memory_management : GLuint;
+		class		abstract;
 		template	<typename t_type, int t_group, memory_management t_management>
-		class		implementation;
-		class		interface;
+		class		real;
 	};
 	class 			vao;
 	class 			buffer;
@@ -45,5 +48,14 @@ namespace			engine
 
 	class			camera;
 
+	namespace		callback
+	{
+		class		abstract;
+		template	<auto t_functor, typename t_type>
+		class		real;
+	}
+	template		<auto t_functor, typename t_type>
+	class			timer;
+
 	class 			renderer;
-};
+}

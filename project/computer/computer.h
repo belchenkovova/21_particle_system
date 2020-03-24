@@ -35,7 +35,7 @@ class				explosion
 {
 private :
 
-	using			alias_particles = std::array<particle, 100>;
+	using			particles_ = std::array<particle, 100>;
 
 public :
 
@@ -53,6 +53,6 @@ private :
 	glm::vec3		position{0.f, 0.f, 0.f};
 	float			power{0.f};
 
-	alias_particles	particles{};
+	particles_		particles{};
 	engine::buffer	buffer;
 };

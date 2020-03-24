@@ -11,6 +11,8 @@ void 					main_unsafe()
 	engine::buffer::size = 9;
 
 	engine::camera::start_position = glm::vec3(0.f, 0.f, 5.f);
+	engine::camera::movement_speed = 0.2f;
+	engine::camera::rotation_speed = 1.f;
 
 	engine::renderer::vertex_source = "project/resources/OpenGL/vertex.glsl";
 	engine::renderer::fragment_source = "project/resources/OpenGL/fragment.glsl";

@@ -6,12 +6,11 @@ using namespace			engine;
 						vao(),
 						local_size(size)
 {
-	points = alias_vbo_point_ptr(new alias_vbo_point);
-	points->resize(local_size);
-	vao::add_attribute(std::dynamic_pointer_cast<alias_vbo_interface>(points));
+	points.resize(local_size);
+	vao::add_attribute(reference<vbo::abstract>(points));
 }
 
-buffer::alias_vbo_point	&buffer::receive_points()
+buffer::vbo_point		&buffer::receive_points()
 {
-	return (*points);
+	return (points);
 }

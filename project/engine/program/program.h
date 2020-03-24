@@ -1,7 +1,7 @@
 #pragma once
 
 #include "engine/namespace.h"
-#include "engine/shader/shader.h"
+#include "shader.h"
 
 class						engine::program
 {

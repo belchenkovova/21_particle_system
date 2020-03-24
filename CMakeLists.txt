@@ -31,9 +31,9 @@ set(TOOLS
 
 set(ENGINE
 	project/engine/core/core.cpp
-	project/engine/shader/shader.cpp
+	project/engine/program/shader.cpp
 	project/engine/program/program.cpp
-	project/engine/OpenGL_objects/vao.cpp
+	project/engine/buffer/vao.cpp
 	project/engine/buffer/buffer.cpp
 	project/engine/camera/camera.cpp
 	project/engine/renderer/renderer.cpp)
