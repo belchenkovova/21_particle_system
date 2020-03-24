@@ -51,7 +51,7 @@ void				renderer::render()
 	glClearColor(background.r, background.g, background.b, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glClear(GL_DEPTH_BUFFER_BIT);
-	glDrawArrays(GL_TRIANGLES, 0, buffer::local_size / 3);
+	glDrawArrays(GL_POINTS, 0, buffer::local_size / 3);
 	glfwSwapBuffers(core::window);
 
 	program::use(false);
@@ -86,6 +86,8 @@ void				renderer::glfw_callback(GLFWwindow* window, int key, int code, int actio
 		renderer->rotate(axis::x, sign::positive);
 	else if (key == GLFW_KEY_DOWN)
 		renderer->rotate(axis::x, sign::negative);
+	else if (key == GLFW_KEY_1)
+		renderer->functor(renderer->pointer);
 	else
 		return ;
 	renderer->request_render();

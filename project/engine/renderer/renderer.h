@@ -28,6 +28,9 @@ public :
 	void									loop();
 	void									request_render();
 
+	std::function<void(void *)>				functor;
+	void									*pointer;
+
 private :
 
 	bool									render_request{false};

@@ -22,7 +22,7 @@ void				camera::rotate(const axis &axis, const sign &sign)
 	if (axis == axis::x)
 		pitch += (float)sign * rotation_speed;
 	else if (axis == axis::y)
-		yaw += (float)sign * rotation_speed;
+		yaw += -1.f * (float)sign * rotation_speed;
 	update();
 }
 
