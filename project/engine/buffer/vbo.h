@@ -26,6 +26,12 @@ namespace							engine::vbo
 			glDeleteBuffers(1, &object);
 		}
 
+		[[deprecated]]
+		int 						read_object()
+		{
+			return (object);
+		}
+
 	protected :
 
 		void						bind(const bool &state)
@@ -78,7 +84,7 @@ namespace							engine::vbo
 			else if (std::is_same<t_type, float>::value)
 				return (GL_FLOAT);
 			else
-				throw (tools::exception("Engine, VBO : Bad data type"));
+				throw (common::exception("Engine, VBO : Bad data type"));
 		}
 
 		GLuint						read_size() override

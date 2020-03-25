@@ -1,6 +1,6 @@
-#include "tools/tools.h"
+#include "common.h"
 
-std::string				tools::read_file(const std::string &source)
+std::string				common::read_file(const std::string &source)
 {
 	std::ifstream		file;
 	std::stringstream	stream;

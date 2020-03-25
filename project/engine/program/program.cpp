@@ -27,7 +27,7 @@ void				program::link()
 	if (not success)
 	{
 		glGetProgramInfoLog(object, 512, nullptr, infoLog);
-		throw (tools::exception("Engine, Program : Compilation error"));
+		throw (common::exception("Engine, Program : Compilation error"));
 	}
 }
 

@@ -25,9 +25,9 @@ link_libraries(
 set(MAIN
 	project/main.cpp)
 
-set(TOOLS
-	project/tools/exception.cpp
-	project/tools/read_file.cpp)
+set(COMMON
+	project/common/exception.cpp
+	project/common/read_file.cpp)
 
 set(ENGINE
 	project/engine/core/core.cpp
@@ -39,10 +39,12 @@ set(ENGINE
 	project/engine/renderer/renderer.cpp)
 
 set(COMPUTER
-	project/computer/computer.cpp)
+	project/computer/core/core.cpp
+	project/computer/kernel/kernel.cpp
+	project/computer/buffer/buffer.cpp)
 
 add_executable(21_particle_system
 	${MAIN}
-	${TOOLS}
+	${COMMON}
 	${ENGINE}
 	${COMPUTER})

@@ -4,7 +4,7 @@ using namespace		engine;
 
 					shader::shader(type type, const std::string &source)
 {
-	std::string		file = tools::read_file(source);
+	std::string		file = common::read_file(source);
 	const char		*file_c = file.c_str();
 
 	object = glCreateShader(static_cast<GLuint>(type));
@@ -16,7 +16,7 @@ using namespace		engine;
 	if (not success)
 	{
 		glGetShaderInfoLog(object, 512, nullptr, infoLog);
-		throw (tools::exception("Engine, Shader : Compilation error"));
+		throw (common::exception("Engine, Shader : Compilation error"));
 	}
 }
 

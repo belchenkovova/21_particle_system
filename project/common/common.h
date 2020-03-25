@@ -6,7 +6,7 @@
 #include <sstream>
 #include <fstream>
 
-namespace			tools
+namespace			common
 {
 	class			exception : public std::exception
 	{
