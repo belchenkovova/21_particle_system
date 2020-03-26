@@ -37,8 +37,6 @@ namespace							engine::vbo
 		virtual GLuint				read_type() = 0;
 		virtual GLuint				read_size() = 0;
 		virtual GLuint				read_step() = 0;
-
-		GLuint						object{0};
 	};
 
 	template						<typename t_type, int t_group, memory_management t_management>

@@ -1,10 +1,8 @@
 #include "engine/engine.h"
 #include "computer/computer.h"
 
-void 					main_unsafe()
+void 					setup()
 {
-	engine::renderer	*renderer{nullptr};
-
 	engine::core::window_width = 1280;
 	engine::core::window_height = 720;
 	engine::core::window_name = "";
@@ -23,9 +21,13 @@ void 					main_unsafe()
 	engine::renderer::fragment_source = "project/resources/OpenGL/fragment.glsl";
 	engine::renderer::background = glm::vec3(0.2f, 0.3f, 0.3f);
 
-	renderer = new engine::renderer;
+	computer::core::use_OpenGL = true;
+}
 
-	auto 				&buffer = renderer->receive_buffer();
+void 					launch()
+{
+	engine::renderer	renderer;
+	auto 				&buffer = renderer.receive_buffer();
 	auto 				&points = buffer.receive_points();
 
 	GLfloat				vertices[] =
@@ -38,8 +40,6 @@ void 					main_unsafe()
 	for (int i = 0; i < 9; i++)
 		points[i] = vertices[i];
 	points.upload();
-
-	computer::core::use_OpenGL = true;
 
 	computer::core		core;
 	computer::kernel	kernel = core.generate_kernel();
@@ -55,18 +55,16 @@ void 					main_unsafe()
 	kernel.run();
 	argument.release();
 
-
-	renderer->request_render();
-	renderer->loop();
-
-	delete renderer;
+	renderer.request_render();
+	renderer.loop();
 }
 
 int					main()
 {
 	try
 	{
-		main_unsafe();
+		setup();
+		launch();
 		return (0);
 	}
 	catch (std::exception &exception)
