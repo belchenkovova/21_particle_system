@@ -39,19 +39,22 @@ void 					main_unsafe()
 		points[i] = vertices[i];
 	points.upload();
 
+	computer::core::use_OpenGL = true;
+
 	computer::core		core;
 	computer::kernel	kernel = core.generate_kernel();
-	cl::BufferGL		buffer_gl{core.read_context(), CL_MEM_WRITE_ONLY, static_cast<cl_GLuint>(points.read_object()), nullptr};
-	cl::CommandQueue	queue = kernel.read_command_queue();
 
 	kernel.add_source("project/resources/OpenCL/source.txt");
 	kernel.build("test", 9);
-	kernel.read_object().setArg(0, buffer_gl);
 
-	std::vector<cl::Memory> vector = {buffer_gl};
-	queue.enqueueAcquireGLObjects(&vector);
+	computer::argument	argument = kernel.generate_argument(points, computer::memory_management::read_write);
+
+	kernel.link_argument(argument);
+
+	argument.acquire();
 	kernel.run();
-	queue.enqueueReleaseGLObjects(&vector);
+	argument.release();
+
 
 	renderer->request_render();
 	renderer->loop();

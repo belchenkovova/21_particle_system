@@ -41,7 +41,7 @@ set(ENGINE
 set(COMPUTER
 	project/computer/core/core.cpp
 	project/computer/kernel/kernel.cpp
-	project/computer/buffer/buffer.cpp)
+	project/computer/argument/argument.cpp)
 
 add_executable(21_particle_system
 	${MAIN}

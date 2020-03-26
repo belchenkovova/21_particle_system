@@ -27,7 +27,7 @@ namespace							engine::vbo
 		}
 
 		[[deprecated]]
-		int 						read_object()
+		int 						read_object() const
 		{
 			return (object);
 		}

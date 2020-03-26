@@ -2,30 +2,27 @@
 
 using namespace					computer;
 
-#pragma OPENCL EXTENSION CL_APPLE_gl_sharing : enable
-
 //								PUBLIC
 
-#include <OpenCL/opencl.h>
-#include <OpenGL/OpenGL.h>
-
-								core::core()
+								core::core() :
+								use_OpenGL_local(use_OpenGL)
 {
-	CGLContextObj glContext = CGLGetCurrentContext();
-	CGLShareGroupObj shareGroup = CGLGetShareGroup(glContext);
-
-	cl_context_properties properties[] = {
-		CL_CONTEXT_PROPERTY_USE_CGL_SHAREGROUP_APPLE,
-		(cl_context_properties)shareGroup,
-		0};
-
 	set_platform();
 	set_device();
-#ifdef OPENCL_X_OPENGL
-	context = cl::Context(device, properties);
-#else
-	set_context();
-#endif
+
+	if (use_OpenGL)
+	{
+		CGLContextObj			gl_context = CGLGetCurrentContext();
+		CGLShareGroupObj		share_group = CGLGetShareGroup(gl_context);
+
+		cl_context_properties	properties[] = {
+			CL_CONTEXT_PROPERTY_USE_CGL_SHAREGROUP_APPLE,
+			(cl_context_properties) share_group, 0};
+
+		set_context(properties);
+	}
+	else
+		set_context(nullptr);
 }
 
 kernel						core::generate_kernel()
@@ -53,7 +50,7 @@ void 							core::set_device()
 
 }
 
-void 					core::set_context()
+void 					core::set_context(cl_context_properties *properties)
 {
-	context = cl::Context(device);
+	context = cl::Context(device, properties);
 }

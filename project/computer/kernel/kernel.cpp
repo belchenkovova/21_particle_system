@@ -30,21 +30,31 @@ void 						kernel::run()
 	queue.finish();
 }
 
-buffer 						kernel::generate_buffer(const int &size, const memory_management &memory)
+argument 						kernel::generate_argument(const int &size, const memory_management &memory)
 {
-	buffer					buffer;
+	argument					buffer;
 
 	if (not is_built)
 		throw (common::exception("Computer, Kernel : Object is not built"));
-	buffer = computer::buffer(context, &queue, size, memory);
+	buffer = computer::argument(context, size, memory);
 	return (buffer);
 }
 
-void 						kernel::link_buffer(buffer &buffer)
+argument 						kernel::generate_argument(const engine::vbo::abstract &vbo, const memory_management &memory)
+{
+	argument					buffer;
+
+	if (not is_built)
+		throw (common::exception("Computer, Kernel : Object is not built"));
+	buffer = computer::argument(context, &queue, vbo, memory);
+	return (buffer);
+}
+
+void 						kernel::link_argument(argument &argument)
 {
 	if (not is_built)
 		throw (common::exception("Computer, Kernel : Object is not built"));
-	buffer.link(object, buffer_count++);
+	argument.link(object, buffer_count++);
 }
 
 //							PRIVATE

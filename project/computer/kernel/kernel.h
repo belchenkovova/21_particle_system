@@ -1,7 +1,7 @@
 #pragma once
 
 #include "computer/namespace.h"
-#include "computer/buffer/buffer.h"
+#include "computer/argument/argument.h"
 
 class						computer::kernel
 {
@@ -15,20 +15,9 @@ public :
 	void					build(const std::string &function, const int &number);
 	void					run();
 
-	buffer 					generate_buffer(const int &size, const memory_management &memory);
-	void 					link_buffer(buffer &buffer);
-
-	[[deprecated]]
-	cl::CommandQueue		&read_command_queue()
-	{
-		return (queue);
-	}
-
-	[[deprecated]]
-	cl::Kernel				&read_object()
-	{
-		return (object);
-	}
+	argument 				generate_argument(const int &size, const memory_management &memory);
+	argument 				generate_argument(const engine::vbo::abstract &vbo, const memory_management &memory);
+	void 					link_argument(argument &argument);
 
 private :
 
