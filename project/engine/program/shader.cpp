@@ -2,7 +2,8 @@
 
 using namespace		engine;
 
-					shader::shader(type type, const std::string &source)
+					shader::shader(type type, const std::string &source) :
+					object_wrapper()
 {
 	std::string		file = common::read_file(source);
 	const char		*file_c = file.c_str();

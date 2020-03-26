@@ -2,7 +2,7 @@
 
 using namespace		engine;
 
-					program::program()
+					program::program() : object_wrapper()
 {
 	object = glCreateProgram();
 }

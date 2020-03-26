@@ -3,7 +3,7 @@
 #include "engine/namespace.h"
 #include "vbo.h"
 
-class 									engine::vao
+class 									engine::vao : public engine::object_wrapper
 {
 public :
 
@@ -15,6 +15,5 @@ public :
 
 private :
 
-	GLuint								object{0};
 	vector<reference<vbo::abstract>>	attributes;
 };

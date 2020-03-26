@@ -11,12 +11,12 @@ namespace							engine::vbo
 		stream = GL_STREAM_DRAW
 	};
 
-	class							abstract
+	class							abstract : public object_wrapper
 	{
 		friend class 				engine::vao;
 
 	public :
-									abstract()
+									abstract() : object_wrapper()
 		{
 			glGenBuffers(1, &object);
 		}
@@ -24,12 +24,6 @@ namespace							engine::vbo
 		virtual						~abstract()
 		{
 			glDeleteBuffers(1, &object);
-		}
-
-		[[deprecated]]
-		int 						read_object() const
-		{
-			return (object);
 		}
 
 	protected :

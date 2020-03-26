@@ -2,7 +2,7 @@
 
 using namespace	engine;
 
-				vao::vao()
+				vao::vao() : object_wrapper()
 {
 	glGenVertexArrays(1, &object);
 }

@@ -13,6 +13,24 @@
 
 namespace			engine
 {
+	class 			object_wrapper
+	{
+	public :
+
+					object_wrapper() = default;
+					~object_wrapper() = default;
+
+		[[nodiscard]]
+		GLuint		read_object() const
+		{
+			return (object);
+		}
+
+	protected :
+
+		GLuint		object{0};
+	};
+
 	template		<typename t_type>
 	using			vector = std::vector<t_type>;
 	template		<typename t_type>

@@ -4,7 +4,11 @@ using namespace		engine;
 
 //					PUBLIC
 
-					renderer::renderer()
+					renderer::renderer() :
+					engine::core(),
+					engine::program(),
+					engine::buffer(),
+					engine::camera()
 {
 	program::attach(shader(shader::type::vertex, vertex_source));
 	program::attach(shader(shader::type::fragment, fragment_source));

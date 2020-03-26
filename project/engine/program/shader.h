@@ -2,7 +2,7 @@
 
 #include "engine/namespace.h"
 
-class				engine::shader
+class				engine::shader : private engine::object_wrapper
 {
 	friend class	engine::program;
 
@@ -16,10 +16,6 @@ public :
 
 					shader(type type, const std::string &source);
 					~shader();
-
-private :
-
-	GLuint			object{0};
 };
 
 
