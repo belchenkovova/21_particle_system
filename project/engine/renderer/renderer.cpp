@@ -7,7 +7,7 @@ using namespace		engine;
 					renderer::renderer() :
 					engine::core(),
 					engine::program(),
-					engine::buffer(),
+					engine::buffer(300),
 					engine::camera()
 {
 	program::attach(shader(shader::type::vertex, vertex_source));
@@ -16,11 +16,6 @@ using namespace		engine;
 
 	glfwSetWindowUserPointer(window, this);
 	glfwSetKeyCallback(window, glfw_callback);
-}
-
-engine::buffer		&renderer::receive_buffer()
-{
-	return (*this);
 }
 
 void				renderer::loop()
@@ -55,7 +50,7 @@ void				renderer::render()
 	glClearColor(background.r, background.g, background.b, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glClear(GL_DEPTH_BUFFER_BIT);
-	glDrawArrays(GL_POINTS, 0, buffer::local_size / 3);
+	glDrawArrays(GL_POINTS, 0, buffer::size / 3);
 	glfwSwapBuffers(core::window);
 
 	program::use(false);

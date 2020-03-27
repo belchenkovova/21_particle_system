@@ -15,8 +15,12 @@ public :
 	void					build(const std::string &function, const int &number);
 	void					run();
 
-	argument 				generate_argument(const int &size, const memory_management &memory);
-	argument 				generate_argument(const engine::vbo::abstract &vbo, const memory_management &memory);
+	argument 				generate_argument(
+							const int &size,
+							const memory_management &memory = memory_management::read_write);
+	argument 				generate_argument(
+							const engine::vbo::abstract &vbo,
+							const memory_management &memory = memory_management::read_write);
 	void 					link_argument(argument &argument);
 
 private :

@@ -24,7 +24,7 @@ public :
 private :
 
 	bool						is_OpenGL_based{false};
-	std::shared_ptr<cl::Buffer>	object;
+	std::optional<cl::Buffer>	object;
 	vector<cl::Memory>			vector;
 	const cl::CommandQueue		*queue{nullptr};
 

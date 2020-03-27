@@ -14,12 +14,6 @@ public :
 
 	kernel						generate_kernel();
 
-	[[deprecated]]
-	const cl::Context			&read_context()
-	{
-		return (context);
-	}
-
 private :
 
 	const bool					use_OpenGL_local{false};

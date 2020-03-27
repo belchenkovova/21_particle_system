@@ -22,8 +22,7 @@ public :
 											renderer();
 											~renderer() override = default;
 
-	[[nodiscard]]
-	engine::buffer							&receive_buffer();
+	using									buffer::receive_points;
 
 	void									loop();
 	void									request_render();

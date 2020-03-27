@@ -4,30 +4,28 @@
 #include "vbo.h"
 #include "vao.h"
 
-class						engine::buffer : private engine::vao
+class					engine::buffer : private engine::vao
 {
-	using					vbo_point = vbo::real<GLfloat, 3, vbo::memory_management::stream>;
-
 public :
 
-	inline static int		size{0};
+	using				vbo_point = vbo::real<GLfloat, 3, vbo::memory_management::stream>;
 
-							buffer();
-	virtual					~buffer() = default;
+	explicit			buffer(int size);
+	virtual				~buffer() = default;
 
-	using					vao::bind;
+	using				vao::bind;
 
 	[[nodiscard]]
-	vbo_point				&receive_points();
+	vbo_point			*receive_points();
 
 protected :
 
-	int 					local_size{0};
+	int 				size{0};
 
 private :
 
-	vbo_point				points;
-	vao						vao;
+	vbo_point			points;
+	vao					vao;
 };
 
 

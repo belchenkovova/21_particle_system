@@ -1,5 +1,6 @@
 #include "engine/engine.h"
 #include "computer/computer.h"
+#include "particle_system/particle_system.h"
 
 void 					setup()
 {
@@ -8,8 +9,6 @@ void 					setup()
 	engine::core::window_name = "";
 	engine::core::use_depth_test = false;
 	engine::core::point_size = 2;
-
-	engine::buffer::size = 9;
 
 	engine::camera::start_position = glm::vec3(0.f, 0.f, 10.f);
 	engine::camera::movement_speed = 2.f;
@@ -22,41 +21,15 @@ void 					setup()
 	engine::renderer::background = glm::vec3(0.2f, 0.3f, 0.3f);
 
 	computer::core::use_OpenGL = true;
+
+	particle_system::number_of_particles = 100;
 }
 
-void 					launch()
+void 					start()
 {
-	engine::renderer	renderer;
-	auto 				&buffer = renderer.receive_buffer();
-	auto 				&points = buffer.receive_points();
+	particle_system		system;
 
-	GLfloat				vertices[] =
-		{
-			0.f, 0.5f, 0.f,
-			0.5f, -0.5f, 0.f,
-			-0.5f, -0.5f, 0.f
-		};
-
-	for (int i = 0; i < 9; i++)
-		points[i] = vertices[i];
-	points.upload();
-
-	computer::core		core;
-	computer::kernel	kernel = core.generate_kernel();
-
-	kernel.add_source("project/resources/OpenCL/source.txt");
-	kernel.build("test", 9);
-
-	computer::argument	argument = kernel.generate_argument(points, computer::memory_management::read_write);
-
-	kernel.link_argument(argument);
-
-	argument.acquire();
-	kernel.run();
-	argument.release();
-
-	renderer.request_render();
-	renderer.loop();
+	system.loop();
 }
 
 int					main()
@@ -64,7 +37,7 @@ int					main()
 	try
 	{
 		setup();
-		launch();
+		start();
 		return (0);
 	}
 	catch (std::exception &exception)

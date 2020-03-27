@@ -1,6 +1,0 @@
-kernel void			test(global float *data)
-{
-	const int		global_id = get_global_id(0);
-
-	data[global_id] *= 0.2;
-}

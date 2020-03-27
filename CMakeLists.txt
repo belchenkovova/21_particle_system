@@ -43,8 +43,12 @@ set(COMPUTER
 	project/computer/kernel/kernel.cpp
 	project/computer/argument/argument.cpp)
 
+set(PARTICLE_SYSTEM
+	project/particle_system/particle_system.cpp)
+
 add_executable(21_particle_system
 	${MAIN}
 	${COMMON}
 	${ENGINE}
-	${COMPUTER})
+	${COMPUTER}
+	${PARTICLE_SYSTEM})

@@ -8,7 +8,7 @@ using namespace		computer;
 					const memory_management &memory) :
 					is_OpenGL_based(false)
 {
-	object = std::make_shared<cl::Buffer>(
+	object = cl::Buffer(
 		*context,
 		static_cast<unsigned int>(memory),
 		size);
@@ -22,11 +22,11 @@ using namespace		computer;
 					is_OpenGL_based(true),
 					queue(queue)
 {
-	object = std::make_shared<cl::BufferGL>(
+	object = cl::BufferGL(
 		*context,
 		static_cast<unsigned int>(memory),
 		static_cast<cl_GLuint>(vbo.read_object()));
-	vector.push_back(*object);
+	vector.push_back(object.value());
 }
 
 void				argument::acquire()

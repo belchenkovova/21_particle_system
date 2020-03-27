@@ -2,15 +2,15 @@
 
 using namespace			engine;
 
-						buffer::buffer() :
+						buffer::buffer(int size) :
 						vao(),
-						local_size(size)
+						size(300)
 {
-	points.resize(local_size);
+	points.resize(size);
 	vao::add_attribute(reference<vbo::abstract>(points));
 }
 
-buffer::vbo_point		&buffer::receive_points()
+buffer::vbo_point		*buffer::receive_points()
 {
-	return (points);
+	return (&points);
 }
