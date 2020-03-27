@@ -28,18 +28,22 @@ namespace							engine::vbo
 
 	protected :
 
-		void						bind(const bool &state)
+		void						bind(bool state) const
 		{
 			glBindBuffer(GL_ARRAY_BUFFER, state ? object : 0);
 		}
 
-		virtual GLuint				read_group() = 0;
-		virtual GLuint				read_type() = 0;
-		virtual GLuint				read_size() = 0;
-		virtual GLuint				read_step() = 0;
+		[[nodiscard]]
+		virtual GLuint				read_group() const = 0;
+		[[nodiscard]]
+		virtual GLuint				read_type() const = 0;
+		[[nodiscard]]
+		virtual GLuint				read_size() const = 0;
+		[[nodiscard]]
+		virtual GLuint				read_step() const = 0;
 	};
 
-	template						<typename t_type, int t_group, memory_management t_management>
+	template						<typename t_type = float, int t_group = 3, memory_management t_management = memory_management::stream>
 	class							real final : public abstract, private std::vector<t_type>
 	{
 		friend class 				engine::buffer;
@@ -63,12 +67,12 @@ namespace							engine::vbo
 
 	private :
 
-		GLuint						read_group() override
+		GLuint						read_group() const override
 		{
 			return (group);
 		}
 
-		GLuint						read_type() override
+		GLuint						read_type() const override
 		{
 
 			if (std::is_same<t_type, unsigned int>::value)
@@ -79,17 +83,17 @@ namespace							engine::vbo
 				throw (common::exception("Engine, VBO : Bad data type"));
 		}
 
-		GLuint						read_size() override
+		GLuint						read_size() const override
 		{
-			return (sizeof(t_type) * std::vector<t_type>::size());
+			return (sizeof(t_type) * vector<t_type>::size());
 		}
 
-		GLuint						read_step() override
+		GLuint						read_step() const override
 		{
 			return (sizeof(t_type) * t_group);
 		}
 
-		using						std::vector<t_type>::resize;
+		using						vector<t_type>::resize;
 
 		const memory_management		memory_management{t_management};
 		const int					group{t_group};

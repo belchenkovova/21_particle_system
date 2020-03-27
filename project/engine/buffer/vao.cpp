@@ -1,4 +1,5 @@
 #include "vao.h"
+#include "vbo.h"
 
 using namespace	engine;
 
@@ -12,24 +13,24 @@ using namespace	engine;
 	glDeleteVertexArrays(1, &object);
 }
 
-void 			vao::bind(const bool& state)
+void 			vao::bind(bool state) const
 {
 	glBindVertexArray(state ? object : 0);
 }
 
-void 			vao::add_attribute(const reference<vbo::abstract> &vbo)
+void 			vao::add_attribute(const shared_ptr<vbo::abstract> &vbo)
 {
 	bind(true);
-	vbo.get().bind(true);
+	vbo->bind(true);
 	glVertexAttribPointer(
 		attributes.size(),
-		vbo.get().read_group(),
-		vbo.get().read_type(),
+		vbo->read_group(),
+		vbo->read_type(),
 		GL_FALSE,
-		vbo.get().read_step(),
+		vbo->read_step(),
 		nullptr);
 	glEnableVertexAttribArray(attributes.size());
-	vbo.get().bind(false);
+	vbo->bind(false);
 	bind(false);
 	attributes.push_back(vbo);
 }

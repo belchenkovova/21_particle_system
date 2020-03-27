@@ -17,13 +17,11 @@ public :
 private :
 
 	engine::renderer			renderer;
-	engine::buffer::vbo_point	*points_gl{nullptr};
+	engine::buffer				buffer;
 
 	computer::core				core;
 	computer::kernel			kernel_construct_cube;
 	computer::argument			points_cl;
-
-	const int 					local_number_of_particles{0};
 
 	void						start_OpenGL();
 	void						start_OpenCL();

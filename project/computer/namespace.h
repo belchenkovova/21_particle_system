@@ -8,10 +8,9 @@
 
 namespace			computer
 {
-	template 		<typename t_type>
-	using			unique = std::unique_ptr<t_type>;
-	template 		<typename t_type>
-	using			vector = std::vector<t_type>;
+	using			std::vector;
+	using			std::shared_ptr;
+	using			std::make_shared;
 
 	class 			core;
 	class 			kernel;

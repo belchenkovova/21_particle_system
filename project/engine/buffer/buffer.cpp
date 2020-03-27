@@ -4,13 +4,9 @@ using namespace			engine;
 
 						buffer::buffer(int size) :
 						vao(),
-						size(300)
+						size(size)
 {
-	points.resize(size);
-	vao::add_attribute(reference<vbo::abstract>(points));
-}
-
-buffer::vbo_point		*buffer::receive_points()
-{
-	return (&points);
+	points = make_shared<vbo::real<>>();
+	points->resize(size);
+	vao::add_attribute(points);
 }

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "engine/namespace.h"
-#include "shader.h"
 
 class						engine::program : public object_wrapper
 {

@@ -1,13 +1,16 @@
 #include "renderer.h"
-
-using namespace		engine;
+#include "engine/buffer/vao.h"
+#include "engine/program/shader.h"
+#include "engine/buffer/buffer.h"
 
 //					PUBLIC
+
+
+using namespace		engine;
 
 					renderer::renderer() :
 					engine::core(),
 					engine::program(),
-					engine::buffer(300),
 					engine::camera()
 {
 	program::attach(shader(shader::type::vertex, vertex_source));
@@ -23,22 +26,31 @@ void				renderer::loop()
 	while (!glfwWindowShouldClose(core::window))
 	{
 		glfwPollEvents();
-		if (render_request)
+		if (is_rendering_requested)
 			render();
 	}
 }
 
-void				renderer::request_render()
+void				renderer::request_rendering()
 {
-	render_request = true;
+	is_rendering_requested = true;
 }
+
+void				renderer::define_target(const buffer *target)
+{
+	rendering_target = target;
+}
+
 
 //					PRIVATE
 
+
 void				renderer::render()
 {
+	if (not rendering_target)
+		throw (common::exception("Engine, Renderer : Target is not defined"));
 	program::use(true);
-	buffer::bind(true);
+	rendering_target->bind(true);
 
 	glUniformMatrix4fv(
 		glGetUniformLocation(program::read_object(), "uniform_projection"),
@@ -50,11 +62,13 @@ void				renderer::render()
 	glClearColor(background.r, background.g, background.b, 1.f);
 	glClear(GL_COLOR_BUFFER_BIT);
 	glClear(GL_DEPTH_BUFFER_BIT);
-	glDrawArrays(GL_POINTS, 0, buffer::size / 3);
+	glDrawArrays(GL_POINTS, 0, rendering_target->read_size() / 3);
 	glfwSwapBuffers(core::window);
 
 	program::use(false);
-	buffer::bind(false);
+	rendering_target->bind(false);
+
+	is_rendering_requested = false;
 }
 
 void				renderer::glfw_callback(GLFWwindow* window, int key, int code, int action, int mode)
@@ -87,5 +101,5 @@ void				renderer::glfw_callback(GLFWwindow* window, int key, int code, int actio
 		renderer->rotate(axis::x, sign::negative);
 	else
 		return ;
-	renderer->request_render();
+	renderer->request_rendering();
 }

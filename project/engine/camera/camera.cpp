@@ -1,4 +1,5 @@
 #include "camera.h"
+#include "engine/core/core.h"
 
 using namespace		engine;
 

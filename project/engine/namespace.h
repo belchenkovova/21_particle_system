@@ -13,6 +13,10 @@
 
 namespace			engine
 {
+	using			std::vector;
+	using			std::shared_ptr;
+	using 			std::make_shared;
+
 	class 			object_wrapper
 	{
 	public :
@@ -30,12 +34,6 @@ namespace			engine
 
 		GLuint		object{0};
 	};
-
-	template		<typename t_type>
-	using			vector = std::vector<t_type>;
-	template		<typename t_type>
-	using			reference = std::reference_wrapper<t_type>;
-
 	class 			core;
 
 	class 			shader;

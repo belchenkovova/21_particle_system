@@ -3,14 +3,11 @@
 #include "engine/namespace.h"
 #include "engine/core/core.h"
 #include "engine/program/program.h"
-#include "engine/buffer/buffer.h"
 #include "engine/camera/camera.h"
-#include "engine/callback/callback.h"
 
 class										engine::renderer :
 											engine::core,
 											engine::program,
-											engine::buffer,
 											engine::camera
 {
 public :
@@ -22,19 +19,21 @@ public :
 											renderer();
 											~renderer() override = default;
 
-	using									buffer::receive_points;
-
 	void									loop();
-	void									request_render();
+
+	void									request_rendering();
+	void									define_target(const buffer *target);
 
 private :
 
-	bool									render_request{false};
+	bool									is_rendering_requested{false};
+	const buffer							*rendering_target{nullptr};
+
 	void									render();
 	static void								glfw_callback(GLFWwindow* window, int key, int code, int action, int mode);
 
-	vector<reference<callback::abstract>>	callbacks;
-	vector<reference<callback::abstract>>	timer;
+	vector<shared_ptr<callback::abstract>>	callbacks;
+	vector<shared_ptr<callback::abstract>>	timer;
 };
 
 

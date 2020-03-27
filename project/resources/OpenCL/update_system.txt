@@ -1,0 +1,8 @@
+kernel void			construct_cube(global float *data)
+{
+	const int		global_id = get_global_id(0);
+
+	data[global_id + 0] = x;
+    data[global_id + 1] = y;
+    data[global_id + 2] = 0;
+}
