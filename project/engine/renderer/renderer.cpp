@@ -33,29 +33,6 @@ void				renderer::loop()
 	}
 }
 
-class				test
-{
-public :
-
-					test(int i) :
-					i(i)
-	{}
-
-	void			callback()
-	{
-		std::cout << "hi" << std::endl;
-	}
-
-	int i = 0;
-
-};
-
-static void			say_hi()
-{
-	std::cout << "hi" << std::endl;
-}
-
-
 void				renderer::request_rendering()
 {
 	is_rendering_requested = true;
@@ -63,7 +40,6 @@ void				renderer::request_rendering()
 
 void				renderer::define_target(const buffer *target)
 {
-	add_timer(2, say_hi);
 	rendering_target = target;
 }
 

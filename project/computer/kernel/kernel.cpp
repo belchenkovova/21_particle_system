@@ -30,16 +30,6 @@ void 						kernel::run()
 	queue.finish();
 }
 
-argument 						kernel::generate_argument(const int &size, const memory_management &memory)
-{
-	argument					argument;
-
-	if (not is_built)
-		throw (common::exception("Computer, Kernel : Object is not built"));
-	argument = computer::argument(context, size, memory);
-	return (argument);
-}
-
 argument 						kernel::generate_argument(const engine::vbo::abstract &vbo, const memory_management &memory)
 {
 	argument					argument;

@@ -1,9 +1,11 @@
-kernel void			kernel_function(
-					global float *position,
-					global float *velocity,
-					global float *acceleration)
+kernel void			update(
+					global vector *position,
+					global vector *velocity,
+					global vector *acceleration)
 {
 	const int		global_id = get_global_id(0);
 
-
+	velocity[global_id] = vector_add(velocity[global_id], acceleration[global_id]);
+	position[global_id] = vector_add(position[global_id], velocity[global_id]);
+	acceleration[global_id] = vector_multiply(acceleration[global_id], 0.f);
 }

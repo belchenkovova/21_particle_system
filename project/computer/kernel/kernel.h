@@ -15,9 +15,18 @@ public :
 	void					build(const std::string &function, const int &number);
 	void					run();
 
+	template 				<typename t_type = bool>
 	argument 				generate_argument(
 							const int &size,
-							const memory_management &memory = memory_management::read_write);
+							const memory_management &memory = memory_management::read_write)
+	{
+		argument			argument;
+
+		if (not is_built)
+			throw (common::exception("Computer, Kernel : Object is not built"));
+		argument = computer::argument(context, size * sizeof(t_type), memory);
+		return (argument);
+	}
 	argument 				generate_argument(
 							const engine::vbo::abstract &vbo,
 							const memory_management &memory = memory_management::read_write);

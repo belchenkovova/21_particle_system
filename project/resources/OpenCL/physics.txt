@@ -1,0 +1,21 @@
+kernel void			physics(
+					global vector *position,
+					global vector *velocity,
+					global vector *acceleration)
+{
+	const int		global_id = get_global_id(0);
+	const vector	attractor = {5, 5, 0};
+
+	vector			force;
+	float			distance_squared;
+	float			strength;
+
+	force = vector_subtract(attractor, position[global_id]);
+	distance_squared = vector_length_squared(force);
+	distance_squared = CLAMP(distance_squared, 1, 100);
+	strength = -0.1 / distance_squared;
+	force = vector_normalize(force);
+	force = vector_multiply(force, strength);
+
+	acceleration[global_id] = force;
+}

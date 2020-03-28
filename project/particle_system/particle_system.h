@@ -25,6 +25,7 @@ private :
 	{
 		computer::kernel		reset;
 		computer::kernel		update;
+		computer::kernel		physics;
 	}							kernels;
 
 	struct
@@ -37,7 +38,7 @@ private :
 	void						start_OpenGL();
 	void						start_OpenCL();
 
-	static void 				callback_update(particle_system *system);
+	void 						timer();
 };
 
 
