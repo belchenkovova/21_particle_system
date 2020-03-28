@@ -1,0 +1,9 @@
+kernel void			kernel_function(
+					global float *position,
+					global float *velocity,
+					global float *acceleration)
+{
+	const int		global_id = get_global_id(0);
+
+
+}

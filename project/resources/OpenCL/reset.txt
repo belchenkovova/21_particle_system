@@ -1,0 +1,22 @@
+kernel void			kernel_function(
+					global float *position,
+					global float *velocity,
+					global float *acceleration)
+{
+	const int		global_id = get_global_id(0);
+
+	const int		y = global_id / 10;
+	const int		x = global_id % 10;
+
+	position[(y * 10 + x) * 3 + 0] = x;
+    position[(y * 10 + x) * 3 + 1] = y;
+    position[(y * 10 + x) * 3 + 2] = 0;
+
+	velocity[3 * global_id + 0] = 0;
+	velocity[3 * global_id + 1] = 0;
+	velocity[3 * global_id + 2] = 0;
+
+	acceleration[3 * global_id + 0] = 0;
+	acceleration[3 * global_id + 1] = 0;
+	acceleration[3 * global_id + 2] = 0;
+}

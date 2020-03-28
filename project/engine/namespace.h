@@ -64,13 +64,7 @@ namespace			engine
 
 	class			camera;
 
-	namespace		callback
-	{
-		class		abstract;
-		template	<auto t_functor, typename t_type>
-		class		real;
-	}
-	template		<auto t_functor, typename t_type>
+	class 			callback;
 	class			timer;
 
 	class 			renderer;

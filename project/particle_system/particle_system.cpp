@@ -14,7 +14,9 @@
 
 void				particle_system::loop()
 {
-	kernel_construct_cube.run();
+	arguments.position.acquire();
+	kernels.reset.run();
+	arguments.position.release();
 	renderer.loop();
 }
 
@@ -31,10 +33,30 @@ void				particle_system::start_OpenGL()
 
 void				particle_system::start_OpenCL()
 {
-	kernel_construct_cube = core.generate_kernel();
-	kernel_construct_cube.add_source("project/resources/OpenCL/construct_cube.txt");
-	kernel_construct_cube.build("construct_cube", 100);
+	kernels.reset = core.generate_kernel();
+	kernels.reset.add_source("project/resources/OpenCL/reset.txt");
+	kernels.reset.build("kernel_function", number_of_particles);
 
-	points_cl = kernel_construct_cube.generate_argument(buffer.receive_points());
-	kernel_construct_cube.link_argument(points_cl);
+	kernels.update = core.generate_kernel();
+	kernels.update.add_source("project/resources/OpenCL/update.txt");
+	kernels.update.build("kernel_function", number_of_particles);
+
+	arguments.position = kernels.reset.generate_argument(buffer.receive_points());
+	arguments.velocity = kernels.reset.generate_argument(number_of_particles * 3);
+	arguments.acceleration = kernels.reset.generate_argument(number_of_particles * 3);
+
+	kernels.reset.link_argument(arguments.position);
+	kernels.reset.link_argument(arguments.velocity);
+	kernels.reset.link_argument(arguments.acceleration);
+
+	kernels.update.link_argument(arguments.position);
+	kernels.update.link_argument(arguments.velocity);
+	kernels.update.link_argument(arguments.acceleration);
+}
+
+void 				particle_system::callback_update(particle_system *system)
+{
+	system->arguments.position.acquire();
+	system->kernels.update.run();
+	system->arguments.position.release();
 }

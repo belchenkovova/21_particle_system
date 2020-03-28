@@ -20,11 +20,24 @@ private :
 	engine::buffer				buffer;
 
 	computer::core				core;
-	computer::kernel			kernel_construct_cube;
-	computer::argument			points_cl;
+
+	struct
+	{
+		computer::kernel		reset;
+		computer::kernel		update;
+	}							kernels;
+
+	struct
+	{
+		computer::argument		position;
+		computer::argument		velocity;
+		computer::argument		acceleration;
+	}							arguments;
 
 	void						start_OpenGL();
 	void						start_OpenCL();
+
+	static void 				callback_update(particle_system *system);
 };
 
 

@@ -1,7 +1,7 @@
 #include "renderer.h"
-#include "engine/buffer/vao.h"
+#include "engine/buffers/vao.h"
 #include "engine/program/shader.h"
-#include "engine/buffer/buffer.h"
+#include "engine/buffers/buffer.h"
 
 //					PUBLIC
 
@@ -25,11 +25,36 @@ void				renderer::loop()
 {
 	while (!glfwWindowShouldClose(core::window))
 	{
+		for (auto &timer : timers)
+			timer->test(glfwGetTime());
 		glfwPollEvents();
 		if (is_rendering_requested)
 			render();
 	}
 }
+
+class				test
+{
+public :
+
+					test(int i) :
+					i(i)
+	{}
+
+	void			callback()
+	{
+		std::cout << "hi" << std::endl;
+	}
+
+	int i = 0;
+
+};
+
+static void			say_hi()
+{
+	std::cout << "hi" << std::endl;
+}
+
 
 void				renderer::request_rendering()
 {
@@ -38,6 +63,7 @@ void				renderer::request_rendering()
 
 void				renderer::define_target(const buffer *target)
 {
+	add_timer(2, say_hi);
 	rendering_target = target;
 }
 

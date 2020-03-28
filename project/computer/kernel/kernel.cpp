@@ -32,22 +32,22 @@ void 						kernel::run()
 
 argument 						kernel::generate_argument(const int &size, const memory_management &memory)
 {
-	argument					buffer;
+	argument					argument;
 
 	if (not is_built)
 		throw (common::exception("Computer, Kernel : Object is not built"));
-	buffer = computer::argument(context, size, memory);
-	return (buffer);
+	argument = computer::argument(context, size, memory);
+	return (argument);
 }
 
 argument 						kernel::generate_argument(const engine::vbo::abstract &vbo, const memory_management &memory)
 {
-	argument					buffer;
+	argument					argument;
 
 	if (not is_built)
 		throw (common::exception("Computer, Kernel : Object is not built"));
-	buffer = computer::argument(context, &queue, vbo, memory);
-	return (buffer);
+	argument = computer::argument(context, &queue, vbo, memory);
+	return (argument);
 }
 
 void 						kernel::link_argument(argument &argument)

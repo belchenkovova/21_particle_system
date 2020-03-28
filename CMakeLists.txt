@@ -33,9 +33,11 @@ set(ENGINE
 	project/engine/core/core.cpp
 	project/engine/program/shader.cpp
 	project/engine/program/program.cpp
-	project/engine/buffer/vao.cpp
-	project/engine/buffer/buffer.cpp
+	project/engine/buffers/vao.cpp
+	project/engine/buffers/buffer.cpp
 	project/engine/camera/camera.cpp
+	project/engine/callbacks/callback.cpp
+	project/engine/callbacks/timer.cpp
 	project/engine/renderer/renderer.cpp)
 
 set(COMPUTER
