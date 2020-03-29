@@ -31,13 +31,13 @@ set(COMMON
 
 set(ENGINE
 	project/engine/core/core.cpp
-	project/engine/program/shader.cpp
+	project/engine/shader/shader.cpp
 	project/engine/program/program.cpp
-	project/engine/buffers/vao.cpp
-	project/engine/buffers/buffer.cpp
+	project/engine/vao/vao.cpp
+	project/engine/buffer/buffer.cpp
 	project/engine/camera/camera.cpp
-	project/engine/callbacks/callback.cpp
-	project/engine/callbacks/timer.cpp
+	project/engine/callback/callback.cpp
+	project/engine/timer/timer.cpp
 	project/engine/renderer/renderer.cpp)
 
 set(COMPUTER
@@ -46,7 +46,8 @@ set(COMPUTER
 	project/computer/argument/argument.cpp)
 
 set(PARTICLE_SYSTEM
-	project/particle_system/particle_system.cpp)
+	project/particle_system/particle_system.cpp
+	project/particle_system/x_renderer.cpp)
 
 add_executable(21_particle_system
 	${MAIN}

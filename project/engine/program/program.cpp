@@ -1,5 +1,4 @@
 #include "program.h"
-#include "shader.h"
 
 using namespace		engine;
 
@@ -13,7 +12,12 @@ using namespace		engine;
 	glDeleteProgram(object);
 }
 
-void				program::attach(const shader &shader)
+void				program::attach_shader(shader::type type, const std::string &source)
+{
+	attach_shader(temporary_shaders.emplace_back(type, source));
+}
+
+void				program::attach_shader(const shader &shader)
 {
 	glAttachShader(object, shader.object);
 }

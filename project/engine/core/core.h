@@ -1,8 +1,9 @@
 #pragma once
 
 #include "engine/namespace.h"
+#include "engine/renderer/renderer.h"
 
-class							engine::core
+class							engine::core final
 {
 public :
 
@@ -13,17 +14,36 @@ public :
 	inline static bool			use_depth_test{true};
 	inline static bool			use_blending{true};
 	inline static bool			use_multisampling{true};
+	inline static bool 			should_render{true};
 
 								core();
-	virtual						~core();
+								~core();
+
+	void 						attach_renderer(engine::renderer &renderer);
+
+	template					<typename ...t_args>
+	void						generate_timer(float period, t_args ...args)
+	{
+		timers.emplace_back(period, args...);
+	}
+
+	void 						start();
+	void 						finish();
+
+	static void 				draw(draw_mode mode, int count);
 
 protected :
 
-	inline static int			instance_count{0};
+	using						renderer_refence = reference_wrapper<renderer>;
 
+	inline static int			instance_count{0};
 	GLFWwindow					*window{nullptr};
 	int							width{0};
 	int							height{0};
+
+	vector<renderer_refence>	renderers;
+	vector<callback>			callbacks;
+	vector<timer>				timers;
 };
 
 

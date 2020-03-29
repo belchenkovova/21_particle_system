@@ -1,4 +1,6 @@
 #include "core.h"
+#include "engine/callback/callback.h"
+#include "engine/timer/timer.h"
 
 using namespace		engine;
 
@@ -43,4 +45,40 @@ using namespace		engine;
 					core::~core()
 {
 	glfwTerminate();
+}
+
+void 				core::attach_renderer(engine::renderer &renderer)
+{
+	renderers.emplace_back(renderer);
+}
+
+void 				core::start()
+{
+	while (!glfwWindowShouldClose(window))
+	{
+		glfwPollEvents();
+		if (should_render)
+		{
+			glClearColor(0.2f, 0.2f, 0.2f, 1.f);
+			glClear(GL_COLOR_BUFFER_BIT);
+			glClear(GL_DEPTH_BUFFER_BIT);
+
+			for (auto &renderer : renderers)
+				renderer.get().render();
+
+			glfwSwapBuffers(window);
+
+			should_render = false;
+		}
+	}
+}
+
+void 				core::finish()
+{
+	glfwSetWindowShouldClose(window, GLFW_TRUE);
+}
+
+void				core::draw(draw_mode mode, int count)
+{
+	glDrawArrays(static_cast<GLuint>(mode), 0, count);
 }

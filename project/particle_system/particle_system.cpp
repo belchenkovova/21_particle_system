@@ -1,58 +1,43 @@
 #include "particle_system.h"
 
-
-//					PUBLIC
-
-
-					particle_system::particle_system() :
-					renderer(),
-					buffer(number_of_particles * 3)
+					particle_system::particle_system(engine::core &engine, computer::core &computer) :
+					engine(engine),
+					computer(computer)
 {
-	start_OpenGL();
-	start_OpenCL();
-}
-
-void				particle_system::loop()
-{
+	initialize_engine();
+	initialize_computer();
+	
 	arguments.position.acquire();
 	kernels.reset.run();
-	kernels.update.run();
-
+//	kernels.update.run();
 	arguments.position.release();
-	renderer.loop();
 }
 
-
-//					PRIVATE
-
-
-void				particle_system::start_OpenGL()
+void				particle_system::initialize_engine()
 {
-	buffer.receive_points().upload();
-	renderer.add_timer(1.f / 60.f, &particle_system::timer, this);
-	renderer.define_target(&buffer);
-	renderer.request_rendering();
+//	renderer.add_timer(1.f / 60.f, &particle_system::timer, this);
+	engine.attach_renderer(particle_renderer);
 }
 
-void				particle_system::start_OpenCL()
+void				particle_system::initialize_computer()
 {
-	kernels.reset = core.generate_kernel();
+	kernels.reset = computer.generate_kernel();
 	kernels.reset.add_source("project/resources/OpenCL/vector.txt");
 	kernels.reset.add_source("project/resources/OpenCL/reset.txt");
 	kernels.reset.build("reset", number_of_particles);
 
-	kernels.update = core.generate_kernel();
+	kernels.update = computer.generate_kernel();
 	kernels.update.add_source("project/resources/OpenCL/vector.txt");
 	kernels.update.add_source("project/resources/OpenCL/update.txt");
 	kernels.update.build("update", number_of_particles);
 
-	kernels.physics = core.generate_kernel();
+	kernels.physics = computer.generate_kernel();
 	kernels.physics.add_source("project/resources/OpenCL/macros.txt");
 	kernels.physics.add_source("project/resources/OpenCL/vector.txt");
 	kernels.physics.add_source("project/resources/OpenCL/physics.txt");
 	kernels.physics.build("physics", number_of_particles);
 
-	arguments.position = kernels.reset.generate_argument(buffer.receive_points());
+	arguments.position = kernels.reset.generate_argument(*particle_renderer.buffer.receive_attribute(0));
 	arguments.velocity = kernels.reset.generate_argument<float>(number_of_particles * 3);
 	arguments.acceleration = kernels.reset.generate_argument<float>(number_of_particles * 3);
 
@@ -75,5 +60,4 @@ void 				particle_system::timer()
 	kernels.physics.run();
 	kernels.update.run();
 	arguments.position.release();
-	renderer.request_rendering();
 }

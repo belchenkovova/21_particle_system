@@ -13,7 +13,7 @@ public :
 	{
 		this->function = std::bind(function, args...);
 	}
-							~callback() = default;
+	virtual					~callback() = default;
 
 	void 					run() const;
 

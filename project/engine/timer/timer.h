@@ -1,9 +1,9 @@
 #pragma once
 
 #include "engine/namespace.h"
-#include "engine/callbacks/callback.h"
+#include "engine/callback/callback.h"
 
-class				engine::timer : private engine::callback
+class				engine::timer final : private engine::callback
 {
 public :
 
@@ -14,7 +14,7 @@ public :
 					callback(function, args...),
 					period(period)
 	{}
-					~timer() = default;
+					~timer() override = default;
 
 	void 			test(float new_time);
 

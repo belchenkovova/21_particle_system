@@ -16,7 +16,7 @@ public :
 
 private :
 
-	const bool					use_OpenGL_local{false};
+	inline static int			instance_count{0};
 	cl::Platform				platform;
 	cl::Device					device;
 	cl::Context					context;

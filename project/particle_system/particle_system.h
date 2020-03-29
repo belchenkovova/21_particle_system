@@ -7,19 +7,32 @@ class							particle_system
 {
 public :
 
-	static inline int			number_of_particles{100};
+	static inline int			number_of_particles{1};
 
-								particle_system();
+								particle_system(engine::core &engine, computer::core &computer);
 								~particle_system() = default;
-
-	void						loop();
 
 private :
 
-	engine::renderer			renderer;
-	engine::buffer				buffer;
+	engine::core				&engine;
+	computer::core				&computer;
 
-	computer::core				core;
+	class 						particle_renderer final : public engine::renderer
+	{
+	public :
+
+								particle_renderer();
+		void 					render() override;
+
+		using					engine::renderer::program;
+		using					engine::renderer::buffer;
+		engine::camera			camera;
+
+		using					points_type = engine::vbo::real<float, 3>;
+		using 					points_ptr_type = std::shared_ptr<points_type>;
+
+		points_ptr_type			points;
+	}							particle_renderer;
 
 	struct
 	{
@@ -35,8 +48,8 @@ private :
 		computer::argument		acceleration;
 	}							arguments;
 
-	void						start_OpenGL();
-	void						start_OpenCL();
+	void						initialize_engine();
+	void						initialize_computer();
 
 	void 						timer();
 };

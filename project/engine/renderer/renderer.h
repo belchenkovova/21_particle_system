@@ -1,46 +1,33 @@
 #pragma once
 
 #include "engine/namespace.h"
-#include "engine/core/core.h"
 #include "engine/program/program.h"
-#include "engine/camera/camera.h"
-#include "engine/callbacks/timer.h"
+#include "engine/buffer/buffer.h"
 
-class								engine::renderer :
-									engine::core,
-									engine::program,
-									engine::camera
+class								engine::renderer
 {
 public :
 
-	inline static std::string		vertex_source;
-	inline static std::string		fragment_source;
-	inline static glm::vec3			background{0.f, 0.f, 0.f};
+									renderer() = default;
+	virtual							~renderer() = default;
 
-									renderer();
-									~renderer() override = default;
+	virtual void					render() = 0;
 
-	void							loop();
+protected :
 
-	void							request_rendering();
-	void							define_target(const buffer *target);
+	program							program;
+	buffer							buffer;
 
-	template						<typename ... t_args>
-	void							add_timer(float period, t_args ...args)
+	inline void						render_prefix()
 	{
-		timers.push_back(make_shared<timer>(period, args...));
+		program.use(true);
+		buffer.bind(true);
 	}
 
-private :
-
-	bool							is_rendering_requested{false};
-	const buffer					*rendering_target{nullptr};
-
-	void							render();
-	static void						glfw_callback(GLFWwindow* window, int key, int code, int action, int mode);
-
-	vector<shared_ptr<callback>>	callbacks;
-	vector<shared_ptr<timer>>		timers;
+	inline void						render_suffix()
+	{
+		program.use(false);
+		buffer.bind(false);
+	}
 };
-
 

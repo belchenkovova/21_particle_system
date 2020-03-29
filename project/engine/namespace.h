@@ -16,6 +16,7 @@ namespace			engine
 	using			std::vector;
 	using			std::shared_ptr;
 	using 			std::make_shared;
+	using 			std::reference_wrapper;
 
 	class 			object_wrapper
 	{
@@ -34,18 +35,30 @@ namespace			engine
 
 		GLuint		object{0};
 	};
+
+	enum class		draw_mode : GLuint
+	{
+		point = GL_POINTS
+	};
+
 	class 			core;
 
 	class 			shader;
 	class 			program;
 
+	enum class		memory_management : GLuint
+	{
+		static_ = GL_STATIC_DRAW,
+		dynamic = GL_DYNAMIC_DRAW,
+		stream = GL_STREAM_DRAW
+	};
+
 	namespace		vbo
 	{
-		enum class	memory_management : GLuint;
 		class		abstract;
 		template	<typename t_type, int t_group, memory_management t_management>
 		class		real;
-	};
+	}
 	class 			vao;
 	class 			buffer;
 

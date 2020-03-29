@@ -4,16 +4,10 @@
 
 namespace							engine::vbo
 {
-	enum class						memory_management : GLuint
-	{
-		static_ = GL_STATIC_DRAW,
-		dynamic = GL_DYNAMIC_DRAW,
-		stream = GL_STREAM_DRAW
-	};
-
 	class							abstract : public object_wrapper
 	{
 		friend class 				engine::vao;
+		friend class 				engine::buffer;
 
 	public :
 									abstract() : object_wrapper()
@@ -25,6 +19,8 @@ namespace							engine::vbo
 		{
 			glDeleteBuffers(1, &object);
 		}
+
+		virtual void				save() = 0;
 
 	protected :
 
@@ -41,20 +37,22 @@ namespace							engine::vbo
 		virtual GLuint				read_size() const = 0;
 		[[nodiscard]]
 		virtual GLuint				read_step() const = 0;
+
+		virtual void 				resize(int size) = 0;
 	};
 
-	template						<typename t_type = float, int t_group = 3, memory_management t_management = memory_management::stream>
+	template						<typename t_type = float,
+	    							int t_group = 3,
+	    							memory_management t_management = memory_management::stream>
 	class							real final : public abstract, private std::vector<t_type>
 	{
-		friend class 				engine::buffer;
-
 	public :
 									real() = default;
 									~real() override = default;
 
 		using						std::vector<t_type>::operator[];
 
-		void						upload()
+		void						save() override
 		{
 			bind(true);
 			glBufferData(
@@ -93,7 +91,10 @@ namespace							engine::vbo
 			return (sizeof(t_type) * t_group);
 		}
 
-		using						vector<t_type>::resize;
+		void 						resize(int size) override
+		{
+			vector<t_type>::resize(size * group);
+		}
 
 		const memory_management		memory_management{t_management};
 		const int					group{t_group};

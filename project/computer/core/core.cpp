@@ -4,9 +4,11 @@ using namespace					computer;
 
 //								PUBLIC
 
-								core::core() :
-								use_OpenGL_local(use_OpenGL)
+								core::core()
 {
+	if (++instance_count > 1)
+		throw (common::exception("Computer, Core : Can't have more, than one instance"));
+
 	set_platform();
 	set_device();
 
