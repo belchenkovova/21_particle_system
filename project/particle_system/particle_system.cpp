@@ -9,14 +9,15 @@
 	
 	arguments.position.acquire();
 	kernels.reset.run();
-//	kernels.update.run();
+	kernels.update.run();
 	arguments.position.release();
 }
 
 void				particle_system::initialize_engine()
 {
-//	renderer.add_timer(1.f / 60.f, &particle_system::timer, this);
 	engine.attach_renderer(particle_renderer);
+
+	engine.generate_timer(1.f / 60.f, &particle_system::timer, this);
 
 	engine.generate_callback(engine::event::type::key_press, &particle_system::callback, this);
 	engine.generate_callback(engine::event::type::key_hold, &particle_system::callback, this);
@@ -63,9 +64,8 @@ void 				particle_system::timer()
 	kernels.physics.run();
 	kernels.update.run();
 	arguments.position.release();
+	engine::core::should_render = true;
 }
-
-int i = 0;
 
 void 				particle_system::callback()
 {

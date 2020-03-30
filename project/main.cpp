@@ -8,17 +8,17 @@ void 					setup()
 	engine::core::window_height = 720;
 	engine::core::window_name = "";
 	engine::core::use_depth_test = true;
-	engine::core::point_size = 3;
+	engine::core::point_size = 1;
 
-	engine::camera::start_position = glm::vec3(0.f, 0.f, 100.f);
+	engine::camera::start_position = glm::vec3(50.f, 50.f, 150.f);
 	engine::camera::movement_speed = 2.f;
 	engine::camera::rotation_speed = 1.f;
-	engine::camera::near_plane = .1f;
-	engine::camera::far_plane = 2000.f;
+	engine::camera::near_plane = 10.f;
+	engine::camera::far_plane = 1000.f;
 
 	computer::core::use_OpenGL = true;
 
-	particle_system::number_of_particles = 100;
+	particle_system::number_of_particles = 100 * 100;
 }
 
 void 					start()

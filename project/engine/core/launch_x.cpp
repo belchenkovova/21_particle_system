@@ -10,6 +10,8 @@ void 				core::launch_callbacks()
 
 void 				core::launch_timers()
 {
+	const float		time = glfwGetTime();
+
 	for (auto &timer : timers)
-		timer.test(glfwGetTime());
+		timer.test(time);
 }

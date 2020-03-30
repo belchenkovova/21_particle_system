@@ -5,7 +5,7 @@ kernel void			reset(
 {
 	const int		global_id = get_global_id(0);
 
-	const int		side = 10;
+	const int		side = 100;
 	const float		x = global_id % side;
 	const float		y = global_id / side;
 
