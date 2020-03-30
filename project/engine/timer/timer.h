@@ -3,15 +3,13 @@
 #include "engine/namespace.h"
 #include "engine/callback/callback.h"
 
-class				engine::timer final : private engine::callback
+class				engine::timer final : private engine::functor
 {
 public :
 
-	explicit		timer(float period, std::function<void()> &function);
-
 	template		<typename t_function, typename... t_args >
-	explicit		timer(float period, t_function function, t_args ...args) :
-					callback(function, args...),
+					timer(float period, t_function function, t_args ...args) :
+					functor(function, args...),
 					period(period)
 	{}
 					~timer() override = default;

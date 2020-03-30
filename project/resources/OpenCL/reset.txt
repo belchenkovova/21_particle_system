@@ -5,15 +5,9 @@ kernel void			reset(
 {
 	const int		global_id = get_global_id(0);
 
-#define M(v)		v.x, v.y, v.z
-
-	printf("%d : %f %f %f\n", global_id, M(position[global_id]));
-
-	return ;
-
 	const int		side = 10;
-	const float		x = 0.1 * (global_id % side);
-	const float		y = 0.1 * (global_id / side);
+	const float		x = global_id % side;
+	const float		y = global_id / side;
 
 	position[global_id].x = x;
     position[global_id].y = y;

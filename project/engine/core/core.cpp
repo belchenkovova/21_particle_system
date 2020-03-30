@@ -27,8 +27,8 @@ using namespace		engine;
 	if (glewInit() != GLEW_OK)
 		throw (common::exception("Engine, Core : GLEW error"));
 
-	glfwGetFramebufferSize(window, &width, &height);
-	glViewport(0, 0, width, height);
+	glfwGetFramebufferSize(window, &final_width, &final_height);
+	glViewport(0, 0, final_width, final_height);
 
 	glPointSize(point_size);
 	if (use_depth_test)
@@ -40,6 +40,11 @@ using namespace		engine;
 	}
 	if (use_multisampling)
 		glEnable(GL_MULTISAMPLE);
+
+	glfwSetWindowUserPointer(window, this);
+	glfwSetKeyCallback(window, glfw_callback_key);
+	glfwSetMouseButtonCallback(window, glfw_callback_mouse_key);
+	glfwSetCursorPosCallback(window, glfw_callback_mouse_movement);
 }
 
 					core::~core()
@@ -56,7 +61,10 @@ void 				core::start()
 {
 	while (!glfwWindowShouldClose(window))
 	{
+		event.reset_if_needed();
 		glfwPollEvents();
+		launch_callbacks();
+		launch_timers();
 		if (should_render)
 		{
 			glClearColor(0.2f, 0.2f, 0.2f, 1.f);
@@ -76,6 +84,11 @@ void 				core::start()
 void 				core::finish()
 {
 	glfwSetWindowShouldClose(window, GLFW_TRUE);
+}
+
+event				&core::receive_event()
+{
+	return (event);
 }
 
 void				core::draw(draw_mode mode, int count)

@@ -1,25 +1,26 @@
 #pragma once
 
 #include "engine/namespace.h"
+#include "engine/functor/functor.h"
+#include "engine/event/event.h"
 
-class						engine::callback
+
+class					engine::callback final : private engine::functor
 {
 public :
 
-	explicit				callback(std::function<void()> &function);
+	template			<typename t_function, typename... t_args >
+						callback(event::type type, t_function function, t_args ...args) :
+						engine::functor(function, args...),
+						type(type)
+	{}
+						~callback() override = default;
 
-	template				<typename t_function, typename... t_args >
-	explicit				callback(t_function function, t_args ...args)
-	{
-		this->function = std::bind(function, args...);
-	}
-	virtual					~callback() = default;
-
-	void 					run() const;
+	void				test(event::type type);
 
 private :
 
-	std::function<void()>	function;
+	const event::type	type;
 };
 
 

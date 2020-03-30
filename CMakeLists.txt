@@ -31,13 +31,17 @@ set(COMMON
 
 set(ENGINE
 	project/engine/core/core.cpp
+	project/engine/core/launch_x.cpp
+	project/engine/core/glfw_callback_x.cpp
 	project/engine/shader/shader.cpp
 	project/engine/program/program.cpp
 	project/engine/vao/vao.cpp
 	project/engine/buffer/buffer.cpp
 	project/engine/camera/camera.cpp
-	project/engine/callback/callback.cpp
+	project/engine/functor/functor.cpp
 	project/engine/timer/timer.cpp
+	project/engine/event/event.cpp
+	project/engine/callback/callback.cpp
 	project/engine/renderer/renderer.cpp)
 
 set(COMPUTER

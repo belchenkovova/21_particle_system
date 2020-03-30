@@ -16,14 +16,6 @@
 
 	points = std::dynamic_pointer_cast<points_type>(buffer.receive_attribute(0));
 	assert(points != nullptr);
-
-	for (int y = 0; y < 1; y++)
-		for (int x = 0; x < 10; x++)
-		{
-			(*points)[3 * (10 * y + x) + 0] = x;
-			(*points)[3 * (10 * y + x) + 1] = y;
-			(*points)[3 * (10 * y + x) + 2] = 0;
-		}
 	points->save();
 }
 

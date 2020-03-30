@@ -1,12 +1,9 @@
 #include "callback.h"
 
-using namespace			engine;
+using namespace		engine;
 
-						callback::callback(std::function<void()> &function) :
-						function(function)
-{}
-
-void 					callback::run() const
+void				callback::test(event::type type)
 {
-	function();
+	if (this->type == type)
+		functor::run();
 }

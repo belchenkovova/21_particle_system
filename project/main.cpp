@@ -18,7 +18,7 @@ void 					setup()
 
 	computer::core::use_OpenGL = true;
 
-	particle_system::number_of_particles = 10;
+	particle_system::number_of_particles = 100;
 }
 
 void 					start()

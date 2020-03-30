@@ -52,6 +52,7 @@ private :
 	void						initialize_computer();
 
 	void 						timer();
+	void 						callback();
 };
 
 

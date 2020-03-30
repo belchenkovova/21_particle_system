@@ -9,6 +9,8 @@
 #include "glm/gtx/euler_angles.hpp"
 #include <OpenGL/OpenGL.h>
 #include <vector>
+#include <optional>
+#include <tuple>
 #include "common/common.h"
 
 namespace			engine
@@ -17,6 +19,9 @@ namespace			engine
 	using			std::shared_ptr;
 	using 			std::make_shared;
 	using 			std::reference_wrapper;
+	using 			std::optional;
+	using 			std::tuple;
+	using 			std::make_tuple;
 
 	class 			object_wrapper
 	{
@@ -77,8 +82,10 @@ namespace			engine
 
 	class			camera;
 
-	class 			callback;
+	class 			functor;
 	class			timer;
+	class			event;
+	class			callback;
 
 	class 			renderer;
 }
