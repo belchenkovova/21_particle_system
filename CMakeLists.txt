@@ -10,17 +10,20 @@ include_directories(
 include_directories(
 	/usr/local/Cellar/glew/2.1.0_1/include
 	/usr/local/Cellar/glfw/3.3/include
-	/usr/local/Cellar/glm/0.9.9.5/include)
+	/usr/local/Cellar/glm/0.9.9.5/include
+	/usr/local/Cellar/freetype/2.10.1/include/freetype2)
 
 link_directories(
 	/usr/local/Cellar/glew/2.1.0_1/lib
-	/usr/local/Cellar/glfw/3.3/lib)
+	/usr/local/Cellar/glfw/3.3/lib
+	/usr/local/Cellar/freetype/2.10.1/lib)
 
 link_libraries(
 	"-framework OpenGL"
 	"-framework OpenCL"
 	GLFW
-	GLEW)
+	GLEW
+	Freetype)
 
 set(MAIN
 	project/main.cpp)
@@ -49,6 +52,10 @@ set(COMPUTER
 	project/computer/kernel/kernel.cpp
 	project/computer/argument/argument.cpp)
 
+set(GUI
+	project/gui/symbol/symbol.cpp
+	project/gui/font/font.cpp)
+
 set(PARTICLE_SYSTEM
 	project/particle_system/particle_system.cpp
 	project/particle_system/x_renderer.cpp)
@@ -58,4 +65,5 @@ add_executable(21_particle_system
 	${COMMON}
 	${ENGINE}
 	${COMPUTER}
+	${GUI}
 	${PARTICLE_SYSTEM})
