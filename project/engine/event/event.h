@@ -28,14 +28,14 @@ public :
 	[[nodiscard]]
 	optional<int>				read_key() const;
 	[[nodiscard]]
-	optional<tuple<int, int>>	read_mouse() const;
+	optional<pair<int, int>>	read_mouse() const;
 
 private :
 
 	type						type_value{type::none};
 
 	optional<int>				key;
-	optional<tuple<int, int>>	mouse;
+	optional<pair<int, int>>	mouse;
 
 	void						reset();
 	void						reset_if_needed();

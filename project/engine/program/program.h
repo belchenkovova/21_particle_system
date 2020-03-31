@@ -2,21 +2,34 @@
 
 #include "engine/namespace.h"
 #include "engine/shader/shader.h"
+#include "engine/uniform/uniform.h"
 
-class						engine::program : public object_wrapper
+class						engine::program : public object_wrapper<GLuint>
 {
-	friend class			engine::renderer;
-
 public :
 							program();
-	virtual					~program();
+							~program() override;
 
 	void					attach_shader(shader::type type, const std::string &source);
 	void					attach_shader(const shader &shader);
 	void 					link();
 	void					use(const bool &state);
 
+	void					build_uniform(const string &name);
+	template 				<typename type>
+	void					upload_uniform(const string &name, type data)
+	{
+		auto				uniform = uniforms.find(name);
+
+		if (uniform == uniforms.end())
+			throw (common::exception("Engine, Program : Uniform not found"));
+		uniform->second.upload(data);
+	}
+
+private :
+
 	vector<shader>			temporary_shaders;
+	map<string, uniform>	uniforms;
 };
 
 

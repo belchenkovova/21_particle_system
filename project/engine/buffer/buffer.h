@@ -13,6 +13,7 @@ public :
 
 	using					engine::vao::generate_attribute;
 	using					engine::vao::receive_attribute;
+	using					engine::vao::receive_attribute_as_pointer;
 
 	void					resize(int size);
 	void					bind(bool state);

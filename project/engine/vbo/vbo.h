@@ -4,7 +4,7 @@
 
 namespace							engine::vbo
 {
-	class							abstract : public object_wrapper
+	class							abstract : public object_wrapper<GLuint>
 	{
 		friend class 				engine::vao;
 		friend class 				engine::buffer;

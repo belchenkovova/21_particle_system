@@ -37,6 +37,7 @@ set(ENGINE
 	project/engine/core/launch_x.cpp
 	project/engine/core/glfw_callback_x.cpp
 	project/engine/shader/shader.cpp
+	project/engine/uniform/uniform.cpp
 	project/engine/program/program.cpp
 	project/engine/vao/vao.cpp
 	project/engine/buffer/buffer.cpp
@@ -45,6 +46,7 @@ set(ENGINE
 	project/engine/timer/timer.cpp
 	project/engine/event/event.cpp
 	project/engine/callback/callback.cpp
+	project/engine/texture/texture.cpp
 	project/engine/renderer/renderer.cpp)
 
 set(COMPUTER

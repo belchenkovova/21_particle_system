@@ -2,7 +2,7 @@
 
 #include "engine/namespace.h"
 
-class				engine::shader : private engine::object_wrapper
+class				engine::shader : private engine::object_wrapper<GLuint>
 {
 	friend class	engine::program;
 
@@ -15,7 +15,7 @@ public :
 	};
 
 					shader(type type, const std::string &source);
-					~shader();
+					~shader() override;
 };
 
 

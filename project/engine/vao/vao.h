@@ -3,7 +3,7 @@
 #include "engine/namespace.h"
 #include "engine/vbo/vbo.h"
 
-class 									engine::vao : public engine::object_wrapper
+class 									engine::vao : public engine::object_wrapper<GLuint>
 {
 public :
 
@@ -16,7 +16,7 @@ public :
 	template							<typename t_type = float,
 										int t_group = 3,
 										memory_management t_management = memory_management::stream>
-	shared_ptr<vbo::abstract>			generate_attribute()
+	vbo::abstract						&generate_attribute()
 	{
 		shared_ptr<vbo::abstract>		vbo = make_shared<vbo::real<t_type, t_group, t_management>>();
 
@@ -34,14 +34,13 @@ public :
 		bind(false);
 		attributes.push_back(vbo);
 
-		return (vbo);
+		return (*vbo);
 	}
 
 	[[nodiscard]]
-	inline shared_ptr<vbo::abstract>	receive_attribute(int index)
-	{
-		return (attributes[index]);
-	}
+	vbo::abstract						&receive_attribute(int index);
+	[[nodiscard]]
+	shared_ptr<vbo::abstract>			receive_attribute_as_pointer(int index);
 
 protected :
 

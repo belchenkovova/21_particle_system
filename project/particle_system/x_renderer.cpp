@@ -14,21 +14,20 @@
 	buffer.generate_attribute<float, 3>();
 	buffer.resize(number_of_particles);
 
-	points = std::dynamic_pointer_cast<points_type>(buffer.receive_attribute(0));
+	points = std::dynamic_pointer_cast<points_type>(buffer.receive_attribute_as_pointer(0));
 	assert(points != nullptr);
 	points->save();
+
+	program.build_uniform("uniform_projection");
+	program.build_uniform("uniform_view");
 }
 
 void				particle_system::particle_renderer::render()
 {
 	render_prefix();
 
-	glUniformMatrix4fv(
-		glGetUniformLocation(program.read_object(), "uniform_projection"),
-		1, GL_FALSE, glm::value_ptr(camera.receive_projection_matrix()));
-	glUniformMatrix4fv(
-		glGetUniformLocation(program.read_object(), "uniform_view"),
-		1, GL_FALSE, glm::value_ptr(camera.receive_view_matrix()));
+	program.upload_uniform("uniform_projection", camera.receive_projection_matrix());
+	program.upload_uniform("uniform_view", camera.receive_view_matrix());
 
 	engine::core::draw(engine::draw_mode::point, buffer.read_size());
 

@@ -9,8 +9,10 @@
 namespace			gui
 {
 	using			std::map;
-	using 			std::tuple;
-	using 			std::make_tuple;
+	using 			std::pair;
+	using 			std::make_pair;
+	using			std::shared_ptr;
+	using			std::make_shared;
 
 	class			symbol;
 	class			font;

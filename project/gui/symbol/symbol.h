@@ -14,18 +14,22 @@ public :
 					~symbol() = default;
 
 	[[nodiscard]]
-	tuple<int, int>	read_size() const;
+	pair<int, int>	read_size() const;
 	[[nodiscard]]
-	tuple<int, int>	read_bearing() const;
+	pair<int, int>	read_bearing() const;
 	[[nodiscard]]
 	int 			read_advance() const;
+	[[nodiscard]]
+	engine::texture	&read_texture() const;
 
 private :
 
-	tuple<int, int>	size;
-	tuple<int, int>	bearing;
+	pair<int, int>	size;
+	pair<int, int>	bearing;
 	int 			advance;
 
+	using			texture_type = shared_ptr<engine::texture>;
+	texture_type	texture;
 };
 
 

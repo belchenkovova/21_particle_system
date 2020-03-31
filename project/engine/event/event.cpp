@@ -12,7 +12,7 @@ optional<int>				event::read_key() const
 	return (key);
 }
 
-optional<tuple<int, int>>	event::read_mouse() const
+optional<pair<int, int>>	event::read_mouse() const
 {
 	return (mouse);
 }

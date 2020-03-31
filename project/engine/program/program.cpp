@@ -40,3 +40,10 @@ void				program::use(const bool &state)
 {
 	glUseProgram(state ? object : 0);
 }
+
+void				program::build_uniform(const string &name)
+{
+	auto			[iterator, result] = uniforms.emplace(name, name);
+
+	iterator->second.connect(object);
+}

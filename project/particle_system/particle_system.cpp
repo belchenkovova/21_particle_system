@@ -41,7 +41,7 @@ void				particle_system::initialize_computer()
 	kernels.physics.add_source("project/resources/OpenCL/physics.txt");
 	kernels.physics.build("physics", number_of_particles);
 
-	arguments.position = kernels.reset.generate_argument(*particle_renderer.buffer.receive_attribute(0));
+	arguments.position = kernels.reset.generate_argument(particle_renderer.buffer.receive_attribute(0));
 	arguments.velocity = kernels.reset.generate_argument<float>(number_of_particles * 3);
 	arguments.acceleration = kernels.reset.generate_argument<float>(number_of_particles * 3);
 

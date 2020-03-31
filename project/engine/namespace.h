@@ -8,38 +8,43 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtx/euler_angles.hpp>
 #include <OpenGL/OpenGL.h>
+#include <string>
 #include <vector>
 #include <optional>
 #include <tuple>
+#include <map>
 
 #include "common/common.h"
 
 namespace			engine
 {
+	using			std::string;
 	using			std::vector;
 	using			std::shared_ptr;
 	using 			std::make_shared;
 	using 			std::reference_wrapper;
 	using 			std::optional;
-	using 			std::tuple;
-	using 			std::make_tuple;
+	using 			std::pair;
+	using 			std::make_pair;
+	using			std::map;
 
+	template		<typename type>
 	class 			object_wrapper
 	{
 	public :
 
 					object_wrapper() = default;
-					~object_wrapper() = default;
+		virtual		~object_wrapper() = default;
 
 		[[nodiscard]]
-		GLuint		read_object() const
+		type		read_object() const
 		{
 			return (object);
 		}
 
 	protected :
 
-		GLuint		object{0};
+		type		object{0};
 	};
 
 	enum class		draw_mode : GLuint
@@ -50,6 +55,7 @@ namespace			engine
 	class 			core;
 
 	class 			shader;
+	class 			uniform;
 	class 			program;
 
 	enum class		memory_management : GLuint
@@ -87,6 +93,8 @@ namespace			engine
 	class			timer;
 	class			event;
 	class			callback;
+
+	class			texture;
 
 	class 			renderer;
 }
