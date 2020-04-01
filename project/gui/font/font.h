@@ -9,7 +9,10 @@ public :
 
 	static inline int	size{128};
 
-						font(const std::string &source, int width);
+						font(
+						const std::string &source,
+						int width,
+						const glm::vec3 &color = glm::vec3(1, 1, 1));
 						~font();
 
 	const symbol		&find_symbol(char task) const;

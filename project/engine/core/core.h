@@ -21,6 +21,8 @@ public :
 								core();
 								~core();
 
+	[[deprecated]] GLFWwindow	*read_window() const {return (window);}
+
 	void 						attach_renderer(engine::renderer &renderer);
 
 	template					<typename ...t_args>

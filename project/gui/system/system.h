@@ -1,6 +1,7 @@
 #pragma once
 
 #include "gui/namespace.h"
+#include "gui/font/font.h"
 
 class						gui::system final
 {
@@ -28,9 +29,13 @@ private :
 		using 				points_ptr_type = std::shared_ptr<points_type>;
 		using 				texture_ptr_type = std::shared_ptr<texture_type>;
 
-	private :
+//#pragma message "Make private"
+//	private :
 
 		points_ptr_type		points;
 		texture_ptr_type	texture;
 	}						text_renderer;
+
+	void					callback();
+	font					font;
 };

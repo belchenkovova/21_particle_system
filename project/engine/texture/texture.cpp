@@ -35,9 +35,3 @@ void				texture::bind(bool state) const
 {
 	glBindTexture(GL_TEXTURE_2D, state ? object : 0);
 }
-
-void				texture::activate(int index)
-{
-	glActiveTexture(GL_TEXTURE0 + index);
-}
-

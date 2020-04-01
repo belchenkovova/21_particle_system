@@ -2,7 +2,13 @@
 
 using namespace		gui;
 
-					font::font(const std::string &source, int width)
+					font::font(
+					const std::string &source,
+					int width,
+					const glm::vec3 &color) :
+					library{},
+					face{},
+					color(color)
 {
 	if (FT_Init_FreeType(&library))
 		throw (common::exception("GUI, Font : Can't start FreeType library"));
@@ -32,12 +38,10 @@ const symbol		&font::find_symbol(char task) const
 	return (result->second);
 }
 
-
-
 symbol				font::build_symbol(char task)
 {
 	if (FT_Load_Char(face, task, FT_LOAD_RENDER))
 		throw (common::exception("GUI, Font : Can't build symbol"));
 
-	//return (symbol(face));
+	return (symbol(face));
 }

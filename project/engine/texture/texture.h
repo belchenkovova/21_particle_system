@@ -17,8 +17,6 @@ public :
 
 	void			bind(bool state) const;
 
-	static void		activate(int index);
-
 private :
 
 	const int 		width;
