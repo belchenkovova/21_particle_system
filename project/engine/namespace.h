@@ -49,7 +49,8 @@ namespace			engine
 
 	enum class		draw_mode : GLuint
 	{
-		point = GL_POINTS
+		point = GL_POINTS,
+		triangle = GL_TRIANGLES
 	};
 
 	class 			core;
@@ -71,6 +72,7 @@ namespace			engine
 		template	<typename t_type, int t_group, memory_management t_management>
 		class		real;
 	}
+	class			ebo;
 	class 			vao;
 	class 			buffer;
 

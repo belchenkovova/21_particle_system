@@ -39,6 +39,7 @@ set(ENGINE
 	project/engine/shader/shader.cpp
 	project/engine/uniform/uniform.cpp
 	project/engine/program/program.cpp
+	project/engine/ebo/ebo.cpp
 	project/engine/vao/vao.cpp
 	project/engine/buffer/buffer.cpp
 	project/engine/camera/camera.cpp
@@ -56,7 +57,9 @@ set(COMPUTER
 
 set(GUI
 	project/gui/symbol/symbol.cpp
-	project/gui/font/font.cpp)
+	project/gui/font/font.cpp
+	project/gui/system/system.cpp
+	project/gui/system/x_renderer.cpp)
 
 set(PARTICLE_SYSTEM
 	project/particle_system/particle_system.cpp

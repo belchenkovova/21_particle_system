@@ -21,9 +21,11 @@ public :
 	{
 		auto				uniform = uniforms.find(name);
 
+		use(true);
 		if (uniform == uniforms.end())
 			throw (common::exception("Engine, Program : Uniform not found"));
 		uniform->second.upload(data);
+		use(false);
 	}
 
 private :

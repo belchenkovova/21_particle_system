@@ -91,7 +91,22 @@ event				&core::receive_event()
 	return (event);
 }
 
-void				core::draw(draw_mode mode, int count)
+void 				core::draw(draw_mode mode, const buffer &buffer)
 {
-	glDrawArrays(static_cast<GLuint>(mode), 0, count);
+	buffer.bind(true);
+	if (buffer.uses_indexing)
+		glDrawElements(static_cast<GLuint>(mode), buffer.ebo->read_size(), GL_UNSIGNED_INT, nullptr);
+	else
+		glDrawArrays(static_cast<GLuint>(mode), 0, buffer.size);
+	buffer.bind(false);
+}
+
+int 				core::read_width() const
+{
+	return (final_width);
+}
+
+int 				core::read_height() const
+{
+	return (final_height);
 }

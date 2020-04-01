@@ -7,8 +7,8 @@
 
 					particle_system::particle_renderer::particle_renderer()
 {
-	program.attach_shader(engine::shader::type::vertex, "project/resources/OpenGL/vertex.glsl");
-	program.attach_shader(engine::shader::type::fragment, "project/resources/OpenGL/fragment.glsl");
+	program.attach_shader(engine::shader::type::vertex, "project/resources/OpenGL/particle.vertex.glsl");
+	program.attach_shader(engine::shader::type::fragment, "project/resources/OpenGL/particle.fragment.glsl");
 	program.link();
 
 	buffer.generate_attribute<float, 3>();
@@ -29,7 +29,7 @@ void				particle_system::particle_renderer::render()
 	program.upload_uniform("uniform_projection", camera.receive_projection_matrix());
 	program.upload_uniform("uniform_view", camera.receive_view_matrix());
 
-	engine::core::draw(engine::draw_mode::point, buffer.read_size());
+	engine::core::draw(engine::draw_mode::point, buffer);
 
 	render_suffix();
 }

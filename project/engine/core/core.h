@@ -39,7 +39,12 @@ public :
 	void 						finish();
 	event						&receive_event();
 
-	static void 				draw(draw_mode mode, int count);
+	static void 				draw(draw_mode mode, const buffer &buffer);
+
+	[[nodiscard]]
+	int 						read_width() const;
+	[[nodiscard]]
+	int 						read_height() const;
 
 protected :
 

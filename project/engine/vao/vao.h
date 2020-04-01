@@ -8,7 +8,7 @@ class 									engine::vao : public engine::object_wrapper<GLuint>
 public :
 
 										vao();
-	virtual								~vao();
+										~vao() override;
 
 	void 								bind(bool state) const;
 

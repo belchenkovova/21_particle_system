@@ -29,8 +29,7 @@ private :
 		engine::camera			camera;
 
 		using					points_type = engine::vbo::real<float, 3>;
-		using 					points_ptr_type = std::shared_ptr<points_type>;
-
+		using 					points_ptr_type = std::shared_ptr<engine::vbo::real<float, 3>>;
 		points_ptr_type			points;
 	}							particle_renderer;
 

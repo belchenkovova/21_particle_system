@@ -15,16 +15,17 @@ namespace							engine::vbo
 			glGenBuffers(1, &object);
 		}
 
-		virtual						~abstract()
+									~abstract() override
 		{
 			glDeleteBuffers(1, &object);
 		}
 
 		virtual void				save() = 0;
 
+
 	protected :
 
-		void						bind(bool state) const
+		virtual void				bind(bool state) const
 		{
 			glBindBuffer(GL_ARRAY_BUFFER, state ? object : 0);
 		}
@@ -44,13 +45,22 @@ namespace							engine::vbo
 	template						<typename t_type = float,
 	    							int t_group = 3,
 	    							memory_management t_management = memory_management::stream>
-	class							real final : public abstract, private std::vector<t_type>
+	class							real final : public abstract, private vector<t_type>
 	{
 	public :
 									real() = default;
 									~real() override = default;
 
-		using						std::vector<t_type>::operator[];
+		t_type						&at(int index)
+		{
+			return (vector<t_type>::at(index));
+		}
+
+		t_type						&at_group(int index)
+		{
+			return (vector<t_type>::at(index * group));
+		}
+
 
 		void						save() override
 		{

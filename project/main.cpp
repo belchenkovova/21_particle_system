@@ -1,5 +1,6 @@
 #include "engine/engine.h"
 #include "computer/computer.h"
+#include "gui/gui.h"
 #include "particle_system/particle_system.h"
 
 void 					setup()
@@ -8,11 +9,11 @@ void 					setup()
 	engine::core::window_height = 720;
 	engine::core::window_name = "";
 	engine::core::use_depth_test = true;
-	engine::core::point_size = 1;
+	engine::core::point_size = 5;
 
 	engine::camera::start_position = glm::vec3(50.f, 50.f, 150.f);
-	engine::camera::movement_speed = 2.f;
-	engine::camera::rotation_speed = 1.f;
+	engine::camera::movement_speed = .5f;
+	engine::camera::rotation_speed = .1f;
 	engine::camera::near_plane = 10.f;
 	engine::camera::far_plane = 1000.f;
 
@@ -25,7 +26,8 @@ void 					start()
 {
 	engine::core		engine;
 	computer::core		computer;
-	particle_system		system(engine, computer);
+	gui::system			gui(engine);
+	//particle_system		system(engine, computer);
 
 	engine.start();
 }
