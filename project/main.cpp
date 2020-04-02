@@ -7,7 +7,7 @@ void 					setup()
 {
 	engine::core::window_width = 1280;
 	engine::core::window_height = 720;
-	engine::core::window_name = "";
+	engine::core::window_name = "Particle System";
 	engine::core::use_depth_test = true;
 	engine::core::point_size = 5;
 

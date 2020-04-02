@@ -5,6 +5,8 @@
 
 class					gui::font
 {
+	friend class		gui::label;
+
 public :
 
 	static inline int	size{128};
@@ -14,9 +16,6 @@ public :
 						int width,
 						const glm::vec3 &color = glm::vec3(1, 1, 1));
 						~font();
-
-	const symbol		&find_symbol(char task) const;
-
 private :
 
 	FT_Library			library;
@@ -25,6 +24,8 @@ private :
 	glm::vec3			color;
 
 	symbol				build_symbol(char task);
+	[[nodiscard]]
+	const symbol		&find_symbol(char task) const;
 };
 
 

@@ -11,7 +11,7 @@ public :
 
 	inline static int			window_width{0};
 	inline static int			window_height{0};
-	inline static std::string	window_name;
+	inline static string		window_name;
 	inline static int			point_size{2};
 	inline static bool			use_depth_test{true};
 	inline static bool			use_blending{true};

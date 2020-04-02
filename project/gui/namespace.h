@@ -8,11 +8,13 @@
 
 namespace			gui
 {
+	using			std::string;
 	using			std::map;
-	using 			std::pair;
-	using 			std::make_pair;
 	using			std::shared_ptr;
 	using			std::make_shared;
+	using			std::optional;
+
+	class 			point;
 
 	class			symbol;
 	class			font;

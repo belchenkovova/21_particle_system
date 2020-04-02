@@ -1,8 +1,8 @@
-#include "system.h"
+#include "gui/label/label.h"
 
 using namespace		gui;
 
-					system::text_renderer::text_renderer(engine::core &engine)
+					label::renderer::renderer(const engine::core &core)
 {
 	program.attach_shader(engine::shader::type::vertex, "project/resources/OpenGL/text.vertex.glsl");
 	program.attach_shader(engine::shader::type::fragment, "project/resources/OpenGL/text.fragment.glsl");
@@ -18,33 +18,25 @@ using namespace		gui;
 
 	program.build_uniform("uniform_projection");
 	program.upload_uniform("uniform_projection",
-		glm::ortho(0.f, (float)engine.read_width(), (float)engine.read_height(), 0.f));
+		glm::ortho(0.f, (float)core.read_width(), (float)core.read_height(), 0.f));
+	program.build_uniform("uniform_color");
 
-#pragma message("Connect texture. Activate texture?")
-
-	float			raw_points[] =
+	float			raw_texture[] =
 	{
-		200, 100,
-		100, 100,
-		100, 200,
-		200, 200,
-	};
-
-	float			raw_texture[] = {
 		1.f, 0.f,
 		0.f, 0.f,
 		0.f, 1.f,
 		1.f, 1.f
 	};
 
-	unsigned int indices[] = {0, 1, 2, 0, 2, 3};
-
-	for (int i = 0; i < sizeof(raw_points) / sizeof(float); i++)
-		points->at(i) = raw_points[i];
+	unsigned int indices[] =
+	{
+		0, 1, 2,
+		0, 2, 3
+	};
 
 	for (int i = 0; i < sizeof(raw_texture) / sizeof(float); i++)
 		texture->at(i) = raw_texture[i];
-
 	buffer.use_indexing(sizeof(indices) / sizeof(unsigned int));
 	for (int i = 0; i < sizeof(indices) / sizeof(unsigned int); i++)
 		buffer.receive_indices().at(i) = indices[i];
@@ -52,7 +44,7 @@ using namespace		gui;
 	buffer.save();
 }
 
-void				system::text_renderer::render()
+void				label::renderer::render()
 {
 	render_prefix();
 	engine::core::draw(engine::draw_mode::triangle, buffer);

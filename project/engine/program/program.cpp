@@ -12,7 +12,7 @@ using namespace		engine;
 	glDeleteProgram(object);
 }
 
-void				program::attach_shader(shader::type type, const std::string &source)
+void				program::attach_shader(shader::type type, const string &source)
 {
 	attach_shader(temporary_shaders.emplace_back(type, source));
 }

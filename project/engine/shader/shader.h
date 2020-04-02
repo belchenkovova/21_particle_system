@@ -14,7 +14,7 @@ public :
 		fragment = GL_FRAGMENT_SHADER
 	};
 
-					shader(type type, const std::string &source);
+					shader(type type, const string &source);
 					~shader() override;
 };
 

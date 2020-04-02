@@ -6,7 +6,7 @@ class				engine::uniform final : private engine::object_wrapper<GLint>
 {
 public :
 
-	explicit		uniform(const std::string &name);
+	explicit		uniform(const string &name);
 					~uniform() override = default;
 
 	void 			connect(GLuint program);

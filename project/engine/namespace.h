@@ -16,87 +16,89 @@
 
 #include "common/common.h"
 
-namespace			engine
+namespace						engine
 {
-	using			std::string;
-	using			std::vector;
-	using			std::shared_ptr;
-	using 			std::make_shared;
-	using 			std::reference_wrapper;
-	using 			std::optional;
-	using 			std::pair;
-	using 			std::make_pair;
-	using			std::map;
+	using						std::string;
+	using						std::vector;
+	using						std::shared_ptr;
+	using 						std::make_shared;
+	using 						std::reference_wrapper;
+	using 						std::optional;
+	using 						std::pair;
+	using 						std::make_pair;
+	using						std::map;
 
-	template		<typename type>
-	class 			object_wrapper
+	template					<typename type>
+	class 						object_wrapper
 	{
 	public :
 
-					object_wrapper() = default;
-		virtual		~object_wrapper() = default;
+								object_wrapper() = default;
+		virtual					~object_wrapper() = default;
 
 		[[nodiscard]]
-		type		read_object() const
+		type					read_object() const
 		{
 			return (object);
 		}
 
+		object_wrapper<type>	&operator = (const object_wrapper<type> &other) = delete;
+
 	protected :
 
-		type		object{0};
+		type					object{0};
 	};
 
-	enum class		draw_mode : GLuint
+	enum class					draw_mode : GLuint
 	{
 		point = GL_POINTS,
 		triangle = GL_TRIANGLES
 	};
 
-	class 			core;
+	class 						core;
 
-	class 			shader;
-	class 			uniform;
-	class 			program;
+	class 						shader;
+	class 						uniform;
+	class 						program;
 
-	enum class		memory_management : GLuint
+	enum class					memory_management : GLuint
 	{
 		static_ = GL_STATIC_DRAW,
 		dynamic = GL_DYNAMIC_DRAW,
 		stream = GL_STREAM_DRAW
 	};
 
-	namespace		vbo
+	namespace					vbo
 	{
-		class		abstract;
-		template	<typename t_type, int t_group, memory_management t_management>
-		class		real;
+		class					abstract;
+		template				<typename t_type, int t_group, memory_management t_management>
+		class					real;
 	}
-	class			ebo;
-	class 			vao;
-	class 			buffer;
+	class						ebo;
+	class 						vao;
+	class 						buffer;
 
-	enum class		axis
+	enum class					axis
 	{
 		x,
 		y,
 		z
 	};
 
-	enum class		sign : int
+	enum class					sign
 	{
 		negative = -1,
 		positive = 1
 	};
 
-	class			camera;
+	class						camera;
 
-	class 			functor;
-	class			timer;
-	class			event;
-	class			callback;
+	class 						functor;
+	class						timer;
+	class						event;
+	class						callback;
 
-	class			texture;
+	class						texture;
 
-	class 			renderer;
+	class 						renderer;
 }

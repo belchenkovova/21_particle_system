@@ -10,9 +10,9 @@ public :
 							kernel() = default;
 							~kernel() = default;
 
-	void					add_source(const std::string &file);
+	void					add_source(const string &file);
 
-	void					build(const std::string &function, const int &number);
+	void					build(const string &function, const int &number);
 	void					run();
 
 	template 				<typename t_type = bool>
@@ -36,7 +36,7 @@ private :
 
 	bool 					is_built = false;
 
-	std::string 			source;
+	string 			source;
 
 	int						kernel_number = 0;
 	int 					buffer_count = 0;
@@ -51,7 +51,7 @@ private :
 
 	void 					compile_program();
 	void 					set_queue();
-	void 					set_kernel(const std::string &function);
+	void 					set_kernel(const string &function);
 };
 
 

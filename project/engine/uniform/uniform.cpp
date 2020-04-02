@@ -2,7 +2,7 @@
 
 using namespace		engine;
 
-					uniform::uniform(const std::string &name) :
+					uniform::uniform(const string &name) :
 					name(name)
 {}
 

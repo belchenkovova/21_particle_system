@@ -56,10 +56,12 @@ set(COMPUTER
 	project/computer/argument/argument.cpp)
 
 set(GUI
+	project/gui/point/point.cpp
 	project/gui/symbol/symbol.cpp
 	project/gui/font/font.cpp
-	project/gui/system/system.cpp
-	project/gui/system/x_renderer.cpp)
+	project/gui/label/renderer.cpp
+	project/gui/label/label.cpp
+	project/gui/system/system.cpp)
 
 set(PARTICLE_SYSTEM
 	project/particle_system/particle_system.cpp

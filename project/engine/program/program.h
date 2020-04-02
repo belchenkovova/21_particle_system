@@ -10,7 +10,7 @@ public :
 							program();
 							~program() override;
 
-	void					attach_shader(shader::type type, const std::string &source);
+	void					attach_shader(shader::type type, const string &source);
 	void					attach_shader(const shader &shader);
 	void 					link();
 	void					use(const bool &state);

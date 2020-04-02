@@ -1,6 +1,7 @@
 #pragma once
 
 #include "gui/namespace.h"
+#include "gui/point/point.h"
 
 class				gui::symbol
 {
@@ -14,9 +15,9 @@ public :
 					~symbol() = default;
 
 	[[nodiscard]]
-	pair<int, int>	read_size() const;
+	point			read_size() const;
 	[[nodiscard]]
-	pair<int, int>	read_bearing() const;
+	point			read_bearing() const;
 	[[nodiscard]]
 	int 			read_advance() const;
 	[[nodiscard]]
@@ -24,8 +25,8 @@ public :
 
 private :
 
-	pair<int, int>	size;
-	pair<int, int>	bearing;
+	point			size;
+	point			bearing;
 	int 			advance;
 
 	using			texture_type = shared_ptr<engine::texture>;

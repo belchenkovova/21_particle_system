@@ -4,13 +4,13 @@ using namespace				computer;
 
 //							PUBLIC
 
-void						kernel::add_source(const std::string &file)
+void						kernel::add_source(const string &file)
 {
 	source += common::read_file(file);
 	source += "\n\n";
 }
 
-void						kernel::build(const std::string &function, const int &number)
+void						kernel::build(const string &function, const int &number)
 {
 	kernel_number = number;
 
@@ -57,7 +57,7 @@ void 						kernel::link_argument(argument &argument)
 
 void 						kernel::compile_program()
 {
-	std::string				log;
+	string				log;
 
 	program = cl::Program(*context, source);
 	if(program.build({*device}) != CL_SUCCESS)
@@ -74,7 +74,7 @@ void 						kernel::set_queue()
 	queue = cl::CommandQueue(*context, *device);
 }
 
-void 						kernel::set_kernel(const std::string &function)
+void 						kernel::set_kernel(const string &function)
 {
 	object = cl::Kernel(program, function.c_str());
 }
