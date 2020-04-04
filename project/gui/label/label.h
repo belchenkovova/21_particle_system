@@ -14,8 +14,7 @@ public :
 	void					replace_text(const string &new_text);
 	void					render();
 
-#pragma message "Make public"
-//private :
+private :
 
 							label(
 							const point &center,

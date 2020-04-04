@@ -47,8 +47,7 @@ set(ENGINE
 	project/engine/timer/timer.cpp
 	project/engine/event/event.cpp
 	project/engine/callback/callback.cpp
-	project/engine/texture/texture.cpp
-	project/engine/renderer/renderer.cpp)
+	project/engine/texture/texture.cpp)
 
 set(COMPUTER
 	project/computer/core/core.cpp
@@ -65,7 +64,7 @@ set(GUI
 
 set(PARTICLE_SYSTEM
 	project/particle_system/particle_system.cpp
-	project/particle_system/x_renderer.cpp)
+	project/particle_system/renderers.cpp)
 
 add_executable(21_particle_system
 	${MAIN}

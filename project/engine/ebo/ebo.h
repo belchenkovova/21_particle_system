@@ -2,7 +2,7 @@
 
 #include "engine/namespace.h"
 
-class							engine::ebo : public object_wrapper<GLuint>, private vector<unsigned int>
+class							engine::ebo : private object_wrapper<GLuint>, private vector<unsigned int>
 {
 	friend class 				engine::buffer;
 

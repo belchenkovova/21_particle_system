@@ -46,7 +46,7 @@ using namespace		gui;
 
 void				label::renderer::render()
 {
-	render_prefix();
+	program.use(true);
 	engine::core::draw(engine::draw_mode::triangle, buffer);
-	render_suffix();
+	program.use(false);
 }

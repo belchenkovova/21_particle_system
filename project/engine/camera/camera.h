@@ -21,9 +21,9 @@ public :
 	void					rotate(const axis &axis, const sign &sign);
 
 	[[nodiscard]]
-	glm::mat4				receive_projection_matrix();
+	glm::mat4				receive_projection_matrix() const;
 	[[nodiscard]]
-	glm::mat4				receive_view_matrix();
+	glm::mat4				receive_view_matrix() const;
 
 private :
 

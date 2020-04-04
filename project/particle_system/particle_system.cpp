@@ -1,6 +1,7 @@
 #include "particle_system.h"
 
 					particle_system::particle_system(engine::core &engine, computer::core &computer) :
+
 					engine(engine),
 					computer(computer)
 {
@@ -15,9 +16,11 @@
 
 void				particle_system::initialize_engine()
 {
-	engine.attach_renderer(particle_renderer);
+	engine::core::should_render = true;
+//	engine.attach_renderer(renderers.particle);
+	engine.attach_renderer(renderers.cube);
 
-	engine.generate_timer(1.f / 60.f, &particle_system::timer, this);
+//	engine.generate_timer(1.f / 60.f, &particle_system::timer, this);
 
 	engine.generate_callback(engine::event::type::key_press, &particle_system::callback, this);
 	engine.generate_callback(engine::event::type::key_hold, &particle_system::callback, this);
@@ -41,7 +44,7 @@ void				particle_system::initialize_computer()
 	kernels.physics.add_source("project/resources/OpenCL/physics.txt");
 	kernels.physics.build("physics", number_of_particles);
 
-	arguments.position = kernels.reset.generate_argument(particle_renderer.buffer.receive_attribute(0));
+	arguments.position = kernels.reset.generate_argument(renderers.particle.buffer.receive_attribute(0));
 	arguments.velocity = kernels.reset.generate_argument<float>(number_of_particles * 3);
 	arguments.acceleration = kernels.reset.generate_argument<float>(number_of_particles * 3);
 
@@ -74,25 +77,25 @@ void 				particle_system::callback()
 	if (event.read_key() == GLFW_KEY_ESCAPE)
 		engine.finish();
 	else if (event.read_key() == GLFW_KEY_A)
-		particle_renderer.camera.move(engine::axis::x, engine::sign::negative);
+		renderers.camera.move(engine::axis::x, engine::sign::negative);
 	else if (event.read_key() == GLFW_KEY_D)
-		particle_renderer.camera.move(engine::axis::x, engine::sign::positive);
+		renderers.camera.move(engine::axis::x, engine::sign::positive);
 	else if (event.read_key() == GLFW_KEY_W)
-		particle_renderer.camera.move(engine::axis::z, engine::sign::negative);
+		renderers.camera.move(engine::axis::z, engine::sign::negative);
 	else if (event.read_key() == GLFW_KEY_S)
-		particle_renderer.camera.move(engine::axis::z, engine::sign::positive);
+		renderers.camera.move(engine::axis::z, engine::sign::positive);
 	else if (event.read_key() == GLFW_KEY_Q)
-		particle_renderer.camera.move(engine::axis::y, engine::sign::positive);
+		renderers.camera.move(engine::axis::y, engine::sign::positive);
 	else if (event.read_key() == GLFW_KEY_E)
-		particle_renderer.camera.move(engine::axis::y, engine::sign::negative);
+		renderers.camera.move(engine::axis::y, engine::sign::negative);
 	else if (event.read_key() == GLFW_KEY_LEFT)
-		particle_renderer.camera.rotate(engine::axis::y, engine::sign::positive);
+		renderers.camera.rotate(engine::axis::y, engine::sign::positive);
 	else if (event.read_key() == GLFW_KEY_RIGHT)
-		particle_renderer.camera.rotate(engine::axis::y, engine::sign::negative);
+		renderers.camera.rotate(engine::axis::y, engine::sign::negative);
 	else if (event.read_key() == GLFW_KEY_UP)
-		particle_renderer.camera.rotate(engine::axis::x, engine::sign::positive);
+		renderers.camera.rotate(engine::axis::x, engine::sign::positive);
 	else if (event.read_key() == GLFW_KEY_DOWN)
-		particle_renderer.camera.rotate(engine::axis::x, engine::sign::negative);
+		renderers.camera.rotate(engine::axis::x, engine::sign::negative);
 	else
 		return ;
 	engine::core::should_render = true;

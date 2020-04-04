@@ -11,10 +11,10 @@ void 					setup()
 	engine::core::use_depth_test = true;
 	engine::core::point_size = 5;
 
-	engine::camera::start_position = glm::vec3(50.f, 50.f, 150.f);
-	engine::camera::movement_speed = .5f;
+	engine::camera::start_position = glm::vec3(0.f, 0.f, 5.f);
+	engine::camera::movement_speed = .1f;
 	engine::camera::rotation_speed = .1f;
-	engine::camera::near_plane = 10.f;
+	engine::camera::near_plane = .1f;
 	engine::camera::far_plane = 1000.f;
 
 	computer::core::use_OpenGL = true;
@@ -27,7 +27,7 @@ void 					start()
 	engine::core		engine;
 	computer::core		computer;
 	gui::system			gui(engine);
-	//particle_system		system(engine, computer);
+	particle_system		system(engine, computer);
 
 	engine.start();
 }

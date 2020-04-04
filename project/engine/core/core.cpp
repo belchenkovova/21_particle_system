@@ -1,6 +1,5 @@
 #include "core.h"
 #include "engine/callback/callback.h"
-#include "engine/timer/timer.h"
 
 using namespace		engine;
 
@@ -59,7 +58,7 @@ void 				core::attach_renderer(engine::renderer &renderer)
 
 void 				core::start()
 {
-	while (!glfwWindowShouldClose(window))
+	while (not glfwWindowShouldClose(window))
 	{
 		event.reset_if_needed();
 		glfwPollEvents();
@@ -67,7 +66,9 @@ void 				core::start()
 		launch_timers();
 		if (should_render)
 		{
-
+			glClearColor(0.2f, 0.2f, 0.2f, 1.f);
+			glClear(GL_COLOR_BUFFER_BIT);
+			glClear(GL_DEPTH_BUFFER_BIT);
 
 			for (auto &renderer : renderers)
 				renderer.get().render();
@@ -93,10 +94,18 @@ void 				core::draw(draw_mode mode, const buffer &buffer)
 {
 	buffer.bind(true);
 	if (buffer.uses_indexing)
-		glDrawElements(static_cast<GLuint>(mode), buffer.ebo->read_size(), GL_UNSIGNED_INT, nullptr);
+		glDrawElements(GL_LINES, buffer.ebo->read_size(), GL_UNSIGNED_INT, nullptr);
 	else
 		glDrawArrays(static_cast<GLuint>(mode), 0, buffer.size);
 	buffer.bind(false);
+}
+
+void 				core::fill_polygon(bool state)
+{
+	if (state)
+		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	else
+		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 }
 
 int 				core::read_width() const

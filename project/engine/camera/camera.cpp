@@ -27,7 +27,7 @@ void				camera::rotate(const axis &axis, const sign &sign)
 	update();
 }
 
-glm::mat4			camera::receive_projection_matrix()
+glm::mat4			camera::receive_projection_matrix() const
 {
 	return (glm::perspective(
 		glm::radians(45.f),
@@ -35,7 +35,7 @@ glm::mat4			camera::receive_projection_matrix()
 		near_plane, far_plane));
 }
 
-glm::mat4			camera::receive_view_matrix()
+glm::mat4			camera::receive_view_matrix() const
 {
 	return (glm::lookAt(position, position + front, up));
 }

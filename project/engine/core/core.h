@@ -42,6 +42,7 @@ public :
 	event						&receive_event();
 
 	static void 				draw(draw_mode mode, const buffer &buffer);
+	static void 				fill_polygon(bool state);
 
 	[[nodiscard]]
 	int 						read_width() const;

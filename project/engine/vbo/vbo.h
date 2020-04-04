@@ -22,10 +22,9 @@ namespace							engine::vbo
 
 		virtual void				save() = 0;
 
-
 	protected :
 
-		virtual void				bind(bool state) const
+		void						bind(bool state) const
 		{
 			glBindBuffer(GL_ARRAY_BUFFER, state ? object : 0);
 		}

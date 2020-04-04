@@ -17,31 +17,58 @@ private :
 	engine::core				&engine;
 	computer::core				&computer;
 
-	class 						particle_renderer final : public engine::renderer
+	class						renderers
 	{
 	public :
+								renderers();
+								~renderers() = default;
 
-								particle_renderer();
-		void 					render() override;
-
-		using					engine::renderer::program;
-		using					engine::renderer::buffer;
 		engine::camera			camera;
 
+		using					camera_type = const engine::camera;
 		using					points_type = engine::vbo::real<float, 3>;
-		using 					points_ptr_type = std::shared_ptr<engine::vbo::real<float, 3>>;
-		points_ptr_type			points;
-	}							particle_renderer;
+		using					points_ptr_type = std::shared_ptr<engine::vbo::real<float, 3>>;
 
-	struct
+		class 					particle final : public engine::renderer
+		{
+		public :
+
+			explicit			particle(camera_type &camera);
+			void 				render() override;
+
+			using				engine::renderer::program;
+			using				engine::renderer::buffer;
+
+			camera_type			&camera;
+
+			points_ptr_type		points;
+		}						particle;
+
+		class 					cube final : public engine::renderer
+		{
+		public :
+
+			explicit			cube(camera_type &camera);
+			void 				render() override;
+
+			using				engine::renderer::program;
+			using				engine::renderer::buffer;
+
+			camera_type			&camera;
+		}						cube;
+	}							renderers;
+
+	class
 	{
+	public :
 		computer::kernel		reset;
 		computer::kernel		update;
 		computer::kernel		physics;
 	}							kernels;
 
-	struct
+	class
 	{
+	public :
 		computer::argument		position;
 		computer::argument		velocity;
 		computer::argument		acceleration;

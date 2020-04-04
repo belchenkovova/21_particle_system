@@ -52,7 +52,8 @@ namespace						engine
 	enum class					draw_mode : GLuint
 	{
 		point = GL_POINTS,
-		triangle = GL_TRIANGLES
+		line = GL_LINES,
+		triangle = GL_TRIANGLES,
 	};
 
 	class 						core;

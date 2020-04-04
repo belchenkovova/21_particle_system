@@ -24,9 +24,9 @@ void					buffer::bind(bool state) const
 {
 	if (not is_ready_to_use)
 		throw (common::exception("Engine, Buffer : Can't use buffer"));
+	vao::bind(state);
 	if (uses_indexing)
 		ebo->bind(state);
-	vao::bind(state);
 }
 
 void					buffer::use_indexing(int size)

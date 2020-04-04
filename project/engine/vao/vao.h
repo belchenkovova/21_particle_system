@@ -10,8 +10,7 @@ public :
 										vao();
 										~vao() override;
 
-	void 								bind(bool state) const;
-
+	virtual void 						bind(bool state) const;
 
 	template							<typename t_type = float,
 										int t_group = 3,
@@ -20,7 +19,7 @@ public :
 	{
 		shared_ptr<vbo::abstract>		vbo = make_shared<vbo::real<t_type, t_group, t_management>>();
 
-		bind(true);
+		vao::bind(true);
 		vbo->bind(true);
 		glVertexAttribPointer(
 			attributes.size(),
@@ -31,7 +30,7 @@ public :
 			nullptr);
 		glEnableVertexAttribArray(attributes.size());
 		vbo->bind(false);
-		bind(false);
+		vao::bind(false);
 		attributes.push_back(vbo);
 
 		return (*vbo);

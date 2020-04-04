@@ -19,7 +19,7 @@ public :
 
 	void					resize(int size);
 	void					save();
-	void					bind(bool state) const;
+	void					bind(bool state) const override;
 
 	void					use_indexing(int size);
 	ebo						&receive_indices();

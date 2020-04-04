@@ -17,17 +17,5 @@ protected :
 
 	program							program;
 	buffer							buffer;
-
-	inline void						render_prefix()
-	{
-		program.use(true);
-		buffer.bind(true);
-	}
-
-	inline void						render_suffix()
-	{
-		program.use(false);
-		buffer.bind(false);
-	}
 };
 
