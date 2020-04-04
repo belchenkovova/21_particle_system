@@ -61,7 +61,8 @@ set(GUI
 	project/gui/font/font.cpp
 	project/gui/label/renderer.cpp
 	project/gui/label/label.cpp
-	project/gui/system/system.cpp)
+	project/gui/system/system.cpp
+	project/gui/system/renderer.cpp)
 
 set(PARTICLE_SYSTEM
 	project/particle_system/particle_system.cpp

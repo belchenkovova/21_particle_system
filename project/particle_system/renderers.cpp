@@ -34,7 +34,7 @@
 	program.build_uniform("uniform_view");
 }
 
-void				particle_system::renderers::particle::render()
+void				particle_system::renderers::particle::render() const
 {
 	program.upload_uniform("uniform_projection", camera.receive_projection_matrix());
 	program.upload_uniform("uniform_view", camera.receive_view_matrix());
@@ -110,13 +110,13 @@ void				particle_system::renderers::particle::render()
 	buffer.save();
 }
 
-void				particle_system::renderers::cube::render()
+void				particle_system::renderers::cube::render() const
 {
 
 	program.upload_uniform("uniform_projection", camera.receive_projection_matrix());
 	program.upload_uniform("uniform_view", camera.receive_view_matrix());
 
 	program.use(true);
-	engine::core::draw(engine::draw_mode::triangle, buffer);
+	engine::core::draw(engine::draw_mode::line, buffer);
 	program.use(false);
 }

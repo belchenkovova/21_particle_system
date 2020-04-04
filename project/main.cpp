@@ -30,6 +30,13 @@ void 					start()
 	engine::core::settings::depth_test(true);
 	engine::core::settings::point_size(2);
 
+	engine.attach_renderer(system.receive_particle_renderer());
+	engine.attach_renderer(system.receive_cube_renderer());
+	engine.attach_renderer(gui.receive_renderer());
+
+	auto font = gui::font("project/resources/HelveticaNeue.ttc", 70);
+	auto label = gui.generate_label(gui::point(200, 200), font, std::string("Hello"));
+
 	engine.start();
 }
 

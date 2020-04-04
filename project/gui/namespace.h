@@ -8,10 +8,16 @@
 
 namespace			gui
 {
+	using			std::forward;
 	using			std::string;
 	using			std::map;
+	using			std::vector;
+	using			std::static_pointer_cast;
+	using			std::dynamic_pointer_cast;
 	using			std::shared_ptr;
 	using			std::make_shared;
+	using			std::unique_ptr;
+	using			std::make_unique;
 	using			std::optional;
 
 	class 			point;
@@ -19,6 +25,7 @@ namespace			gui
 	class			symbol;
 	class			font;
 
+	class			space;
 	class 			label;
 	class 			button;
 

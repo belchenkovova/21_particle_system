@@ -1,23 +1,21 @@
 #include "system.h"
 
-using namespace		gui;
+using namespace				gui;
 
-
-					system::system(engine::core &core) :
-					core(core),
-					font("project/resources/HelveticaNeue.ttc", 70),
-					label(point(200, 200), font, "Hello")
+							system::system(engine::core &core) :
+							core(core),
+							renderer(spaces)
 {
 	engine::core::should_render = true;
 	//core.attach_renderer(text_renderer);
 	core.generate_callback(engine::event::type::key_press, &system::callback, this);
 
-	label::start_renderer(core);
+	label::start(core);
 }
 
-void				system::callback()
+void						system::callback()
 {
-	engine::event	&event = core.receive_event();
+	engine::event			&event = core.receive_event();
 
 	if (event.read_key() == GLFW_KEY_ESCAPE)
 		core.finish();
@@ -27,8 +25,13 @@ void				system::callback()
 		glClear(GL_COLOR_BUFFER_BIT);
 		glClear(GL_DEPTH_BUFFER_BIT);
 
-		label.render();
+		//label.render();
 
 		glfwSwapBuffers(core.read_window());
 	}
+}
+
+const engine::renderer::pure	&system::receive_renderer()
+{
+	return (renderer);
 }

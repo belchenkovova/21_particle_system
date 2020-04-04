@@ -3,82 +3,82 @@
 #include "engine/engine.h"
 #include "computer/computer.h"
 
-class							particle_system
+class								particle_system
 {
 public :
 
-	static inline int			number_of_particles{1};
+	static inline int				number_of_particles{1};
 
-								particle_system(engine::core &engine, computer::core &computer);
-								~particle_system() = default;
+									particle_system(engine::core &engine, computer::core &computer);
+									~particle_system() = default;
+
+	const engine::renderer::pure	&receive_particle_renderer();
+	const engine::renderer::pure	&receive_cube_renderer();
 
 private :
 
-	engine::core				&engine;
-	computer::core				&computer;
+	engine::core					&engine;
+	computer::core					&computer;
 
-	class						renderers
+	class							renderers
 	{
 	public :
-								renderers();
-								~renderers() = default;
+									renderers();
+									~renderers() = default;
 
-		engine::camera			camera;
+		engine::camera				camera;
 
-		using					camera_type = const engine::camera;
-		using					points_type = engine::vbo::real<float, 3>;
-		using					points_ptr_type = std::shared_ptr<engine::vbo::real<float, 3>>;
+		using						camera_type = const engine::camera;
+		using						points_type = engine::vbo::real<float, 3>;
+		using						points_ptr_type = std::shared_ptr<engine::vbo::real<float, 3>>;
 
-		class 					particle final : public engine::renderer
+		class 						particle final : public engine::renderer::OpenGL
 		{
 		public :
 
-			explicit			particle(camera_type &camera);
-			void 				render() override;
+			explicit				particle(camera_type &camera);
+			void 					render() const override;
 
-			using				engine::renderer::program;
-			using				engine::renderer::buffer;
+			using					OpenGL::program;
+			using					OpenGL::buffer;
 
-			camera_type			&camera;
+			camera_type				&camera;
 
-			points_ptr_type		points;
-		}						particle;
+			points_ptr_type			points;
+		}							particle;
 
-		class 					cube final : public engine::renderer
+		class 						cube final : public engine::renderer::OpenGL
 		{
 		public :
 
-			explicit			cube(camera_type &camera);
-			void 				render() override;
+			explicit				cube(camera_type &camera);
+			void 					render() const override;
 
-			using				engine::renderer::program;
-			using				engine::renderer::buffer;
-
-			camera_type			&camera;
-		}						cube;
-	}							renderers;
+			camera_type				&camera;
+		}							cube;
+	}								renderers;
 
 	class
 	{
 	public :
-		computer::kernel		reset;
-		computer::kernel		update;
-		computer::kernel		physics;
-	}							kernels;
+		computer::kernel			reset;
+		computer::kernel			update;
+		computer::kernel			physics;
+	}								kernels;
 
 	class
 	{
 	public :
-		computer::argument		position;
-		computer::argument		velocity;
-		computer::argument		acceleration;
-	}							arguments;
+		computer::argument			position;
+		computer::argument			velocity;
+		computer::argument			acceleration;
+	}								arguments;
 
-	void						initialize_engine();
-	void						initialize_computer();
+	void							initialize_engine();
+	void							initialize_computer();
 
-	void 						timer();
-	void 						callback();
+	void 							timer();
+	void 							callback();
 };
 
 

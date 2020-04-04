@@ -1,9 +1,8 @@
 #include "particle_system.h"
 
-					particle_system::particle_system(engine::core &engine, computer::core &computer) :
-
-					engine(engine),
-					computer(computer)
+								particle_system::particle_system(engine::core &engine, computer::core &computer) :
+								engine(engine),
+								computer(computer)
 {
 	initialize_engine();
 	initialize_computer();
@@ -14,19 +13,26 @@
 	arguments.position.release();
 }
 
-void				particle_system::initialize_engine()
+const engine::renderer::pure	&particle_system::receive_particle_renderer()
 {
-	engine::core::should_render = true;
-//	engine.attach_renderer(renderers.particle);
-	engine.attach_renderer(renderers.cube);
+	return (renderers.particle);
+}
 
+const engine::renderer::pure	&particle_system::receive_cube_renderer()
+{
+	return (renderers.cube);
+}
+
+
+void							particle_system::initialize_engine()
+{
 //	engine.generate_timer(1.f / 60.f, &particle_system::timer, this);
 
 	engine.generate_callback(engine::event::type::key_press, &particle_system::callback, this);
 	engine.generate_callback(engine::event::type::key_hold, &particle_system::callback, this);
 }
 
-void				particle_system::initialize_computer()
+void							particle_system::initialize_computer()
 {
 	kernels.reset = computer.generate_kernel();
 	kernels.reset.add_source("project/resources/OpenCL/vector.txt");
@@ -61,7 +67,7 @@ void				particle_system::initialize_computer()
 	kernels.physics.link_argument(arguments.acceleration);
 }
 
-void 				particle_system::timer()
+void 							particle_system::timer()
 {
 	arguments.position.acquire();
 	kernels.physics.run();
@@ -70,9 +76,9 @@ void 				particle_system::timer()
 	engine::core::should_render = true;
 }
 
-void 				particle_system::callback()
+void 							particle_system::callback()
 {
-	engine::event	&event = engine.receive_event();
+	engine::event				&event = engine.receive_event();
 
 	if (event.read_key() == GLFW_KEY_ESCAPE)
 		engine.finish();

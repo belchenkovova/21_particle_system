@@ -48,7 +48,7 @@ using namespace		engine;
 	glfwTerminate();
 }
 
-void 				core::attach_renderer(engine::renderer &renderer)
+void 				core::attach_renderer(const engine::renderer::pure &renderer)
 {
 	renderers.emplace_back(renderer);
 }
@@ -91,7 +91,7 @@ void 				core::draw(draw_mode mode, const buffer &buffer)
 {
 	buffer.bind(true);
 	if (buffer.uses_indexing)
-		glDrawElements(GL_LINES, buffer.ebo->read_size(), GL_UNSIGNED_INT, nullptr);
+		glDrawElements(static_cast<GLuint>(mode), buffer.ebo->read_size(), GL_UNSIGNED_INT, nullptr);
 	else
 		glDrawArrays(static_cast<GLuint>(mode), 0, buffer.size);
 	buffer.bind(false);

@@ -36,7 +36,7 @@ void				program::link()
 	}
 }
 
-void				program::use(const bool &state)
+void				program::use(const bool &state) const
 {
 	glUseProgram(state ? object : 0);
 }

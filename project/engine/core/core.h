@@ -21,7 +21,7 @@ public :
 
 	[[deprecated]] GLFWwindow	*read_window() const {return (window);}
 
-	void 						attach_renderer(engine::renderer &renderer);
+	void 						attach_renderer(const engine::renderer::pure &renderer);
 
 	template					<typename ...t_args>
 	void						generate_callback(event::type type, t_args ...args)
@@ -62,7 +62,7 @@ protected :
 	int							final_height{0};
 	event						event;
 
-	using						renderer_refence = reference_wrapper<renderer>;
+	using						renderer_refence = reference_wrapper<const renderer::pure>;
 	vector<renderer_refence>	renderers;
 	vector<callback>			callbacks;
 	vector<timer>				timers;

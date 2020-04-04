@@ -17,7 +17,8 @@ public :
 		mouse_move,
 		mouse_press,
 		mouse_release,
-		mouse_hold
+		mouse_hold,
+		rendering
 	};
 
 								event() = default;

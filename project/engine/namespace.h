@@ -53,7 +53,7 @@ namespace						engine
 	{
 		point = GL_POINTS,
 		line = GL_LINES,
-		triangle = GL_TRIANGLES,
+		triangle = GL_TRIANGLES
 	};
 
 	class 						core;
@@ -101,5 +101,9 @@ namespace						engine
 
 	class						texture;
 
-	class 						renderer;
+	namespace					renderer
+	{
+		class					pure;
+		class					OpenGL;
+	}
 }

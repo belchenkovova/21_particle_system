@@ -13,11 +13,11 @@ public :
 	void					attach_shader(shader::type type, const string &source);
 	void					attach_shader(const shader &shader);
 	void 					link();
-	void					use(const bool &state);
+	void					use(const bool &state) const;
 
 	void					build_uniform(const string &name);
 	template 				<typename type>
-	void					upload_uniform(const string &name, type data)
+	void					upload_uniform(const string &name, type data) const
 	{
 		auto				uniform = uniforms.find(name);
 

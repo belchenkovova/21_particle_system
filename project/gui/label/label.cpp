@@ -24,15 +24,20 @@ void				label::replace_text(const string &new_text)
 		size.x += symbol.read_advance();
 		size.y = std::max(size.y, symbol.read_size().y);
 	}
+
+	space::min = center - size;
+	space::max = center + size;
 }
 
-void				label::start_renderer(const engine::core &core)
+void				label::start(const engine::core &core)
 {
-	renderer.emplace(core);
+	renderer = make_unique<class label::renderer>(core);
 }
 
-void				label::render()
+void				label::render() const
 {
+	assert(renderer);
+
 	point			position_iterator;
 	point			position_this;
 	point			size_this;

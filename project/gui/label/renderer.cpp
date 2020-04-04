@@ -44,7 +44,7 @@ using namespace		gui;
 	buffer.save();
 }
 
-void				label::renderer::render()
+void				label::renderer::render() const
 {
 	program.use(true);
 	engine::core::draw(engine::draw_mode::triangle, buffer);
