@@ -34,6 +34,7 @@ set(COMMON
 
 set(ENGINE
 	project/engine/core/core.cpp
+	project/engine/core/settings.cpp
 	project/engine/core/launch_x.cpp
 	project/engine/core/glfw_callback_x.cpp
 	project/engine/shader/shader.cpp

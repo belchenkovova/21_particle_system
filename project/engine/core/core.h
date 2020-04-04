@@ -12,8 +12,6 @@ public :
 	inline static int			window_width{0};
 	inline static int			window_height{0};
 	inline static string		window_name;
-	inline static int			point_size{2};
-	inline static bool			use_depth_test{true};
 	inline static bool			use_blending{true};
 	inline static bool			use_multisampling{true};
 	inline static bool 			should_render{true};
@@ -42,7 +40,14 @@ public :
 	event						&receive_event();
 
 	static void 				draw(draw_mode mode, const buffer &buffer);
-	static void 				fill_polygon(bool state);
+
+	class 						settings
+	{
+	public :
+		static void				fill_polygon(bool state);
+		static void 			depth_test(bool state);
+		static void				point_size(int value);
+	};
 
 	[[nodiscard]]
 	int 						read_width() const;

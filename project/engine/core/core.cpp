@@ -29,9 +29,6 @@ using namespace		engine;
 	glfwGetFramebufferSize(window, &final_width, &final_height);
 	glViewport(0, 0, final_width, final_height);
 
-	glPointSize(point_size);
-	if (use_depth_test)
-		glEnable(GL_DEPTH_TEST);
 	if (use_blending)
 	{
 		glEnable(GL_BLEND);
@@ -98,14 +95,6 @@ void 				core::draw(draw_mode mode, const buffer &buffer)
 	else
 		glDrawArrays(static_cast<GLuint>(mode), 0, buffer.size);
 	buffer.bind(false);
-}
-
-void 				core::fill_polygon(bool state)
-{
-	if (state)
-		glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	else
-		glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 }
 
 int 				core::read_width() const

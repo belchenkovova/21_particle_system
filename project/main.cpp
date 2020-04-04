@@ -8,8 +8,6 @@ void 					setup()
 	engine::core::window_width = 1280;
 	engine::core::window_height = 720;
 	engine::core::window_name = "Particle System";
-	engine::core::use_depth_test = true;
-	engine::core::point_size = 5;
 
 	engine::camera::start_position = glm::vec3(0.f, 0.f, 5.f);
 	engine::camera::movement_speed = .1f;
@@ -28,6 +26,9 @@ void 					start()
 	computer::core		computer;
 	gui::system			gui(engine);
 	particle_system		system(engine, computer);
+
+	engine::core::settings::depth_test(true);
+	engine::core::settings::point_size(2);
 
 	engine.start();
 }
