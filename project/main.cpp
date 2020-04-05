@@ -47,6 +47,9 @@ void 					start()
 	auto functor = engine::functor([](){ std::cout << "Hi" << std::endl;});
 	gui.generate_button(functor, gui::point(150, 200), font, std::string("button"));
 
+	for (int i = 1; i <= 9; i++)
+		std::cout << i << " = GLFW_KEY_" << i << "," << std::endl;
+
 	engine.start();
 }
 

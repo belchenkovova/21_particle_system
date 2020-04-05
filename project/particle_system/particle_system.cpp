@@ -80,27 +80,27 @@ void 							particle_system::callback()
 {
 	engine::event				&event = engine.receive_event();
 
-	if (event.read_key() == GLFW_KEY_ESCAPE)
+	if (event.read_key() == engine::event::key::escape)
 		engine.finish();
-	else if (event.read_key() == GLFW_KEY_A)
+	else if (event.read_key() == engine::event::key::letter_a)
 		renderers.camera.move(engine::axis::x, engine::sign::negative);
-	else if (event.read_key() == GLFW_KEY_D)
+	else if (event.read_key() == engine::event::key::letter_d)
 		renderers.camera.move(engine::axis::x, engine::sign::positive);
-	else if (event.read_key() == GLFW_KEY_W)
+	else if (event.read_key() == engine::event::key::letter_w)
 		renderers.camera.move(engine::axis::z, engine::sign::negative);
-	else if (event.read_key() == GLFW_KEY_S)
+	else if (event.read_key() == engine::event::key::letter_s)
 		renderers.camera.move(engine::axis::z, engine::sign::positive);
-	else if (event.read_key() == GLFW_KEY_Q)
+	else if (event.read_key() == engine::event::key::letter_q)
 		renderers.camera.move(engine::axis::y, engine::sign::positive);
-	else if (event.read_key() == GLFW_KEY_E)
+	else if (event.read_key() == engine::event::key::letter_e)
 		renderers.camera.move(engine::axis::y, engine::sign::negative);
-	else if (event.read_key() == GLFW_KEY_LEFT)
+	else if (event.read_key() == engine::event::key::left)
 		renderers.camera.rotate(engine::axis::y, engine::sign::positive);
-	else if (event.read_key() == GLFW_KEY_RIGHT)
+	else if (event.read_key() == engine::event::key::right)
 		renderers.camera.rotate(engine::axis::y, engine::sign::negative);
-	else if (event.read_key() == GLFW_KEY_UP)
+	else if (event.read_key() == engine::event::key::up)
 		renderers.camera.rotate(engine::axis::x, engine::sign::positive);
-	else if (event.read_key() == GLFW_KEY_DOWN)
+	else if (event.read_key() == engine::event::key::down)
 		renderers.camera.rotate(engine::axis::x, engine::sign::negative);
 	else
 		return ;

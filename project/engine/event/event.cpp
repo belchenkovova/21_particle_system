@@ -1,30 +1,30 @@
 #include "event.h"
 
-using namespace		engine;
+using namespace			engine;
 
-event::type			event::read_type() const
+event::type				event::read_type() const
 {
 	return (type_value);
 }
 
-optional<int>		event::read_key() const
+optional<event::key>	event::read_key() const
 {
-	return (key);
+	return (key_value);
 }
 
-optional<point>		event::read_mouse() const
+optional<point>			event::read_mouse() const
 {
-	return (mouse);
+	return (mouse_value);
 }
 
-void				event::reset()
+void					event::reset()
 {
 	type_value = type::none;
-	key = {};
-	mouse = {};
+	key_value = {};
+	mouse_value = {};
 }
 
-void				event::reset_if_needed()
+void					event::reset_if_needed()
 {
 	if (type_value == type::key_hold)
 		return ;
