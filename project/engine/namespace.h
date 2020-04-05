@@ -58,6 +58,8 @@ namespace						engine
 
 	class 						core;
 
+	class 						point;
+
 	class 						shader;
 	class 						uniform;
 	class 						program;

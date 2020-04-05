@@ -4,12 +4,10 @@ using namespace		gui;
 
 void 				system::functor_press()
 {
-	auto 			event = core.receive_event();
-	auto			mouse = event.read_mouse();
-	auto			point = (class point)(mouse->first, mouse->second);
+	auto			point = core.receive_event().read_mouse();
 
 	for (const auto &space : spaces)
-		if (space->functors.pressed.has_value() and space->test_point(point))
+		if (space->functors.pressed.has_value() and space->test_point(point.value()))
 			space->functors.pressed->run();
 }
 

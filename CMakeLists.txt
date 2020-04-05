@@ -34,6 +34,7 @@ set(COMMON
 
 set(ENGINE
 	project/engine/core/core.cpp
+	project/engine/point/point.cpp
 	project/engine/core/settings.cpp
 	project/engine/core/launch_x.cpp
 	project/engine/core/glfw_callback_x.cpp
@@ -56,7 +57,6 @@ set(COMPUTER
 	project/computer/argument/argument.cpp)
 
 set(GUI
-	project/gui/point/point.cpp
 	project/gui/symbol/symbol.cpp
 	project/gui/font/font.cpp
 	project/gui/label/renderer.cpp

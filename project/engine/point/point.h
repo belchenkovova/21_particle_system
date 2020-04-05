@@ -1,8 +1,8 @@
 #pragma once
 
-#include "gui/namespace.h"
+#include "engine/namespace.h"
 
-class				gui::point
+class				engine::point
 {
 public :
 

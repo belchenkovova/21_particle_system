@@ -1,7 +1,6 @@
 #pragma once
 
 #include "gui/namespace.h"
-#include "gui/point/point.h"
 
 class				gui::symbol
 {

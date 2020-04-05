@@ -1,6 +1,6 @@
 #include "point.h"
 
-using namespace		gui;
+using namespace		engine;
 
 					point::point(int value) :
 					x{value}, y{value}

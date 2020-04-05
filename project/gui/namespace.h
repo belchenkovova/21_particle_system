@@ -20,11 +20,10 @@ namespace			gui
 	using			std::make_unique;
 	using			std::optional;
 
+	using			engine::point;
 	using 			engine::functor;
 	using 			engine::event;
 	using 			engine::callback;
-
-	class 			point;
 
 	class			symbol;
 	class			font;
