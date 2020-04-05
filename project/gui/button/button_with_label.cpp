@@ -10,23 +10,23 @@ using namespace		gui;
 					button(functor),
 					label(center, font, text)
 {
-	reload_space();
+	reload();
 }
 
 void				button_with_label::replace_text(const string &new_text)
 {
 	label.replace_text(new_text);
-	reload_space();
+	reload();
 }
 
-void				button_with_label::reload_space()
+void				button_with_label::reload()
 {
-	min = label.receive_min() - point(1);
-	max = label.receive_max() + point(1);
+	min = label.receive_min() - indent;
+	max = label.receive_max() + indent;
 }
 
 void				button_with_label::render() const
 {
-	label.render();
 	button::render();
+	label.render();
 }

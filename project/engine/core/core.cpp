@@ -63,7 +63,7 @@ void 				core::start()
 		launch_timers();
 		if (should_render)
 		{
-			glClearColor(0.2f, 0.2f, 0.2f, 1.f);
+			glClearColor(background.x, background.y, background.z, 1.f);
 			glClear(GL_COLOR_BUFFER_BIT);
 			glClear(GL_DEPTH_BUFFER_BIT);
 

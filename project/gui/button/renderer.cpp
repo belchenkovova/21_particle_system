@@ -21,10 +21,8 @@ using namespace		gui;
 
 	unsigned int indices[] =
 	{
-		0, 1,
-		1, 2,
-		2, 3,
-		3, 0
+		0, 1, 2,
+		0, 2, 3
 	};
 
 	buffer.use_indexing(sizeof(indices) / sizeof(unsigned int));
@@ -37,7 +35,7 @@ using namespace		gui;
 void				button::renderer::render() const
 {
 	program.use(true);
-	engine::core::draw(engine::draw_mode::line, buffer);
+	engine::core::draw(engine::draw_mode::triangle, buffer);
 	program.use(false);
 }
 

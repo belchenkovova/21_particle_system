@@ -39,6 +39,7 @@ void				particle_system::renderers::particle::render() const
 	program.upload_uniform("uniform_projection", camera.receive_projection_matrix());
 	program.upload_uniform("uniform_view", camera.receive_view_matrix());
 
+	engine::core::settings::depth_test(true);
 	program.use(true);
 	engine::core::draw(engine::draw_mode::point, buffer);
 	program.use(false);
@@ -116,6 +117,7 @@ void				particle_system::renderers::cube::render() const
 	program.upload_uniform("uniform_projection", camera.receive_projection_matrix());
 	program.upload_uniform("uniform_view", camera.receive_view_matrix());
 
+	engine::core::settings::depth_test(true);
 	program.use(true);
 	engine::core::draw(engine::draw_mode::line, buffer);
 	program.use(false);

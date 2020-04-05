@@ -11,7 +11,8 @@ public :
 
 	inline static int			window_width{0};
 	inline static int			window_height{0};
-	inline static string		window_name;
+	inline static string		window_name{""};
+	inline static glm::vec3		background{0.f, 0.f, 0.f};
 	inline static bool			use_blending{true};
 	inline static bool			use_multisampling{true};
 	inline static bool 			should_render{true};

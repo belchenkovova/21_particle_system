@@ -10,8 +10,6 @@ void main()
 {
 	vec4			sampled;
 
-	vec3			temp_color = vec3(1, 1, 1);
-
 	sampled = vec4(1, 1, 1, texture(uniform_texture, pass_UV).r);
 	result_color = vec4(uniform_color, 1) * sampled;
 }

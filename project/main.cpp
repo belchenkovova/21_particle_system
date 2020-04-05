@@ -8,6 +8,7 @@ void 					setup()
 	engine::core::window_width = 1280;
 	engine::core::window_height = 720;
 	engine::core::window_name = "Particle System";
+	engine::core::background = glm::vec3(.9f, .9f, .9f);
 
 	engine::camera::start_position = glm::vec3(0.f, 0.f, 5.f);
 	engine::camera::movement_speed = .1f;
@@ -16,6 +17,12 @@ void 					setup()
 	engine::camera::far_plane = 1000.f;
 
 	computer::core::use_OpenGL = true;
+
+	gui::button::body_color = glm::vec3(0.75f, 0.75f, 0.75f);
+	gui::button::frame_color = glm::vec3(0.8f, 0.8f, 0.8f);
+	gui::button::frame_width = 2;
+
+	gui::button_with_label::indent = gui::point(16, 16);
 
 	particle_system::number_of_particles = 100 * 100;
 }
@@ -34,11 +41,11 @@ void 					start()
 	engine.attach_renderer(system.receive_cube_renderer());
 	engine.attach_renderer(gui.receive_renderer());
 
-	auto font = gui::font("project/resources/HelveticaNeue.ttc", 70);
-	gui.generate_label(gui::point(150, 100), font, std::string("Label"));
+	auto font = gui::font("project/resources/HelveticaNeue.ttc", 50);
+	gui.generate_label(gui::point(150, 100), font, std::string("label"));
 
 	auto functor = engine::functor([](){ std::cout << "Hi" << std::endl;});
-	gui.generate_button(functor, gui::point(150, 200), font, std::string("Button"));
+	gui.generate_button(functor, gui::point(150, 200), font, std::string("button"));
 
 	engine.start();
 }

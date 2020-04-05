@@ -54,12 +54,12 @@ void				label::render() const
 		size_this = symbol.read_size();
 
 		float		data[] =
-			{
-				(float)position_this.x + (float)size_this.x, (float)position_this.y,
-				(float)position_this.x, (float)position_this.y,
-				(float)position_this.x, (float)position_this.y + (float)size_this.y,
-				(float)position_this.x + (float)size_this.x, (float)position_this.y + (float)size_this.y
-			};
+		{
+			(float)position_this.x + (float)size_this.x, (float)position_this.y,
+			(float)position_this.x, (float)position_this.y,
+			(float)position_this.x, (float)position_this.y + (float)size_this.y,
+			(float)position_this.x + (float)size_this.x, (float)position_this.y + (float)size_this.y
+		};
 
 		for (int i = 0; i < 8; i++)
 			renderer->points->at(i) = data[i];

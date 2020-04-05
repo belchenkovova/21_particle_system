@@ -9,6 +9,10 @@ class							gui::button : public gui::space
 
 public :
 
+	static inline glm::vec3		body_color{0.f, 0.f, 0.f};
+	static inline glm::vec3		frame_color{0.f, 0.f, 0.f};
+	static inline int			frame_width{0};
+
 	explicit					button(const functor &functor);
 								~button() override = default;
 
@@ -30,6 +34,8 @@ protected :
 		using					points_ptr_type = shared_ptr<points_type>;
 
 		points_ptr_type			points;
+
+		using					OpenGL::program;
 	};
 
 	using						renderer_type = unique_ptr<renderer>;

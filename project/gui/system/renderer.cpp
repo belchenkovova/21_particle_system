@@ -8,6 +8,7 @@ using namespace		gui;
 
 void 				system::renderer::render() const
 {
+	engine::core::settings::depth_test(false);
 	for (const auto &space : spaces)
 		space->render();
 }
