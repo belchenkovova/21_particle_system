@@ -23,7 +23,10 @@ private :
 	const point					center;
 	const font					&font;
 	string						text;
-	point						size;
+
+private :
+
+	static void					start(const engine::core &core);
 
 	class						renderer final : public engine::renderer::OpenGL
 	{
@@ -46,8 +49,4 @@ private :
 
 	using						renderer_type = unique_ptr<renderer>;
 	static inline renderer_type	renderer;
-
-	static void					start(const engine::core &core);
 };
-
-

@@ -6,6 +6,7 @@ using namespace		gui;
 					const point &center,
 					const class font &font,
 					const string &text) :
+					space(true),
 					center(center),
 					font(font)
 {
@@ -14,8 +15,9 @@ using namespace		gui;
 
 void				label::replace_text(const string &new_text)
 {
+	auto			size = point();
+
 	text = new_text;
-	size = point();
 
 	for (const char &iter : text)
 	{
@@ -25,13 +27,8 @@ void				label::replace_text(const string &new_text)
 		size.y = std::max(size.y, symbol.read_size().y);
 	}
 
-	space::min = center - size;
-	space::max = center + size;
-}
-
-void				label::start(const engine::core &core)
-{
-	renderer = make_unique<class label::renderer>(core);
+	space::min = center - size / 2;
+	space::max = center + size / 2;
 }
 
 void				label::render() const
@@ -42,8 +39,8 @@ void				label::render() const
 	point			position_this;
 	point			size_this;
 
-	position_iterator.x = center.x - size.x / 2;
-	position_iterator.y = center.y + size.y / 2;
+	position_iterator.x = min.x;
+	position_iterator.y = max.y;
 
 	renderer->program.upload_uniform("uniform_color", font.color);
 

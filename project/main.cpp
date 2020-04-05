@@ -35,7 +35,10 @@ void 					start()
 	engine.attach_renderer(gui.receive_renderer());
 
 	auto font = gui::font("project/resources/HelveticaNeue.ttc", 70);
-	auto label = gui.generate_label(gui::point(200, 200), font, std::string("Hello"));
+	gui.generate_label(gui::point(150, 100), font, std::string("Label"));
+
+	auto functor = engine::functor([](){ std::cout << "Hi" << std::endl;});
+	gui.generate_button(functor, gui::point(150, 200), font, std::string("Button"));
 
 	engine.start();
 }

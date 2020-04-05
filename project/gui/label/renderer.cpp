@@ -12,8 +12,8 @@ using namespace		gui;
 	buffer.generate_attribute<float, 2>();
 	buffer.resize(4);
 
-	points = std::dynamic_pointer_cast<points_type>(buffer.receive_attribute_as_pointer(0));
-	texture = std::dynamic_pointer_cast<texture_type>(buffer.receive_attribute_as_pointer(1));
+	points = dynamic_pointer_cast<points_type>(buffer.receive_attribute_as_pointer(0));
+	texture = dynamic_pointer_cast<texture_type>(buffer.receive_attribute_as_pointer(1));
 	assert(points != nullptr and texture != nullptr);
 
 	program.build_uniform("uniform_projection");
@@ -49,4 +49,9 @@ void				label::renderer::render() const
 	program.use(true);
 	engine::core::draw(engine::draw_mode::triangle, buffer);
 	program.use(false);
+}
+
+void				label::start(const engine::core &core)
+{
+	renderer = make_unique<class label::renderer>(core);
 }

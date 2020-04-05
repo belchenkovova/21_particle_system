@@ -20,6 +20,10 @@ namespace			gui
 	using			std::make_unique;
 	using			std::optional;
 
+	using 			engine::functor;
+	using 			engine::event;
+	using 			engine::callback;
+
 	class 			point;
 
 	class			symbol;
@@ -28,6 +32,7 @@ namespace			gui
 	class			space;
 	class 			label;
 	class 			button;
+	class 			button_with_label;
 
 	class			system;
 }
