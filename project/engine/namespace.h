@@ -13,6 +13,7 @@
 #include <optional>
 #include <tuple>
 #include <map>
+#include <list>
 
 #include "common/common.h"
 
@@ -20,6 +21,7 @@ namespace						engine
 {
 	using						std::string;
 	using						std::vector;
+	using						std::list;
 	using						std::shared_ptr;
 	using 						std::make_shared;
 	using 						std::reference_wrapper;

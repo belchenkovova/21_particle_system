@@ -1,7 +1,7 @@
 #pragma once
 
 #include "engine/namespace.h"
-#include "engine/renderer/renderer.h"
+#include "engine/renderer/renderers.h"
 #include "engine/timer/timer.h"
 #include "engine/callback/callback.h"
 
@@ -62,9 +62,9 @@ protected :
 	event						event;
 
 	using						renderer_refence = reference_wrapper<const renderer>;
-	vector<renderer_refence>	renderers;
-	vector<callback>			callbacks;
-	vector<timer>				timers;
+	list<renderer_refence>		renderers;
+	list<callback>				callbacks;
+	list<timer>					timers;
 
 	static void 				glfw_callback_key(GLFWwindow *window, int key, int code, int action, int mode);
 	static void 				glfw_callback_mouse_movement(GLFWwindow *window, double x, double y);

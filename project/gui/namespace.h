@@ -4,6 +4,7 @@
 #include FT_FREETYPE_H
 #include <set>
 #include <map>
+#include <list>
 
 #include "engine/engine.h"
 
@@ -12,6 +13,7 @@ namespace			gui
 	using			std::string;
 	using			std::set;
 	using			std::map;
+	using			std::list;
 	using			std::vector;
 	using			std::reference_wrapper;
 	using			std::static_pointer_cast;
@@ -24,6 +26,7 @@ namespace			gui
 	using			std::numeric_limits;
 	using 			std::min;
 	using 			std::max;
+	using			std::for_each;
 
 	using			engine::point;
 	using 			engine::functor;

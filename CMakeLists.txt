@@ -62,11 +62,10 @@ set(GUI
 	project/gui/label/renderer.cpp
 	project/gui/label/label.cpp
 	project/gui/button/button.cpp
-	project/gui/button/renderer.cpp
+	project/gui/button/renderers.cpp
 	project/gui/button/button_with_label.cpp
 	project/gui/container/horizontal_pack.cpp
 	project/gui/system/system.cpp
-	project/gui/system/functors.cpp
 	project/gui/system/renderer.cpp)
 
 set(PARTICLE_SYSTEM

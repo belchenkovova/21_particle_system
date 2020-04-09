@@ -4,43 +4,64 @@
 #include "gui/abstract/editor.h"
 #include "gui/abstract/object.h"
 
-class							gui::button : public gui::editor, public gui::object
+class								gui::button : public gui::editor, public gui::object
 {
-	friend class				gui::system;
+	friend class					gui::system;
 
 public :
 
-	static inline glm::vec3		body_color{0.f, 0.f, 0.f};
-	static inline glm::vec3		frame_color{0.f, 0.f, 0.f};
-	static inline int			frame_width{0};
+	static inline glm::vec3			body_color{0.f, 0.f, 0.f};
+	static inline glm::vec3			frame_color{0.f, 0.f, 0.f};
+	static inline int				frame_width{0};
 
-	explicit					button(const functor &functor);
-								~button() override = default;
+	explicit						button(const functor &functor, bool is_toggle = false);
+									~button() override = default;
 
-	void						render() const override;
+	void							render() const override;
 
-protected :
+private :
 
-	static void 				start(const engine::core &core);
+	const bool						is_toggle = false;
+	bool							is_pressed = false;
 
-	class						renderer final : public engine::renderer
+	void							functor_press();
+	void							functor_release();
+
+	static void 					start(const engine::core &core);
+
+	static inline struct			renderers
 	{
-	public :
-		explicit				renderer(const engine::core &core);
-		~renderer()				override = default;
+		using						points_type = engine::vbo::real<float, 2>;
+		using						points_ptr_type = shared_ptr<points_type>;
 
-		void					render() const override;
+		class						first final : public engine::renderer
+		{
+		public :
+									explicit first(const engine::core &core);
+									~first() override = default;
 
-		using					points_type = engine::vbo::real<float, 2>;
-		using					points_ptr_type = shared_ptr<points_type>;
+			void					render() const override;
 
-		points_ptr_type			points;
+			points_ptr_type			points;
 
-		using					engine::renderer::program;
-	};
+			using					engine::renderer::program;
+		};
 
-	using						renderer_type = unique_ptr<renderer>;
-	static inline renderer_type	renderer;
+		class						second final : public engine::renderer
+		{
+		public :
+			explicit				second(const engine::core &core);
+									~second() override = default;
+
+			void					render() const override;
+
+			points_ptr_type			points;
+			using					engine::renderer::program;
+		};
+
+		unique_ptr<first>			first;
+		unique_ptr<second>			second;
+	}								renderers;
 };
 
 

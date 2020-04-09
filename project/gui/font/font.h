@@ -14,7 +14,7 @@ public :
 						font(
 						const std::string &source,
 						int width,
-						const glm::vec3 &color = glm::vec3(0.f, 0.f, 0.f));
+						const glm::vec3 &color = glm::vec3(1.f, 1.f, 1.f));
 						~font();
 private :
 

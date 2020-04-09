@@ -67,15 +67,15 @@ public :
 	}
 
 	[[nodiscard]]
-	bool				have_press_functor() const
+	bool				have_press_functors() const
 	{
-		return (functors.pressed.has_value());
+		return (not functors.press.empty());
 	}
 
 	[[nodiscard]]
-	bool				have_release_functor() const
+	bool				have_release_functors() const
 	{
-		return (functors.released.has_value());
+		return (not functors.release.empty());
 	}
 
 protected :
@@ -85,11 +85,11 @@ protected :
 
 	optional<point>		position;
 
-	using 				functor_type = optional<functor>;
+	using 				functor_type = list<functor>;
 	struct
 	{
-		functor_type	pressed;
-		functor_type	released;
+		functor_type	press;
+		functor_type	release;
 	}					functors;
 
 	void 				revise_self() const
