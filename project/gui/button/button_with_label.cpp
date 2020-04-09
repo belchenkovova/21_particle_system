@@ -4,29 +4,24 @@ using namespace		gui;
 
 					button_with_label::button_with_label(
 					const class functor &functor,
-					const point &center,
-					const class font &font,
-					const string &text) :
+					const string &text,
+					const shared_ptr<font> &font) :
 					button(functor),
-					label(center, font, text)
+					label(text, font)
 {
-	reload();
-}
-
-void				button_with_label::replace_text(const string &new_text)
-{
-	label.replace_text(new_text);
-	reload();
-}
-
-void				button_with_label::reload()
-{
-	min = label.receive_min() - indent;
-	max = label.receive_max() + indent;
+	final_indent = indent + point(frame_width);
+	required_size = label.read_required_size() + final_indent * 2;
 }
 
 void				button_with_label::render() const
 {
 	button::render();
 	label.render();
+}
+
+void				button_with_label::reload()
+{
+	revise_self();
+	open_current_size(label) = *current_size - final_indent * 2;
+	open_position(label) = *position + final_indent;
 }

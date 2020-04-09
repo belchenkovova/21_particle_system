@@ -4,26 +4,24 @@
 #include "engine/program/program.h"
 #include "engine/buffer/buffer.h"
 
-namespace				engine::renderer
+class					engine::renderer
 {
-	class				pure
+public :
+
+	explicit			renderer(bool should_initialize = true)
 	{
-	public :
-						pure() = default;
-		virtual			~pure() = default;
+		if (should_initialize)
+		{
+			program.emplace();
+			buffer.emplace();
+		}
+	}
+	virtual				~renderer() = default;
 
-		virtual void	render() const = 0;
-	};
+	virtual void		render() const = 0;
 
-	class				OpenGL : public pure
-	{
-	public :
-						OpenGL() = default;
-						~OpenGL() override = default;
-	protected :
+protected :
 
-		program			program;
-		buffer			buffer;
-	};
-}
-
+	optional<program>	program;
+	optional<buffer>	buffer;
+};

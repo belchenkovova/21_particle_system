@@ -33,4 +33,4 @@ public :
 	int 			y{0};
 };
 
-
+engine::ostream		&operator << (engine::ostream& stream, const engine::point &point);

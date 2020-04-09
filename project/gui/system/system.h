@@ -1,59 +1,73 @@
 #pragma once
 
 #include "gui/namespace.h"
-#include "gui/space/space.h"
 #include "gui/font/font.h"
 #include "gui/label/label.h"
 #include "gui/button/button_with_label.h"
+#include "gui/container/horizontal_pack.h"
 
-class								gui::system final
+class						gui::system final
 {
 public :
 
-	explicit						system(engine::core &engine);
-									~system() = default;
+	explicit				system(engine::core &engine);
+							~system() = default;
 
-	template						<typename ...t_args>
-	void							generate_label(t_args &&...args)
+	template				<typename ...args_type>
+	auto					generate_font(args_type &&...args)
 	{
-		auto						label = make_shared<class label>(args...);
-		auto						space = static_pointer_cast<class space>(label);
+		auto 				pointer = make_shared<font>(args...);
 
-		spaces.push_back(space);
+		fonts.push_back(pointer);
+		return (pointer);
 	}
 
-	template						<typename ...t_args>
-	void							generate_button(t_args &&...args)
+	template				<typename ...args_type>
+	auto					generate_button_with_label(args_type &&...args)
 	{
-		auto						button = make_shared<class button_with_label>(args...);
-		auto						space = static_pointer_cast<class space>(button);
+		auto 				pointer = make_shared<button_with_label>(args...);
 
-		spaces.push_back(space);
+		render_objects.push_back(static_pointer_cast<object>(pointer));
+		return (pointer);
 	}
 
-	const engine::renderer::pure	&receive_renderer();
+	template				<typename ...args_type>
+	auto					generate_horizontal_pack(args_type &&...args)
+	{
+		auto 				pointer = make_shared<horizontal_pack>(args...);
+
+		non_render_objects.push_back(static_pointer_cast<object>(pointer));
+		return (pointer);
+	}
+
+
+	const engine::renderer	&receive_renderer();
 
 private :
 
-	engine::core					&core;
+	engine::core			&core;
 
-	using							spaces_type = vector<shared_ptr<space>>;
-	spaces_type						spaces;
+	using					fonts_type = vector<shared_ptr<font>>;
+	fonts_type				fonts;
 
-	void							functor_press();
-	void							functor_release();
+	using					objects_type = vector<shared_ptr<object>>;
+	objects_type			render_objects;
+	objects_type			non_render_objects;
+
+	void					functor_press();
+	void					functor_release();
 
 private :
 
-	class							renderer final : public engine::renderer::pure
+	class					renderer final : public engine::renderer
 	{
 	public :
 
-		explicit					renderer(const spaces_type &spaces);
-									~renderer() override = default;
+		explicit			renderer(const objects_type &objects);
+							~renderer() override = default;
 
-		void						render() const override;
+		void				render() const override;
 
-		const spaces_type			&spaces;
-	}								renderer;
+		const objects_type	&objects;
+	}						renderer;
 };

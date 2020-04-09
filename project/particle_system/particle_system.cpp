@@ -1,8 +1,8 @@
 #include "particle_system.h"
 
-								particle_system::particle_system(engine::core &engine, computer::core &computer) :
-								engine(engine),
-								computer(computer)
+						particle_system::particle_system(engine::core &engine, computer::core &computer) :
+						engine(engine),
+						computer(computer)
 {
 	initialize_engine();
 	initialize_computer();
@@ -13,18 +13,17 @@
 	arguments.position.release();
 }
 
-const engine::renderer::pure	&particle_system::receive_particle_renderer()
+const engine::renderer	&particle_system::receive_particle_renderer()
 {
 	return (renderers.particle);
 }
 
-const engine::renderer::pure	&particle_system::receive_cube_renderer()
+const engine::renderer	&particle_system::receive_cube_renderer()
 {
 	return (renderers.cube);
 }
 
-
-void							particle_system::initialize_engine()
+void					particle_system::initialize_engine()
 {
 //	engine.generate_timer(1.f / 60.f, &particle_system::timer, this);
 
@@ -32,7 +31,7 @@ void							particle_system::initialize_engine()
 	engine.generate_callback(engine::event::type::key_hold, &particle_system::callback, this);
 }
 
-void							particle_system::initialize_computer()
+void					particle_system::initialize_computer()
 {
 	kernels.reset = computer.generate_kernel();
 	kernels.reset.add_source("project/resources/OpenCL/vector.txt");
@@ -50,7 +49,7 @@ void							particle_system::initialize_computer()
 	kernels.physics.add_source("project/resources/OpenCL/physics.txt");
 	kernels.physics.build("physics", number_of_particles);
 
-	arguments.position = kernels.reset.generate_argument(renderers.particle.buffer.receive_attribute(0));
+	arguments.position = kernels.reset.generate_argument(renderers.particle.buffer->receive_attribute(0));
 	arguments.velocity = kernels.reset.generate_argument<float>(number_of_particles * 3);
 	arguments.acceleration = kernels.reset.generate_argument<float>(number_of_particles * 3);
 
@@ -67,7 +66,7 @@ void							particle_system::initialize_computer()
 	kernels.physics.link_argument(arguments.acceleration);
 }
 
-void 							particle_system::timer()
+void 					particle_system::timer()
 {
 	arguments.position.acquire();
 	kernels.physics.run();
@@ -76,9 +75,9 @@ void 							particle_system::timer()
 	engine::core::should_render = true;
 }
 
-void 							particle_system::callback()
+void 					particle_system::callback()
 {
-	engine::event				&event = engine.receive_event();
+	engine::event		&event = engine.receive_event();
 
 	if (event.read_key() == engine::event::key::escape)
 		engine.finish();

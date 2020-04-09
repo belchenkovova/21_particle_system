@@ -1,9 +1,10 @@
 #pragma once
 
 #include "gui/namespace.h"
-#include "gui/space/space.h"
+#include "gui/abstract/editor.h"
+#include "gui/abstract/object.h"
 
-class							gui::button : public gui::space
+class							gui::button : public gui::editor, public gui::object
 {
 	friend class				gui::system;
 
@@ -22,7 +23,7 @@ protected :
 
 	static void 				start(const engine::core &core);
 
-	class						renderer final : public engine::renderer::OpenGL
+	class						renderer final : public engine::renderer
 	{
 	public :
 		explicit				renderer(const engine::core &core);
@@ -35,7 +36,7 @@ protected :
 
 		points_ptr_type			points;
 
-		using					OpenGL::program;
+		using					engine::renderer::program;
 	};
 
 	using						renderer_type = unique_ptr<renderer>;

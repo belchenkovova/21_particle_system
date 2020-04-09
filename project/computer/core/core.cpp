@@ -14,8 +14,8 @@ using namespace					computer;
 
 	if (use_OpenGL)
 	{
-		CGLContextObj			gl_context = CGLGetCurrentContext();
-		CGLShareGroupObj		share_group = CGLGetShareGroup(gl_context);
+		CGLContextObj		gl_context = CGLGetCurrentContext();
+		CGLShareGroupObj	share_group = CGLGetShareGroup(gl_context);
 
 		cl_context_properties	properties[] = {
 			CL_CONTEXT_PROPERTY_USE_CGL_SHAREGROUP_APPLE,
@@ -27,7 +27,7 @@ using namespace					computer;
 		set_context(nullptr);
 }
 
-kernel						core::generate_kernel()
+kernel							core::generate_kernel()
 {
 	return (kernel(&device, &context));
 }
@@ -52,7 +52,7 @@ void 							core::set_device()
 
 }
 
-void 					core::set_context(cl_context_properties *properties)
+void 							core::set_context(cl_context_properties *properties)
 {
 	context = cl::Context(device, properties);
 }

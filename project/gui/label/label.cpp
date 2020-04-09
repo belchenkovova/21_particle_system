@@ -3,50 +3,40 @@
 using namespace		gui;
 
 					label::label(
-					const point &center,
-					const class font &font,
-					const string &text) :
-					space(true),
-					center(center),
+					const string &text,
+					const shared_ptr<class font> &font) :
+					text(text),
 					font(font)
 {
-	replace_text(text);
-}
-
-void				label::replace_text(const string &new_text)
-{
-	auto			size = point();
-
-	text = new_text;
+	required_size = point();
 
 	for (const char &iter : text)
 	{
-		auto		&symbol = font.find_symbol(iter);
+		auto		&symbol = font->find_symbol(iter);
 
-		size.x += symbol.read_advance();
-		size.y = std::max(size.y, symbol.read_size().y);
+		required_size->x += symbol.read_advance();
+		required_size->y = std::max(required_size->y, symbol.read_size().y);
 	}
-
-	space::min = center - size / 2;
-	space::max = center + size / 2;
 }
 
 void				label::render() const
 {
+	revise_self();
 	assert(renderer);
 
 	point			position_iterator;
 	point			position_this;
 	point			size_this;
 
-	position_iterator.x = min.x;
-	position_iterator.y = max.y;
+	position_iterator.x = position->x + (current_size->x - required_size->x) / 2;
+	position_iterator.y = position->y + (current_size->y - required_size->y) / 2;
+	position_iterator.y += required_size->y;
 
-	renderer->program.upload_uniform("uniform_color", font.color);
+	renderer->program->upload_uniform("uniform_color", font->color);
 
 	for (const auto &text_iterator : text)
 	{
-		auto		symbol = font.find_symbol(text_iterator);
+		auto		symbol = font->find_symbol(text_iterator);
 
 		position_this.x = position_iterator.x + symbol.read_bearing().x;
 		position_this.y = position_iterator.y - symbol.read_bearing().y;

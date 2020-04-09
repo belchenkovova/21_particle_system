@@ -27,6 +27,14 @@ namespace						engine
 	using 						std::pair;
 	using 						std::make_pair;
 	using						std::map;
+	using						std::ostream;
+
+	template					<typename type>
+	void 						revise_optional(const optional<type> &data)
+	{
+		if (not data.has_value())
+			throw (common::exception("Engine: Optional doesn't have value"));
+	}
 
 	template					<typename type>
 	class 						object_wrapper
@@ -103,9 +111,5 @@ namespace						engine
 
 	class						texture;
 
-	namespace					renderer
-	{
-		class					pure;
-		class					OpenGL;
-	}
+	class						renderer;
 }

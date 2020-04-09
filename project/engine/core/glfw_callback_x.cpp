@@ -28,7 +28,8 @@ void 				core::glfw_callback_mouse_movement(GLFWwindow *window, double x, double
 void 				core::glfw_callback_mouse_key(GLFWwindow *window, int key, int action, int mode)
 {
 	auto			*core = (engine::core *)glfwGetWindowUserPointer(window);
-	core->event.reset();
+
+	core->event.reset_if_needed();
 	if (key != GLFW_MOUSE_BUTTON_LEFT)
 		return ;
 	if (action == GLFW_PRESS)

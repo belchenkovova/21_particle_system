@@ -1,0 +1,106 @@
+#pragma once
+
+#include "gui/namespace.h"
+
+class					gui::object
+{
+	friend class 		gui::system;
+	friend class 		gui::editor;
+
+public :
+
+#pragma message "Debug version only"
+	static inline int	id_counter = 0;
+	int					id = id_counter++;
+
+#pragma message "Debug version only"
+	void 				info() const
+	{
+#define M1(o)			(o.has_value() ? *o : point(-1))
+
+		std::cout << "Object : id = " << id << std::endl;
+		std::cout << "required size = " << M1(required_size) << std::endl;
+		std::cout << "current size = " << M1(current_size) << std::endl;
+		std::cout << "position = " << M1(position) << std::endl;
+	}
+
+						object() = default;
+	virtual				~object() = default;
+
+	virtual void		render() const {}
+
+	virtual void		reload() {}
+
+	[[nodiscard]]
+	point				read_required_size() const
+	{
+		gui::revise_optional(required_size);
+		return (*required_size);
+	}
+
+	[[nodiscard]]
+	point				read_current_size() const
+	{
+		gui::revise_optional(current_size);
+		return (*current_size);
+	}
+
+	[[nodiscard]]
+	point				read_position() const
+	{
+		gui::revise_optional(position);
+		return (*position);
+	}
+
+	[[nodiscard]]
+	bool				test_point(const point &point) const
+	{
+		if (position.has_value() and current_size.has_value())
+			return (point > *position and point < *position + *current_size);
+		return false;
+	}
+
+	[[nodiscard]]
+	bool				have_position() const
+	{
+		return (position.has_value());
+	}
+
+	[[nodiscard]]
+	bool				have_press_functor() const
+	{
+		return (functors.pressed.has_value());
+	}
+
+	[[nodiscard]]
+	bool				have_release_functor() const
+	{
+		return (functors.released.has_value());
+	}
+
+protected :
+
+	optional<point>		required_size;
+	optional<point>		current_size;
+
+	optional<point>		position;
+
+	using 				functor_type = optional<functor>;
+	struct
+	{
+		functor_type	pressed;
+		functor_type	released;
+	}					functors;
+
+	void 				revise_self() const
+	{
+		gui::revise_optional(required_size);
+		gui::revise_optional(current_size);
+		gui::revise_optional(position);
+
+		if (current_size < required_size)
+			throw (common::exception("GUI, Space : Bad current size"));
+	}
+};
+
+

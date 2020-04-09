@@ -6,9 +6,9 @@ void 				system::functor_press()
 {
 	auto			point = core.receive_event().read_mouse();
 
-	for (const auto &space : spaces)
-		if (space->functors.pressed.has_value() and space->test_point(point.value()))
-			space->functors.pressed->run();
+	for (const auto &object : render_objects)
+		if (object->have_press_functor() and object->test_point(point))
+			object->functors.pressed->run();
 }
 
 void 				system::functor_release()

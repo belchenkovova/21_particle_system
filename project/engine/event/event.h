@@ -72,9 +72,9 @@ public :
 	[[nodiscard]]
 	type			read_type() const;
 	[[nodiscard]]
-	optional<key>	read_key() const;
+	key				read_key() const;
 	[[nodiscard]]
-	optional<point>	read_mouse() const;
+	point			read_mouse() const;
 
 private :
 

@@ -48,7 +48,7 @@ using namespace		engine;
 	glfwTerminate();
 }
 
-void 				core::attach_renderer(const engine::renderer::pure &renderer)
+void 				core::attach_renderer(const engine::renderer &renderer)
 {
 	renderers.emplace_back(renderer);
 }

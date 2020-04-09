@@ -1,34 +1,31 @@
 #pragma once
 
 #include "gui/namespace.h"
-#include "gui/space/space.h"
+#include "gui/abstract/object.h"
 #include "gui/font/font.h"
 
-class							gui::label : public gui::space
+class							gui::label : public gui::object
 {
 	friend class				gui::system;
 
 public :
 								label(
-								const point &center,
-								const font &font,
-								const string &text = "");
+								const string &text,
+								const shared_ptr<font> &font);
 								~label() override = default;
 
-	void						replace_text(const string &new_text);
 	void						render() const override;
 
 private :
 
-	const point					center;
-	const font					&font;
 	string						text;
+	const shared_ptr<font>		font;
 
 private :
 
 	static void					start(const engine::core &core);
 
-	class						renderer final : public engine::renderer::OpenGL
+	class						renderer final : public engine::renderer
 	{
 	public :
 		explicit				renderer(const engine::core &core);
@@ -44,7 +41,7 @@ private :
 		points_ptr_type			points;
 		texture_ptr_type		texture;
 
-		using 					OpenGL::program;
+		using 					engine::renderer::program;
 	};
 
 	using						renderer_type = unique_ptr<renderer>;

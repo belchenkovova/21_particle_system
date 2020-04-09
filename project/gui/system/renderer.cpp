@@ -2,13 +2,14 @@
 
 using namespace		gui;
 
-					system::renderer::renderer(const spaces_type &spaces) :
-					spaces(spaces)
+					system::renderer::renderer(const objects_type &objects) :
+					engine::renderer(false),
+					objects(objects)
 {}
 
 void 				system::renderer::render() const
 {
 	engine::core::settings::depth_test(false);
-	for (const auto &space : spaces)
-		space->render();
+	for (const auto &object : objects)
+		object->render();
 }

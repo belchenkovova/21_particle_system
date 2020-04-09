@@ -1,10 +1,10 @@
 #include "system.h"
 
-using namespace				gui;
+using namespace			gui;
 
-							system::system(engine::core &core) :
-							core(core),
-							renderer(spaces)
+						system::system(engine::core &core) :
+						core(core),
+						renderer(render_objects)
 {
 	label::start(core);
 	button::start(core);
@@ -12,7 +12,7 @@ using namespace				gui;
 	core.generate_callback(event::type::mouse_press, &system::functor_press, this);
 }
 
-const engine::renderer::pure	&system::receive_renderer()
+const engine::renderer	&system::receive_renderer()
 {
 	return (renderer);
 }

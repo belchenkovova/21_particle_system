@@ -3,62 +3,89 @@
 #include "gui/gui.h"
 #include "particle_system/particle_system.h"
 
-void 					setup()
+class				final
 {
-	engine::core::window_width = 1280;
-	engine::core::window_height = 720;
-	engine::core::window_name = "Particle System";
-	engine::core::background = glm::vec3(.9f, .9f, .9f);
+public :
 
-	engine::camera::start_position = glm::vec3(0.f, 0.f, 5.f);
-	engine::camera::movement_speed = .1f;
-	engine::camera::rotation_speed = .1f;
-	engine::camera::near_plane = .1f;
-	engine::camera::far_plane = 1000.f;
+					final() = default;
+					~final() = default;
 
-	computer::core::use_OpenGL = true;
+	static void		setup_static()
+	{
+		engine::core::window_width = 1280;
+		engine::core::window_height = 720;
+		engine::core::window_name = "Particle System";
+		engine::core::background = glm::vec3(.9f, .9f, .9f);
 
-	gui::button::body_color = glm::vec3(0.75f, 0.75f, 0.75f);
-	gui::button::frame_color = glm::vec3(0.8f, 0.8f, 0.8f);
-	gui::button::frame_width = 2;
+		engine::camera::start_position = glm::vec3(0.f, 0.f, 5.f);
+		engine::camera::movement_speed = .1f;
+		engine::camera::rotation_speed = .1f;
+		engine::camera::near_plane = .1f;
+		engine::camera::far_plane = 1000.f;
 
-	gui::button_with_label::indent = gui::point(16, 16);
+		computer::core::use_OpenGL = true;
 
-	particle_system::number_of_particles = 100 * 100;
-}
+		gui::button::body_color = glm::vec3(0.75f, 0.75f, 0.75f);
+		gui::button::frame_color = glm::vec3(0.8f, 0.8f, 0.8f);
+		gui::button::frame_width = 2;
 
-void 					start()
-{
-	engine::core		engine;
-	computer::core		computer;
-	gui::system			gui(engine);
-	particle_system		system(engine, computer);
+		gui::button_with_label::indent = gui::point(25);
 
-	engine::core::settings::depth_test(true);
-	engine::core::settings::point_size(2);
+		particle_system::number_of_particles = 100 * 100;
+	}
 
-	engine.attach_renderer(system.receive_particle_renderer());
-	engine.attach_renderer(system.receive_cube_renderer());
-	engine.attach_renderer(gui.receive_renderer());
+	void			setup_dynamic()
+	{
+		engine::core::settings::depth_test(true);
+		engine::core::settings::point_size(5);
 
-	auto font = gui::font("project/resources/HelveticaNeue.ttc", 50);
-	gui.generate_label(gui::point(150, 100), font, std::string("label"));
+		engine.attach_renderer(system.receive_particle_renderer());
+		engine.attach_renderer(system.receive_cube_renderer());
+		engine.attach_renderer(gui.receive_renderer());
+	}
 
-	auto functor = engine::functor([](){ std::cout << "Hi" << std::endl;});
-	gui.generate_button(functor, gui::point(150, 200), font, std::string("button"));
+	void			setup_gui()
+	{
+		auto		functor_hi  = engine::functor([](){ std::cout << "Hi" << std::endl; });
+		auto		functor_bye = engine::functor([](){ std::cout << "Bye" << std::endl; });
 
-	for (int i = 1; i <= 9; i++)
-		std::cout << i << " = GLFW_KEY_" << i << "," << std::endl;
+		auto		font_a = gui.generate_font("project/resources/HelveticaNeue.ttc", 50);
+		auto		font_b = gui.generate_font("project/resources/HelveticaNeue.ttc", 40);
 
-	engine.start();
-}
+		auto		button_hi = gui.generate_button_with_label(functor_hi, std::string("Hi"), font_a);
+		auto		button_bye = gui.generate_button_with_label(functor_bye, std::string("Bye"), font_b);
+
+		auto		pack = gui.generate_horizontal_pack(gui::point(10, 10));
+
+		pack->add_item(button_hi);
+		pack->add_item(button_bye);
+	}
+
+	void			start()
+	{
+		engine.start();
+	}
+
+private :
+
+	engine::core	engine;
+	computer::core	computer;
+	gui::system		gui = gui::system(engine);
+	particle_system	system = particle_system(engine, computer);
+};
 
 int					main()
 {
 	try
 	{
-		setup();
-		start();
+		final		*final = nullptr;
+
+		final::setup_static();
+		final = new class final;
+		final->setup_dynamic();
+		final->setup_gui();
+		final->start();
+		delete final;
 		return (0);
 	}
 	catch (std::exception &exception)

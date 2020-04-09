@@ -13,17 +13,15 @@ public :
 public :
 						button_with_label(
 						const class functor &functor,
-						const point &center,
-						const class font &font,
-						const string &text = "");
+						const string &text,
+						const shared_ptr<font> &font);
 						~button_with_label() override = default;
 
 	void				render() const override;
-	void				replace_text(const string &new_text);
+	void				reload() override;
 
 private :
 
 	label				label;
-
-	void				reload();
+	point				final_indent;
 };

@@ -82,3 +82,14 @@ bool				point::operator != (const point &other) const
 {
 	return (this->x != other.x or this->y != other.y);
 }
+
+ostream				&operator << (ostream& stream, const point &point)
+{
+	stream << "{";
+	stream << point.x;
+	stream << ", ";
+	stream << point.y;
+	stream << "}";
+
+	return (stream);
+}
