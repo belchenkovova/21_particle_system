@@ -6,14 +6,15 @@ using namespace		gui;
 					is_toggle(is_toggle)
 {
 	functors.press.emplace_back(&gui::button::functor_press, this);
-	functors.release.emplace_back(&gui::button::functor_release, this);
+	if (not is_toggle)
+		functors.release.emplace_back(&gui::button::functor_release, this);
 	functors.press.push_back(functor);
 }
 
 void				button::functor_press()
 {
 	engine::core::should_render = true;
-	is_pressed = true;
+	is_pressed = is_toggle ? not is_pressed : true;
 }
 
 void				button::functor_release()
