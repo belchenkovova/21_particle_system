@@ -11,11 +11,10 @@ public :
 
 	void			add_item(const shared_ptr<object> &item)
 	{
-		if (not items.count(item))
-		{
-			items.emplace(item);
-			reload();
-		}
+		if (items.count(item))
+			throw (common::exception("GUI, Container : Item already exist in container"));
+		items.emplace(item);
+		reload();
 	}
 
 protected :

@@ -51,6 +51,7 @@ namespace			gui
 	class			container;
 	class			free_container;
 	class			horizontal_pack;
+	class			button_pack;
 
 	class			system;
 }

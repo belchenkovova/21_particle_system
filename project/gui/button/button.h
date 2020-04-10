@@ -7,6 +7,7 @@
 class								gui::button : public gui::editor, public gui::object
 {
 	friend class					gui::system;
+	friend class					gui::button_pack;
 
 public :
 
@@ -21,7 +22,7 @@ public :
 
 private :
 
-	const bool						is_toggle = false;
+	bool							is_toggle = false;
 	bool							is_pressed = false;
 
 	void							functor_press();

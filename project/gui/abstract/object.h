@@ -66,16 +66,16 @@ public :
 		return (position.has_value());
 	}
 
-	[[nodiscard]]
-	bool				have_press_functors() const
+	void				invoke_press_functors() const
 	{
-		return (not functors.press.empty());
+		for (const auto &functor : functors.press)
+			functor.run();
 	}
 
-	[[nodiscard]]
-	bool				have_release_functors() const
+	void				invoke_release_functors() const
 	{
-		return (not functors.release.empty());
+		for (const auto &functor : functors.release)
+			functor.run();
 	}
 
 protected :

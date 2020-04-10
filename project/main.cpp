@@ -31,6 +31,8 @@ public :
 
 		gui::button_with_label::indent = gui::point(25);
 
+		gui::horizontal_pack::spacing = 2;
+
 		particle_system::number_of_particles = 100 * 100;
 	}
 
@@ -46,19 +48,21 @@ public :
 
 	void			setup_gui()
 	{
-		auto		functor_hi  = engine::functor([](){ std::cout << "Hi" << std::endl; });
-		auto		functor_bye = engine::functor([](){ std::cout << "Bye" << std::endl; });
+		auto		functor_alpha  = engine::functor([](){ std::cout << "Alpha" << std::endl; });
+		auto		functor_beta = engine::functor([](){ std::cout << "Beta" << std::endl; });
+		auto		functor_gamma = engine::functor([](){ std::cout << "Gamma" << std::endl; });
 
-		auto		font_a = gui.generate_font("project/resources/HelveticaNeue.ttc", 50);
-		auto		font_b = gui.generate_font("project/resources/HelveticaNeue.ttc", 40);
+		auto		font = gui.generate_font("project/resources/Courier New.ttf", 20);
 
-		auto		button_hi = gui.generate_button_with_label(functor_hi, std::string("Hi"), font_a);
-		auto		button_bye = gui.generate_button_with_label(functor_bye, std::string("Bye"), font_b);
+		auto		button_alpha = gui.generate_button_with_label(functor_alpha, std::string("alpha"), font);
+		auto		button_beta = gui.generate_button_with_label(functor_beta, std::string("beta"), font);
+		auto		button_gamma = gui.generate_button_with_label(functor_gamma, std::string("gamma"), font);
 
-		auto		pack = gui.generate_horizontal_pack(gui::point(10, 10));
+		auto		pack = gui.generate_button_pack(gui::point(10, 10), gui::button_pack::type::one_active);
 
-		pack->add_item(button_hi);
-		pack->add_item(button_bye);
+		pack->add_button(button_alpha);
+		pack->add_button(button_beta);
+		pack->add_button(button_gamma);
 	}
 
 	void			start()

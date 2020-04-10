@@ -14,10 +14,10 @@ void				horizontal_pack::reload()
 	for (const auto &item : items)
 		item_size = std::max(item->read_required_size(), item_size);
 
-	required_size->x = item_size.x * (int)items.size();
-	required_size->x = item_size.y;
+	required_size->x = item_size.x * (int)items.size() + spacing * ((int)items.size() - 1);
+	required_size->y = item_size.y;
 
-	const auto		position_step = item_size.x;
+	const auto		position_step = item_size.x + spacing;
 	auto			position_iter = position.value_or(point());
 
 	for (const auto &item : items)

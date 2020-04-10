@@ -23,17 +23,12 @@ void 					system::functor_press()
 	auto				point = core.receive_event().read_mouse();
 
 	for (const auto &object : render_objects)
-		if (object->have_press_functors() and object->test_point(point))
-			for_each(
-				object->functors.press.begin(), object->functors.press.end(),
-				[](const functor &functor){ functor.run(); });
+		if (object->test_point(point))
+			object->invoke_press_functors();
 }
 
 void 					system::functor_release()
 {
 	for (const auto &object : render_objects)
-		if (object->have_release_functors())
-			for_each(
-				object->functors.release.begin(), object->functors.release.end(),
-				[](const functor &functor){ functor.run(); });
+		object->invoke_release_functors();
 }
