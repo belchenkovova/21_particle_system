@@ -12,8 +12,8 @@ public :
 							particle_system(engine::core &engine, computer::core &computer);
 							~particle_system() = default;
 
-	const engine::renderer	&receive_particle_renderer();
-	const engine::renderer	&receive_cube_renderer();
+	engine::renderer		&receive_particle_renderer();
+	engine::renderer		&receive_cube_renderer();
 
 private :
 
@@ -37,7 +37,7 @@ private :
 		public :
 
 			explicit		particle(camera_type &camera);
-			void 			render() const override;
+			void 			render() override;
 
 			using			engine::renderer::program;
 			using			engine::renderer::buffer;
@@ -52,7 +52,7 @@ private :
 		public :
 
 			explicit		cube(camera_type &camera);
-			void 			render() const override;
+			void 			render() override;
 
 			camera_type		&camera;
 		}					cube;

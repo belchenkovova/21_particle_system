@@ -16,6 +16,9 @@ public :
 		engine::core::window_height = 720;
 		engine::core::window_name = "Particle System";
 		engine::core::background = glm::vec3(.05f, .05f, .05f);
+		engine::core::use_multisampling = false;
+		engine::core::number_of_samples = 0;
+		engine::core::use_blending = true;
 
 		engine::camera::start_position = glm::vec3(0.f, 0.f, 5.f);
 		engine::camera::movement_speed = .1f;
@@ -27,6 +30,7 @@ public :
 
 		gui::button::body_color = glm::vec3(0.2f, 0.2f, 0.2f);
 		gui::button::frame_color = glm::vec3(0.35f, 0.35f, 0.35f);
+		gui::button::active_mask = glm::vec4(0.f, 0.f, 0.5f, 0.5f);
 		gui::button::frame_width = 2;
 
 		gui::button_with_label::indent = gui::point(25);
@@ -38,8 +42,8 @@ public :
 
 	void			setup_dynamic()
 	{
-		engine::core::settings::depth_test(true);
-		engine::core::settings::point_size(1);
+		engine::core::settings::point_size(2);
+		engine::core::should_render = true;
 
 		engine.attach_renderer(system.receive_particle_renderer());
 		engine.attach_renderer(system.receive_cube_renderer());

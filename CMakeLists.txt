@@ -59,10 +59,9 @@ set(COMPUTER
 set(GUI
 	project/gui/symbol/symbol.cpp
 	project/gui/font/font.cpp
-	project/gui/label/renderer.cpp
+	project/gui/renderers/renderers.cpp
 	project/gui/label/label.cpp
 	project/gui/button/button.cpp
-	project/gui/button/renderers.cpp
 	project/gui/button/button_with_label.cpp
 	project/gui/container/horizontal_pack.cpp
 	project/gui/container/button_pack.cpp

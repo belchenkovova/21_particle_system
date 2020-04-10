@@ -7,7 +7,7 @@ using namespace		gui;
 					objects(objects)
 {}
 
-void 				system::renderer::render() const
+void 				system::renderer::render()
 {
 	engine::core::settings::depth_test(false);
 	for (const auto &object : objects)

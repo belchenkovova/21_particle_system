@@ -18,7 +18,7 @@ public :
 	}
 	virtual				~renderer() = default;
 
-	virtual void		render() const = 0;
+	virtual void		render() = 0;
 
 protected :
 

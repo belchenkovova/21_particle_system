@@ -29,12 +29,9 @@
 	points = std::dynamic_pointer_cast<points_type>(buffer->receive_attribute_as_pointer(0));
 	assert(points != nullptr);
 	points->save();
-
-	program->build_uniform("uniform_projection");
-	program->build_uniform("uniform_view");
 }
 
-void				particle_system::renderers::particle::render() const
+void				particle_system::renderers::particle::render()
 {
 	program->upload_uniform("uniform_projection", camera.receive_projection_matrix());
 	program->upload_uniform("uniform_view", camera.receive_view_matrix());
@@ -57,9 +54,6 @@ void				particle_system::renderers::particle::render() const
 	program->attach_shader(engine::shader::type::vertex, "project/resources/OpenGL/particle.vertex.glsl");
 	program->attach_shader(engine::shader::type::fragment, "project/resources/OpenGL/particle.fragment.glsl");
 	program->link();
-
-	program->build_uniform("uniform_projection");
-	program->build_uniform("uniform_view");
 
 	buffer->generate_attribute<float, 3>();
 	buffer->resize(8);
@@ -111,7 +105,7 @@ void				particle_system::renderers::particle::render() const
 	buffer->save();
 }
 
-void				particle_system::renderers::cube::render() const
+void				particle_system::renderers::cube::render()
 {
 
 	program->upload_uniform("uniform_projection", camera.receive_projection_matrix());

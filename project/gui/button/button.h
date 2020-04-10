@@ -13,6 +13,7 @@ public :
 
 	static inline glm::vec3			body_color{0.f, 0.f, 0.f};
 	static inline glm::vec3			frame_color{0.f, 0.f, 0.f};
+	static inline glm::vec4			active_mask{0.f, 0.f, 0.f, 0.f};
 	static inline int				frame_width{0};
 
 	explicit						button(const functor &functor, bool is_toggle = true);
@@ -27,42 +28,6 @@ private :
 
 	void							functor_press();
 	void							functor_release();
-
-	static void 					start(const engine::core &core);
-
-	static inline struct			renderers
-	{
-		using						points_type = engine::vbo::real<float, 2>;
-		using						points_ptr_type = shared_ptr<points_type>;
-
-		class						first final : public engine::renderer
-		{
-		public :
-									explicit first(const engine::core &core);
-									~first() override = default;
-
-			void					render() const override;
-
-			points_ptr_type			points;
-
-			using					engine::renderer::program;
-		};
-
-		class						second final : public engine::renderer
-		{
-		public :
-			explicit				second(const engine::core &core);
-									~second() override = default;
-
-			void					render() const override;
-
-			points_ptr_type			points;
-			using					engine::renderer::program;
-		};
-
-		unique_ptr<first>			first;
-		unique_ptr<second>			second;
-	}								renderers;
 };
 
 

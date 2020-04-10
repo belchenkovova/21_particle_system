@@ -1,4 +1,5 @@
 #include "label.h"
+#include "gui/renderers/renderers.h"
 
 using namespace		gui;
 
@@ -22,42 +23,24 @@ using namespace		gui;
 void				label::render() const
 {
 	revise_self();
-	assert(renderer);
+	assert(gui::renderers);
 
 	point			position_iterator;
-	point			position_this;
-	point			size_this;
+	point			position_current;
 
 	position_iterator.x = position->x + (current_size->x - required_size->x) / 2;
 	position_iterator.y = position->y + (current_size->y - required_size->y) / 2;
 	position_iterator.y += required_size->y;
 
-	renderer->program->upload_uniform("uniform_color", font->color);
 
 	for (const auto &text_iterator : text)
 	{
 		auto		symbol = font->find_symbol(text_iterator);
 
-		position_this.x = position_iterator.x + symbol.read_bearing().x;
-		position_this.y = position_iterator.y - symbol.read_bearing().y;
+		position_current.x = position_iterator.x + symbol.read_bearing().x;
+		position_current.y = position_iterator.y - symbol.read_bearing().y;
 
-		size_this = symbol.read_size();
-
-		float		data[] =
-		{
-			(float)position_this.x + (float)size_this.x, (float)position_this.y,
-			(float)position_this.x, (float)position_this.y,
-			(float)position_this.x, (float)position_this.y + (float)size_this.y,
-			(float)position_this.x + (float)size_this.x, (float)position_this.y + (float)size_this.y
-		};
-
-		for (int i = 0; i < 8; i++)
-			renderer->points->at(i) = data[i];
-		renderer->points->save();
-
-		symbol.read_texture().bind(true);
-		renderer->render();
-		symbol.read_texture().bind(false);
+		renderers->text.render(position_current, symbol.read_size(), font->color, symbol.read_texture());
 
 		position_iterator.x += symbol.read_advance();
 	}

@@ -15,17 +15,19 @@ public :
 	void 					link();
 	void					use(const bool &state) const;
 
-	void					build_uniform(const string &name);
 	template 				<typename type>
-	void					upload_uniform(const string &name, type data) const
+	void					upload_uniform(const string &name, type data)
 	{
 		auto				uniform = uniforms.find(name);
 
-		use(true);
-		if (uniform == uniforms.end())
-			throw (common::exception("Engine, Program : Uniform not found"));
-		uniform->second.upload(data);
-		use(false);
+		use(true); DEBUG_GL
+		if (uniform == uniforms.end()) DEBUG_GL
+			tie(uniform, ignore) = uniforms.emplace(
+				piecewise_construct,
+				forward_as_tuple(name),
+				forward_as_tuple(name, object));
+		uniform->second.upload(data); DEBUG_GL
+		use(false); DEBUG_GL
 	}
 
 private :

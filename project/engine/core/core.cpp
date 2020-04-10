@@ -15,7 +15,7 @@ using namespace		engine;
 	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 	glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 	if (use_multisampling)
-		glfwWindowHint(GLFW_SAMPLES, 4);
+		glfwWindowHint(GLFW_SAMPLES, number_of_samples);
 
 	window = glfwCreateWindow(window_width, window_height, window_name.c_str(), nullptr, nullptr);
 	if (window == nullptr)
@@ -48,7 +48,7 @@ using namespace		engine;
 	glfwTerminate();
 }
 
-void 				core::attach_renderer(const engine::renderer &renderer)
+void 				core::attach_renderer(engine::renderer &renderer)
 {
 	renderers.emplace_back(renderer);
 }

@@ -51,7 +51,7 @@ public :
 	}
 
 
-	const engine::renderer	&receive_renderer();
+	engine::renderer		&receive_renderer();
 
 private :
 
@@ -76,7 +76,7 @@ private :
 		explicit			renderer(const objects_type &objects);
 							~renderer() override = default;
 
-		void				render() const override;
+		void				render() override;
 
 		const objects_type	&objects;
 	}						renderer;

@@ -1,19 +1,21 @@
 #include "system.h"
+#include "gui/renderers/renderers.h"
 
 using namespace			gui;
+
+renderers_type			gui::renderers;
 
 						system::system(engine::core &core) :
 						core(core),
 						renderer(render_objects)
 {
-	label::start(core);
-	button::start(core);
+	renderers = make_unique<class renderers>(core);
 
 	core.generate_callback(event::type::mouse_press, &system::functor_press, this);
 	core.generate_callback(event::type::mouse_release, &system::functor_release, this);
 }
 
-const engine::renderer	&system::receive_renderer()
+engine::renderer		&system::receive_renderer()
 {
 	return (renderer);
 }

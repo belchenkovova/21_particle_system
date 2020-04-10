@@ -17,6 +17,8 @@
 
 #include "common/common.h"
 
+#include "debug.h"
+
 namespace						engine
 {
 	using						std::string;
@@ -30,6 +32,10 @@ namespace						engine
 	using 						std::make_pair;
 	using						std::map;
 	using						std::ostream;
+	using						std::tie;
+	using						std::ignore;
+	using						std::piecewise_construct;
+	using						std::forward_as_tuple;
 
 	template					<typename type>
 	void 						revise_optional(const optional<type> &data)

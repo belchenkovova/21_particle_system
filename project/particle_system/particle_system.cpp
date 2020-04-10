@@ -13,12 +13,12 @@
 	arguments.position.release();
 }
 
-const engine::renderer	&particle_system::receive_particle_renderer()
+engine::renderer		&particle_system::receive_particle_renderer()
 {
 	return (renderers.particle);
 }
 
-const engine::renderer	&particle_system::receive_cube_renderer()
+engine::renderer		&particle_system::receive_cube_renderer()
 {
 	return (renderers.cube);
 }
