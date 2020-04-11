@@ -5,6 +5,7 @@
 #include "gui/label/label.h"
 #include "gui/button/button_with_label.h"
 #include "gui/container/horizontal_pack.h"
+#include "gui/container/vertical_pack.h"
 #include "gui/container/button_pack.h"
 
 class						gui::system final
@@ -36,6 +37,15 @@ public :
 	auto					generate_horizontal_pack(args_type &&...args)
 	{
 		auto 				pointer = make_shared<horizontal_pack>(args...);
+
+		objects.push_back(static_pointer_cast<object>(pointer));
+		return (pointer);
+	}
+
+	template				<typename ...args_type>
+	auto					generate_vertical_pack(args_type &&...args)
+	{
+		auto 				pointer = make_shared<vertical_pack>(args...);
 
 		objects.push_back(static_pointer_cast<object>(pointer));
 		return (pointer);

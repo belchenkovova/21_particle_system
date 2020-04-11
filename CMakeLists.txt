@@ -65,6 +65,7 @@ set(GUI
 	project/gui/button/button.cpp
 	project/gui/button/button_with_label.cpp
 	project/gui/container/horizontal_pack.cpp
+	project/gui/container/vertical_pack.cpp
 	project/gui/container/button_pack.cpp
 	project/gui/system/system.cpp
 	project/gui/system/renderer.cpp)

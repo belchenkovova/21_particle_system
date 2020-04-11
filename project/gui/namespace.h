@@ -57,8 +57,8 @@ namespace					gui
 	class 					button;
 	class 					button_with_label;
 	class					container;
-	class					free_container;
 	class					horizontal_pack;
+	class					vertical_pack;
 	class					button_pack;
 
 	class					system;

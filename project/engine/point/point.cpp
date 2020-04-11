@@ -10,14 +10,14 @@ using namespace		engine;
 					x{x}, y{y}
 {}
 
-point				point::operator + (const point& other) const
+point				point::operator + (const point& that) const
 {
-	return (point(this->x + other.x, this->y + other.y));
+	return (point(this->x + that.x, this->y + that.y));
 }
 
-point				point::operator - (const point& other) const
+point				point::operator - (const point& that) const
 {
-	return (point(this->x - other.x, this->y - other.y));
+	return (point(this->x - that.x, this->y - that.y));
 }
 
 point				point::operator * (int value) const
@@ -30,16 +30,16 @@ point				point::operator / (int value) const
 	return (point(this->x / value, this->y / value));
 }
 
-void				point::operator += (const point& other)
+void				point::operator += (const point& that)
 {
-	this->x += other.x;
-	this->y += other.y;
+	this->x += that.x;
+	this->y += that.y;
 }
 
-void				point::operator -= (const point& other)
+void				point::operator -= (const point& that)
 {
-	this->x -= other.x;
-	this->y -= other.y;
+	this->x -= that.x;
+	this->y -= that.y;
 }
 
 void				point::operator *= (int value)
@@ -54,33 +54,43 @@ void				point::operator /= (int value)
 	this->y /= value;
 }
 
-bool				point::operator > (const point &other) const
+bool				point::operator > (const point &that) const
 {
-	return (this->x > other.x and this->y > other.y);
+	return (this->x > that.x and this->y > that.y);
 }
 
-bool				point::operator < (const point &other) const
+bool				point::operator < (const point &that) const
 {
-	return (this->x < other.x and this->y < other.y);
+	return (this->x < that.x and this->y < that.y);
 }
 
-bool				point::operator >= (const point &other) const
+bool				point::operator >= (const point &that) const
 {
-	return (this->x >= other.x and this->y >= other.y);
+	return (this->x >= that.x and this->y >= that.y);
 }
 
-bool				point::operator <= (const point &other) const
+bool				point::operator <= (const point &that) const
 {
-	return (this->x <= other.x and this->y <= other.y);
+	return (this->x <= that.x and this->y <= that.y);
 }
 
-bool				point::operator == (const point &other) const
+bool				point::operator == (const point &that) const
 {
-	return (this->x == other.x and this->y == other.y);
+	return (this->x == that.x and this->y == that.y);
 }
-bool				point::operator != (const point &other) const
+bool				point::operator != (const point &that) const
 {
-	return (this->x != other.x or this->y != other.y);
+	return (this->x != that.x or this->y != that.y);
+}
+
+point				point::min(const point &left, const point &right)
+{
+	return {std::min(left.x, right.x), std::min(left.y, right.y)};
+}
+
+point				point::max(const point &left, const point &right)
+{
+	return {std::max(left.x, right.x), std::max(left.y, right.y)};
 }
 
 ostream				&operator << (ostream& stream, const point &point)

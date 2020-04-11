@@ -1,18 +1,18 @@
-#include "horizontal_pack.h"
+#include "vertical_pack.h"
 
 using namespace		gui;
 
-					horizontal_pack::horizontal_pack()
+					vertical_pack::vertical_pack()
 {
 	is_latent = true;
 }
 
-					horizontal_pack::horizontal_pack(const point &position)
+					vertical_pack::vertical_pack(const point &position)
 {
 	this->position = position;
 }
 
-void				horizontal_pack::reload()
+void				vertical_pack::reload()
 {
 	auto			item_size = point();
 
@@ -20,15 +20,15 @@ void				horizontal_pack::reload()
 		item_size = point::max(item->read_required_size(), item_size);
 
 	required_size = indent * 2;
-	required_size->x += item_size.x * (int)items.size() + spacing * ((int)items.size() - 1);
-	required_size->y += item_size.y;
+	required_size->x += item_size.x;
+	required_size->y += item_size.y * (int)items.size() + spacing * ((int)items.size() - 1);
 
 	if (current_size >= required_size)
 		item_size += (*current_size - *required_size) / (int)items.size();
 	else
 		current_size = required_size;
 
-	const auto		position_step = item_size.x + spacing;
+	const auto		position_step = item_size.y + spacing;
 	auto			position_iter = position.value_or(point()) + indent;
 
 	for (const auto &item : items)
@@ -37,13 +37,13 @@ void				horizontal_pack::reload()
 		if (have_position())
 		{
 			open_position(*item) = position_iter;
-			position_iter.x += position_step;
+			position_iter.y += position_step;
 		}
 		editor::reload(*item);
 	}
 }
 
-void				horizontal_pack::render() const
+void				vertical_pack::render() const
 {
 	rectangle::render();
 	for (const auto &item : items)

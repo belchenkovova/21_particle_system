@@ -11,23 +11,26 @@ public :
 					point(int x, int y);
 					~point() = default;
 
-	point			operator + (const point& other) const;
-	point			operator - (const point& other) const;
+	point			operator + (const point& that) const;
+	point			operator - (const point& that) const;
 	point			operator * (int value) const;
 	point			operator / (int value) const;
 
-	void			operator += (const point& other);
-	void			operator -= (const point& other);
+	void			operator += (const point& that);
+	void			operator -= (const point& that);
 	void			operator *= (int value);
 	void			operator /= (int value);
 
-	bool			operator > (const point &other) const;
-	bool			operator < (const point &other) const;
-	bool			operator >= (const point &other) const;
-	bool			operator <= (const point &other) const;
+	static point	min(const point &left, const point &right);
+	static point	max(const point &left, const point &right);
 
-	bool			operator == (const point &other) const;
-	bool			operator != (const point &other) const;
+	bool			operator > (const point &that) const;
+	bool			operator < (const point &that) const;
+	bool			operator >= (const point &that) const;
+	bool			operator <= (const point &that) const;
+
+	bool			operator == (const point &that) const;
+	bool			operator != (const point &that) const;
 
 	int 			x{0};
 	int 			y{0};

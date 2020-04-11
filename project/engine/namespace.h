@@ -36,6 +36,8 @@ namespace						engine
 	using						std::ignore;
 	using						std::piecewise_construct;
 	using						std::forward_as_tuple;
+	using						std::min;
+	using						std::max;
 
 	template					<typename type>
 	void 						revise_optional(const optional<type> &data)
