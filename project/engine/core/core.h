@@ -9,14 +9,14 @@ class							engine::core final
 {
 public :
 
-	inline static int			window_width{0};
-	inline static int			window_height{0};
-	inline static string		window_name{""};
-	inline static glm::vec3		background{0.f, 0.f, 0.f};
-	inline static bool			use_blending{false};
-	inline static bool			use_multisampling{false};
-	inline static int			number_of_samples{0};
-	inline static bool 			should_render{false};
+	inline static int			window_width = 0;
+	inline static int			window_height = 0;
+	inline static string		window_name;
+	inline static glm::vec3		background = glm::vec3(0.f, 0.f, 0.f);
+	inline static bool			use_blending = false;
+	inline static bool			use_multisampling = false;
+	inline static int			number_of_samples = 0;
+	inline static bool 			should_render = false;
 
 								core();
 								~core();
@@ -56,10 +56,10 @@ public :
 
 protected :
 
-	inline static int			instance_count{0};
-	GLFWwindow					*window{nullptr};
-	int							final_width{0};
-	int							final_height{0};
+	inline static int			instance_count = 0;
+	GLFWwindow					*window = nullptr;
+	int							final_width = 0;
+	int							final_height = 0;
 	event						event;
 
 	using						renderer_refence = reference_wrapper<renderer>;

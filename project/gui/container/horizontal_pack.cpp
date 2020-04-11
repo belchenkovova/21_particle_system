@@ -14,11 +14,14 @@ void				horizontal_pack::reload()
 	for (const auto &item : items)
 		item_size = std::max(item->read_required_size(), item_size);
 
+	required_size.emplace();
 	required_size->x = item_size.x * (int)items.size() + spacing * ((int)items.size() - 1);
 	required_size->y = item_size.y;
 
+	current_size = *required_size + indent * 2;
+
 	const auto		position_step = item_size.x + spacing;
-	auto			position_iter = position.value_or(point());
+	auto			position_iter = position.value_or(point()) + indent;
 
 	for (const auto &item : items)
 	{
@@ -28,6 +31,13 @@ void				horizontal_pack::reload()
 			open_position(*item) = position_iter;
 			position_iter.x += position_step;
 		}
-		item->reload();
+		editor::reload(*item);
 	}
+}
+
+void				horizontal_pack::render() const
+{
+	rectangle::render();
+	for (const auto &item : items)
+		editor::render(*item);
 }

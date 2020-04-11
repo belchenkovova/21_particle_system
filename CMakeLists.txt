@@ -60,6 +60,7 @@ set(GUI
 	project/gui/symbol/symbol.cpp
 	project/gui/font/font.cpp
 	project/gui/renderers/renderers.cpp
+	project/gui/rectangle/rectangle.cpp
 	project/gui/label/label.cpp
 	project/gui/button/button.cpp
 	project/gui/button/button_with_label.cpp

@@ -28,7 +28,7 @@ public :
 	{
 		auto 				pointer = make_shared<button_with_label>(args...);
 
-		render_objects.push_back(static_pointer_cast<object>(pointer));
+		objects.push_back(static_pointer_cast<object>(pointer));
 		return (pointer);
 	}
 
@@ -37,7 +37,7 @@ public :
 	{
 		auto 				pointer = make_shared<horizontal_pack>(args...);
 
-		non_render_objects.push_back(static_pointer_cast<object>(pointer));
+		objects.push_back(static_pointer_cast<object>(pointer));
 		return (pointer);
 	}
 
@@ -46,7 +46,7 @@ public :
 	{
 		auto 				pointer = make_shared<button_pack>(args...);
 
-		non_render_objects.push_back(static_pointer_cast<object>(pointer));
+		objects.push_back(static_pointer_cast<object>(pointer));
 		return (pointer);
 	}
 
@@ -61,8 +61,7 @@ private :
 	fonts_type				fonts;
 
 	using					objects_type = vector<shared_ptr<object>>;
-	objects_type			render_objects;
-	objects_type			non_render_objects;
+	objects_type			objects;
 
 	void					functor_press();
 	void					functor_release();

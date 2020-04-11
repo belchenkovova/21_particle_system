@@ -11,5 +11,6 @@ void 				system::renderer::render()
 {
 	engine::core::settings::depth_test(false);
 	for (const auto &object : objects)
-		object->render();
+		if (not object->is_latent)
+			object->render();
 }

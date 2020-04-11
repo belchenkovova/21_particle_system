@@ -27,9 +27,37 @@ public :
 						object() = default;
 	virtual				~object() = default;
 
+protected :
+
 	virtual void		render() const {}
 
 	virtual void		reload() {}
+
+	bool 				is_latent = false;
+
+	optional<point>		required_size;
+	optional<point>		current_size;
+
+	optional<point>		position;
+
+	using 				functor_type = list<functor>;
+	struct
+	{
+		functor_type	press;
+		functor_type	release;
+	}					functors;
+
+	void 				revise_self() const
+	{
+		gui::revise_optional(required_size);
+		gui::revise_optional(current_size);
+		gui::revise_optional(position);
+
+		if (current_size < required_size)
+			throw (common::exception("GUI, Space : Bad current size"));
+	}
+
+public :
 
 	[[nodiscard]]
 	point				read_required_size() const
@@ -53,17 +81,19 @@ public :
 	}
 
 	[[nodiscard]]
+	bool				have_position() const
+	{
+		return (position.has_value());
+	}
+
+private :
+
+	[[nodiscard]]
 	bool				test_point(const point &point) const
 	{
 		if (position.has_value() and current_size.has_value())
 			return (point > *position and point < *position + *current_size);
 		return false;
-	}
-
-	[[nodiscard]]
-	bool				have_position() const
-	{
-		return (position.has_value());
 	}
 
 	void				invoke_press_functors() const
@@ -76,30 +106,6 @@ public :
 	{
 		for (const auto &functor : functors.release)
 			functor.run();
-	}
-
-protected :
-
-	optional<point>		required_size;
-	optional<point>		current_size;
-
-	optional<point>		position;
-
-	using 				functor_type = list<functor>;
-	struct
-	{
-		functor_type	press;
-		functor_type	release;
-	}					functors;
-
-	void 				revise_self() const
-	{
-		gui::revise_optional(required_size);
-		gui::revise_optional(current_size);
-		gui::revise_optional(position);
-
-		if (current_size < required_size)
-			throw (common::exception("GUI, Space : Bad current size"));
 	}
 };
 

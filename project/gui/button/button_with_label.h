@@ -4,13 +4,12 @@
 #include "gui/button/button.h"
 #include "gui/label/label.h"
 
-class					gui::button_with_label : public gui::button
+class					gui::button_with_label final : public gui::button
 {
 public :
 
-	static inline point	indent{};
+	point				indent;
 
-public :
 						button_with_label(
 						const class functor &functor,
 						const string &text,
@@ -23,5 +22,4 @@ public :
 private :
 
 	label				label;
-	point				final_indent;
 };

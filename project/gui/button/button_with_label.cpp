@@ -9,8 +9,7 @@ using namespace		gui;
 					button(functor),
 					label(text, font)
 {
-	final_indent = indent + point(frame_width);
-	required_size = label.read_required_size() + final_indent * 2;
+	button_with_label::reload();
 }
 
 void				button_with_label::render() const
@@ -21,7 +20,9 @@ void				button_with_label::render() const
 
 void				button_with_label::reload()
 {
-	revise_self();
+	auto 			final_indent = indent + point(frame_width);
+
+	required_size = label.read_required_size() + final_indent * 2;
 	open_current_size(label) = *current_size - final_indent * 2;
 	open_position(label) = *position + final_indent;
 }

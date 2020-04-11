@@ -28,15 +28,6 @@ public :
 
 		computer::core::use_OpenGL = true;
 
-		gui::button::body_color = glm::vec3(0.2f, 0.2f, 0.2f);
-		gui::button::frame_color = glm::vec3(0.35f, 0.35f, 0.35f);
-		gui::button::active_mask = glm::vec4(0.f, 0.f, 0.5f, 0.5f);
-		gui::button::frame_width = 2;
-
-		gui::button_with_label::indent = gui::point(25);
-
-		gui::horizontal_pack::spacing = 2;
-
 		particle_system::number_of_particles = 100 * 100;
 	}
 
@@ -62,7 +53,26 @@ public :
 		auto		button_beta = gui.generate_button_with_label(functor_beta, std::string("beta"), font);
 		auto		button_gamma = gui.generate_button_with_label(functor_gamma, std::string("gamma"), font);
 
-		auto		pack = gui.generate_button_pack(gui::point(10, 10), gui::button_pack::type::one_active);
+		auto 		setup_button = [](gui::button_with_label &button)
+		{
+			button.body_color = glm::vec3(0.3f, 0.3f, 0.3f);
+			button.frame_color = glm::vec3(0.35f, 0.35f, 0.35f);
+			button.frame_width = 2;
+			button.active_color = glm::vec4(0.f, 0.f, 0.5f, 0.5f);
+			button.indent = gui::point(25);
+		};
+
+		setup_button(*button_alpha);
+		setup_button(*button_beta);
+		setup_button(*button_gamma);
+
+		auto		pack = gui.generate_button_pack(gui::point(10, 10), gui::button_pack::activation_type::one);
+
+		pack->body_color = glm::vec3(0.2f, 0.2f, 0.2f);
+		pack->frame_color = glm::vec3(0.25f, 0.25f, 0.25f);
+		pack->frame_width = 2;
+		pack->spacing = 1;
+		pack->indent = gui::point(10);
 
 		pack->add_button(button_alpha);
 		pack->add_button(button_beta);

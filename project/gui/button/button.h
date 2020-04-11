@@ -2,19 +2,16 @@
 
 #include "gui/namespace.h"
 #include "gui/abstract/editor.h"
-#include "gui/abstract/object.h"
+#include "gui/rectangle/rectangle.h"
 
-class								gui::button : public gui::editor, public gui::object
+class								gui::button : public gui::editor, public gui::rectangle
 {
 	friend class					gui::system;
 	friend class					gui::button_pack;
 
 public :
 
-	static inline glm::vec3			body_color{0.f, 0.f, 0.f};
-	static inline glm::vec3			frame_color{0.f, 0.f, 0.f};
-	static inline glm::vec4			active_mask{0.f, 0.f, 0.f, 0.f};
-	static inline int				frame_width{0};
+	glm::vec4						active_color{0.f, 0.f, 0.f, 0.f};
 
 	explicit						button(const functor &functor, bool is_toggle = true);
 									~button() override = default;

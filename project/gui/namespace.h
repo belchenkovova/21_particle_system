@@ -38,7 +38,7 @@ namespace					gui
 	template				<typename type>
 	void 					revise_optional(const optional<type> &data)
 	{
-		if (not data.has_value())
+		if (not data)
 			throw (common::exception("GUI : Optional doesn't have value"));
 	}
 
@@ -52,6 +52,7 @@ namespace					gui
 
 	class					object;
 	class					editor;
+	class					rectangle;
 	class 					label;
 	class 					button;
 	class 					button_with_label;

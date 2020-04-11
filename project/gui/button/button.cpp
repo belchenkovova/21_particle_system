@@ -29,17 +29,10 @@ void				button::render() const
 	revise_self();
 	assert(renderers);
 
-	renderers->rectangle.render(
-		*position,
-		*current_size,
-		frame_color);
-	renderers->rectangle.render(
-		*position + point(frame_width),
-		*current_size - point(2 * frame_width),
-		body_color);
+	rectangle::render();
 	if (is_pressed)
 		renderers->rectangle.render(
 			*position,
 			*current_size,
-			active_mask);
+			active_color);
 }

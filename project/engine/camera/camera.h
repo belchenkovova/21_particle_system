@@ -6,13 +6,13 @@ class					engine::camera
 {
 public :
 
-	static inline float		movement_speed{0.f};
-	static inline float		rotation_speed{0.f};
-	static inline glm::vec3	start_position{0.f, 0.f, 0.f};
-	static inline float		start_yaw{-90.f};
-	static inline float		start_pitch{0.f};
-	static inline float		near_plane{0.1f};
-	static inline float		far_plane{100.f};
+	static inline float		movement_speed = 0.f;
+	static inline float		rotation_speed = 0.f;
+	static inline auto		start_position = glm::vec3(0.f, 0.f, 0.f);
+	static inline float		start_yaw = -90.f;
+	static inline float		start_pitch = 0.f;
+	static inline float		near_plane = 0.1f;
+	static inline float		far_plane = 100.f;
 
 							camera();
 							~camera() = default;

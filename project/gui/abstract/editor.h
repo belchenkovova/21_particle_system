@@ -12,6 +12,31 @@ public :
 
 protected :
 
+	static void 			declare_latent(object &object)
+	{
+		object.is_latent = true;
+	}
+
+	static void 			reload(object &object)
+	{
+		object.reload();
+	}
+
+	static void 			render(object &object)
+	{
+		object.render();
+	}
+
+	static void				invoke_press_functors(object &object)
+	{
+		object.invoke_press_functors();
+	}
+
+	static void				invoke_release_functors(object &object)
+	{
+		object.invoke_release_functors();
+	}
+
 	static optional<point>	&open_current_size(object &object)
 	{
 		return (object.current_size);

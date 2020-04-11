@@ -40,7 +40,7 @@ namespace						engine
 	template					<typename type>
 	void 						revise_optional(const optional<type> &data)
 	{
-		if (not data.has_value())
+		if (not data)
 			throw (common::exception("Engine: Optional doesn't have value"));
 	}
 
