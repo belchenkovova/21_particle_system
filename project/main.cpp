@@ -46,18 +46,19 @@ public :
 		auto		functor_alpha  = engine::functor([](){ std::cout << "Alpha" << std::endl; });
 		auto		functor_beta = engine::functor([](){ std::cout << "Beta" << std::endl; });
 		auto		functor_gamma = engine::functor([](){ std::cout << "Gamma" << std::endl; });
-		auto		functor_delta = engine::functor([](){ std::cout << "Delta" << std::endl; });
-		auto		functor_epsilon = engine::functor([](){ std::cout << "Epsilon" << std::endl; });
 
-		auto		font = gui.generate_font("project/resources/Courier New.ttf", 20);
+		auto		functor_plus = engine::functor([](){ std::cout << "Plus" << std::endl; });
+		auto		functor_minus = engine::functor([](){ std::cout << "Minus" << std::endl; });
 
-		auto		button_alpha = gui.generate_button_with_label(functor_alpha, std::string("alpha"), font);
-		auto		button_beta = gui.generate_button_with_label(functor_beta, std::string("beta"), font);
-		auto		button_gamma = gui.generate_button_with_label(functor_gamma, std::string("gamma"), font);
-		auto		button_delta = gui.generate_button_with_label(functor_delta, std::string("delta"), font);
-		auto		button_epsilon = gui.generate_button_with_label(functor_delta, std::string("epsilon"), font);
+		auto		font = gui.generate_font("project/resources/GUI/Courier New.ttf", 20);
 
-		auto 		setup_button = [](gui::button_with_label &button)
+		auto		button_alpha = gui.generate<gui::button_with_label>(functor_alpha, "alpha", font);
+		auto		button_beta = gui.generate<gui::button_with_label>(functor_beta, "beta", font);
+		auto		button_gamma = gui.generate<gui::button_with_label>(functor_gamma, "gamma", font);
+		auto		button_plus = gui.generate<gui::button_with_icon>(functor_plus, "project/resources/GUI/plus.png");
+		auto		button_minus = gui.generate<gui::button_with_icon>(functor_minus, "project/resources/GUI/minus.png");
+
+		auto 		setup_button_with_label = [](gui::button_with_label &button)
 		{
 			button.body_color = glm::vec3(0.3f, 0.3f, 0.3f);
 			button.frame_color = glm::vec3(0.35f, 0.35f, 0.35f);
@@ -66,13 +67,22 @@ public :
 			button.indent = gui::point(25);
 		};
 
-		setup_button(*button_alpha);
-		setup_button(*button_beta);
-		setup_button(*button_gamma);
-		setup_button(*button_delta);
-		setup_button(*button_epsilon);
+		auto 		setup_button_with_icon = [](gui::button_with_icon &button)
+		{
+			button.body_color = glm::vec3(0.3f, 0.3f, 0.3f);
+			button.frame_color = glm::vec3(0.35f, 0.35f, 0.35f);
+			button.frame_width = 2;
+			button.active_color = glm::vec4(0.f, 0.f, 0.5f, 0.5f);
+			button.indent = gui::point(10);
+		};
 
-		auto		button_pack_higher = gui.generate_button_pack(gui::button_pack::activation_type::one);
+		setup_button_with_label(*button_alpha);
+		setup_button_with_label(*button_beta);
+		setup_button_with_label(*button_gamma);
+		setup_button_with_icon(*button_plus);
+		setup_button_with_icon(*button_minus);
+
+		auto		button_pack_higher = gui.generate<gui::button_pack>(gui::button_pack::activation_type::one);
 
 		button_pack_higher->body_color = glm::vec3(0.2f, 0.2f, 0.2f);
 		button_pack_higher->frame_color = glm::vec3(0.25f, 0.25f, 0.25f);
@@ -84,7 +94,7 @@ public :
 		button_pack_higher->add_button(button_beta);
 		button_pack_higher->add_button(button_gamma);
 
-		auto		button_pack_lower = gui.generate_button_pack(gui::button_pack::activation_type::one);
+		auto		button_pack_lower = gui.generate<gui::button_pack>(gui::button_pack::activation_type::one);
 
 		button_pack_lower->id = 8;
 
@@ -94,10 +104,10 @@ public :
 		button_pack_lower->spacing = 1;
 		button_pack_lower->indent = gui::point(10);
 
-		button_pack_lower->add_button(button_delta);
-		button_pack_lower->add_button(button_epsilon);
+		button_pack_lower->add_button(button_plus);
+		button_pack_lower->add_button(button_minus);
 
-		auto		vertical_pack = gui.generate_vertical_pack(gui::point());
+		auto		vertical_pack = gui.generate<gui::vertical_pack>(gui::point());
 
 		vertical_pack->body_color = glm::vec3(1.f, 0.f, 0.f);
 		vertical_pack->frame_color = glm::vec3(0.25f, 0.25f, 0.25f);

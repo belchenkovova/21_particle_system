@@ -29,11 +29,11 @@ public :
 
 protected :
 
+	bool 				is_latent = false;
+
 	virtual void		render() const {}
 
 	virtual void		reload() {}
-
-	bool 				is_latent = false;
 
 	optional<point>		required_size;
 	optional<point>		current_size;
@@ -64,20 +64,6 @@ public :
 	{
 		gui::revise_optional(required_size);
 		return (*required_size);
-	}
-
-	[[nodiscard]]
-	point				read_current_size() const
-	{
-		gui::revise_optional(current_size);
-		return (*current_size);
-	}
-
-	[[nodiscard]]
-	point				read_position() const
-	{
-		gui::revise_optional(position);
-		return (*position);
 	}
 
 	[[nodiscard]]

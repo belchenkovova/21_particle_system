@@ -2,6 +2,7 @@
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
+
 #include <set>
 #include <map>
 #include <list>
@@ -12,11 +13,17 @@
 
 namespace					gui
 {
+	using					std::is_same_v;
+	using					std::for_each;
+
 	using					std::string;
 	using					std::set;
 	using					std::map;
 	using					std::list;
 	using					std::vector;
+	using					std::optional;
+	using					std::numeric_limits;
+
 	using					std::reference_wrapper;
 	using					std::static_pointer_cast;
 	using					std::dynamic_pointer_cast;
@@ -24,11 +31,6 @@ namespace					gui
 	using					std::make_shared;
 	using					std::unique_ptr;
 	using					std::make_unique;
-	using					std::optional;
-	using					std::numeric_limits;
-	using 					std::min;
-	using 					std::max;
-	using					std::for_each;
 
 	using					engine::point;
 	using 					engine::functor;
@@ -54,8 +56,10 @@ namespace					gui
 	class					editor;
 	class					rectangle;
 	class 					label;
+	class 					icon;
 	class 					button;
 	class 					button_with_label;
+	class 					button_with_icon;
 	class					container;
 	class					horizontal_pack;
 	class					vertical_pack;

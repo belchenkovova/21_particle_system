@@ -8,6 +8,8 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <glm/gtx/euler_angles.hpp>
 #include <OpenGL/OpenGL.h>
+#include <SOIL/SOIL.h>
+
 #include <string>
 #include <vector>
 #include <optional>

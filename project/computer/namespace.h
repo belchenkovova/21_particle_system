@@ -2,7 +2,7 @@
 
 #include "common/common.h"
 #include "engine/engine.h"
-#include "common/cl_wrapper.hpp"
+#include "external/cl_wrapper.hpp"
 #include <optional>
 #include <vector>
 

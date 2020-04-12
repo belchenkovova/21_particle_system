@@ -9,6 +9,7 @@ using namespace		gui;
 					text(text),
 					font(font)
 {
+	is_latent = true;
 	required_size = point();
 
 	for (const char &iter : text)

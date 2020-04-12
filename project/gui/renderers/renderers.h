@@ -38,6 +38,23 @@ public :
 		UV_ptr_type		UV;
 	}					text;
 
+	class				texture final : public engine::renderer
+	{
+	public :
+		explicit		texture(const glm::mat4 &projection);
+						~texture()	override = default;
+
+		void			render() override;
+		void 			render(
+						const point &position,
+						const point &size,
+						const engine::texture &target);
+	private :
+
+		vertex_ptr_type	vertex;
+		UV_ptr_type		UV;
+	}					texture;
+
 	class				rectangle final : public engine::renderer
 	{
 	public :

@@ -8,22 +8,21 @@ include_directories(
 	project)
 
 include_directories(
-	/usr/local/Cellar/glew/2.1.0_1/include
-	/usr/local/Cellar/glfw/3.3/include
-	/usr/local/Cellar/glm/0.9.9.5/include
-	/usr/local/Cellar/freetype/2.10.1/include/freetype2)
+	/usr/local/include
+	/opt/local/include
+	/usr/local/include/freetype2)
 
 link_directories(
-	/usr/local/Cellar/glew/2.1.0_1/lib
-	/usr/local/Cellar/glfw/3.3/lib
-	/usr/local/Cellar/freetype/2.10.1/lib)
+	/usr/local/lib
+	/opt/local/lib)
 
 link_libraries(
 	"-framework OpenGL"
 	"-framework OpenCL"
 	GLFW
 	GLEW
-	Freetype)
+	Freetype
+	SOIL)
 
 set(MAIN
 	project/main.cpp)
@@ -62,8 +61,10 @@ set(GUI
 	project/gui/renderers/renderers.cpp
 	project/gui/rectangle/rectangle.cpp
 	project/gui/label/label.cpp
+	project/gui/icon/icon.cpp
 	project/gui/button/button.cpp
 	project/gui/button/button_with_label.cpp
+	project/gui/button/button_with_icon.cpp
 	project/gui/container/horizontal_pack.cpp
 	project/gui/container/vertical_pack.cpp
 	project/gui/container/button_pack.cpp

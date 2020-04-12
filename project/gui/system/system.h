@@ -24,42 +24,22 @@ public :
 		return (pointer);
 	}
 
-	template				<typename ...args_type>
-	auto					generate_button_with_label(args_type &&...args)
+	template				<typename type, typename ...args_type>
+	auto					generate(args_type &&...args)
 	{
-		auto 				pointer = make_shared<button_with_label>(args...);
+		if constexpr (is_same_v<type, button_with_label>);
+		else if constexpr (is_same_v<type, button_with_icon>);
+		else if constexpr (is_same_v<type, horizontal_pack>);
+		else if constexpr (is_same_v<type, vertical_pack>);
+		else if constexpr (is_same_v<type, button_pack>);
+		else
+			static_assert(not is_same_v<type, type>, "GUI, System : Should generate value of given type");
+
+		auto 				pointer = make_shared<type>(args...);
 
 		objects.push_back(static_pointer_cast<object>(pointer));
 		return (pointer);
 	}
-
-	template				<typename ...args_type>
-	auto					generate_horizontal_pack(args_type &&...args)
-	{
-		auto 				pointer = make_shared<horizontal_pack>(args...);
-
-		objects.push_back(static_pointer_cast<object>(pointer));
-		return (pointer);
-	}
-
-	template				<typename ...args_type>
-	auto					generate_vertical_pack(args_type &&...args)
-	{
-		auto 				pointer = make_shared<vertical_pack>(args...);
-
-		objects.push_back(static_pointer_cast<object>(pointer));
-		return (pointer);
-	}
-
-	template				<typename ...args_type>
-	auto					generate_button_pack(args_type &&...args)
-	{
-		auto 				pointer = make_shared<button_pack>(args...);
-
-		objects.push_back(static_pointer_cast<object>(pointer));
-		return (pointer);
-	}
-
 
 	engine::renderer		&receive_renderer();
 
