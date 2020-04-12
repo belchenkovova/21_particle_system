@@ -18,8 +18,8 @@ public :
 
 private :
 
-	const float		period{0.f};
-	float			old_time{0.f};
+	const float		period = 0.f;
+	float			old_time = 0.f;
 };
 
 

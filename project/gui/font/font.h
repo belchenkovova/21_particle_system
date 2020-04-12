@@ -9,7 +9,7 @@ class					gui::font
 
 public :
 
-	static inline int	size{128};
+	static inline int	size = 128;
 
 						font(
 						const std::string &source,

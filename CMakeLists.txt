@@ -73,7 +73,7 @@ set(GUI
 
 set(PARTICLE_SYSTEM
 	project/particle_system/particle_system.cpp
-	project/particle_system/renderers.cpp)
+	project/particle_system/renderer.cpp)
 
 add_executable(21_particle_system
 	${MAIN}

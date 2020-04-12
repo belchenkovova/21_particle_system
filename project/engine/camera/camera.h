@@ -27,16 +27,16 @@ public :
 
 private :
 
-	const glm::vec3			up_const{0.f, 1.f, 0.f};
-	glm::vec3				position{start_position};
-	glm::vec3				front{0.f, 0.f, -1.f};
-	glm::vec3				up{up_const};
-	glm::vec3				right{0.f, 0.f, 0.f};
+	const glm::vec3			up_const = glm::vec3(0.f, 1.f, 0.f);
+	glm::vec3				position = start_position;
+	glm::vec3				front = glm::vec3(0.f, 0.f, -1.f);
+	glm::vec3				up = up_const;
+	glm::vec3				right = glm::vec3(0.f, 0.f, 0.f);
 
-	float					yaw{start_yaw};
-	float					pitch{start_pitch};
+	float					yaw = start_yaw;
+	float					pitch = start_pitch;
 
-	float					zoom{1.f};
+	float					zoom = 1.f;
 
 	void					update();
 };

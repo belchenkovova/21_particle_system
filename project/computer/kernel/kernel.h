@@ -15,7 +15,7 @@ public :
 	void					build(const string &function, const int &number);
 	void					run();
 
-	template 				<typename t_type = bool>
+	template 				<typename type = bool>
 	argument 				generate_argument(
 							const int &size,
 							const memory_management &memory = memory_management::read_write)
@@ -24,7 +24,7 @@ public :
 
 		if (not is_built)
 			throw (common::exception("Computer, Kernel : Object is not built"));
-		argument = computer::argument(context, size * sizeof(t_type), memory);
+		argument = computer::argument(context, size * sizeof(type), memory);
 		return (argument);
 	}
 	argument 				generate_argument(
@@ -36,7 +36,7 @@ private :
 
 	bool 					is_built = false;
 
-	string 			source;
+	string 					source;
 
 	int						kernel_number = 0;
 	int 					buffer_count = 0;

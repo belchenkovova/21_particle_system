@@ -32,8 +32,8 @@ public :
 	bool			operator == (const point &that) const;
 	bool			operator != (const point &that) const;
 
-	int 			x{0};
-	int 			y{0};
+	int 			x = 0;
+	int 			y = 0;
 };
 
 engine::ostream		&operator << (engine::ostream& stream, const engine::point &point);

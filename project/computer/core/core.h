@@ -7,7 +7,7 @@ class							computer::core
 {
 public :
 
-	static inline bool			use_OpenGL{false};
+	static inline bool			use_OpenGL = false;
 
 								core();
 								~core() = default;
@@ -16,7 +16,7 @@ public :
 
 private :
 
-	inline static int			instance_count{0};
+	inline static int			instance_count = 0;
 	cl::Platform				platform;
 	cl::Device					device;
 	cl::Context					context;

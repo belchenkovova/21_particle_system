@@ -23,10 +23,10 @@ public :
 
 private :
 
-	bool						is_OpenGL_based{false};
+	bool						is_OpenGL_based = false;
 	std::optional<cl::Buffer>	object;
 	vector<cl::Memory>			vector;
-	const cl::CommandQueue		*queue{nullptr};
+	const cl::CommandQueue		*queue = nullptr;
 
 								argument(
 								const cl::Context *context,

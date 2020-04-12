@@ -26,11 +26,11 @@ public :
 
 private :
 
-	bool					is_ready_to_use{false};
-	int 					size{0};
+	bool					is_ready_to_use = false;
+	int 					size = 0;
 
-	bool					uses_indexing{false};
-	shared_ptr<ebo>			ebo{nullptr};
+	bool					uses_indexing = false;
+	shared_ptr<ebo>			ebo = nullptr;
 };
 
 
