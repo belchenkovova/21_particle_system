@@ -17,7 +17,7 @@ using namespace		engine;
 	if (use_multisampling)
 		glfwWindowHint(GLFW_SAMPLES, number_of_samples);
 
-	window = glfwCreateWindow(window_width, window_height, window_name.c_str(), nullptr, nullptr);
+	window = glfwCreateWindow(initial_window_size.x, initial_window_size.y, window_name.c_str(), nullptr, nullptr);
 	if (window == nullptr)
 		throw (common::exception("Engine, Core : GLFW error"));
 	glfwMakeContextCurrent(window);
@@ -26,8 +26,8 @@ using namespace		engine;
 	if (glewInit() != GLEW_OK)
 		throw (common::exception("Engine, Core : GLEW error"));
 
-	glfwGetFramebufferSize(window, &final_width, &final_height);
-	glViewport(0, 0, final_width, final_height);
+	glfwGetFramebufferSize(window, &window_size.x, &window_size.y);
+	glViewport(0, 0, window_size.x, window_size.y);
 
 	if (use_blending)
 	{
@@ -95,14 +95,4 @@ void 				core::draw(draw_mode mode, const buffer &buffer)
 	else
 		glDrawArrays(static_cast<GLuint>(mode), 0, buffer.size);
 	buffer.bind(false);
-}
-
-int 				core::read_width() const
-{
-	return (final_width);
-}
-
-int 				core::read_height() const
-{
-	return (final_height);
 }

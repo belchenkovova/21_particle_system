@@ -12,8 +12,7 @@ public :
 
 	static void		setup_static()
 	{
-		engine::core::window_width = 1280;
-		engine::core::window_height = 720;
+		engine::core::initial_window_size = engine::point(1280, 720);
 		engine::core::window_name = "Particle System";
 		engine::core::background = glm::vec3(.05f, .05f, .05f);
 		engine::core::use_multisampling = false;
@@ -43,31 +42,29 @@ public :
 
 	void			setup_gui()
 	{
-		auto		functor_alpha  = engine::functor([](){ std::cout << "Alpha" << std::endl; });
-		auto		functor_beta = engine::functor([](){ std::cout << "Beta" << std::endl; });
-		auto		functor_gamma = engine::functor([](){ std::cout << "Gamma" << std::endl; });
-
-		auto		functor_plus = engine::functor([](){ std::cout << "Plus" << std::endl; });
-		auto		functor_minus = engine::functor([](){ std::cout << "Minus" << std::endl; });
-
 		auto		font = gui.generate_font("project/resources/GUI/Courier New.ttf", 20);
 
-		auto		button_alpha = gui.generate<gui::button_with_label>(functor_alpha, "alpha", font);
-		auto		button_beta = gui.generate<gui::button_with_label>(functor_beta, "beta", font);
-		auto		button_gamma = gui.generate<gui::button_with_label>(functor_gamma, "gamma", font);
-		auto		button_plus = gui.generate<gui::button_with_icon>(functor_plus, "project/resources/GUI/plus.png");
-		auto		button_minus = gui.generate<gui::button_with_icon>(functor_minus, "project/resources/GUI/minus.png");
+		auto		button_alpha = gui.generate<gui::button>(
+			gui::functor([](){std::cout << "Alpha" << std::endl;}),
+			gui.generate<gui::label>("alpha", font));
 
-		auto 		setup_button_with_label = [](gui::button_with_label &button)
-		{
-			button.body_color = glm::vec3(0.3f, 0.3f, 0.3f);
-			button.frame_color = glm::vec3(0.35f, 0.35f, 0.35f);
-			button.frame_width = 2;
-			button.active_color = glm::vec4(0.f, 0.f, 0.5f, 0.5f);
-			button.indent = gui::point(25);
-		};
+		auto		button_beta = gui.generate<gui::button>(
+			gui::functor([](){std::cout << "Beta" << std::endl;}),
+			gui.generate<gui::label>("beta", font));
 
-		auto 		setup_button_with_icon = [](gui::button_with_icon &button)
+		auto		button_gamma = gui.generate<gui::button>(
+			gui::functor([](){std::cout << "Gamma" << std::endl;}),
+			gui.generate<gui::label>("gamma", font));
+
+		auto		button_plus = gui.generate<gui::button>(
+			gui::functor([](){std::cout << "Plus" << std::endl;}),
+			gui.generate<gui::icon>("project/resources/GUI/plus.png"));
+
+		auto		button_minus = gui.generate<gui::button>(
+			gui::functor([](){std::cout << "Minus" << std::endl;}),
+			gui.generate<gui::icon>("project/resources/GUI/minus.png"));
+
+		auto 		setup_button = [](gui::button &button)
 		{
 			button.body_color = glm::vec3(0.3f, 0.3f, 0.3f);
 			button.frame_color = glm::vec3(0.35f, 0.35f, 0.35f);
@@ -76,13 +73,13 @@ public :
 			button.indent = gui::point(10);
 		};
 
-		setup_button_with_label(*button_alpha);
-		setup_button_with_label(*button_beta);
-		setup_button_with_label(*button_gamma);
-		setup_button_with_icon(*button_plus);
-		setup_button_with_icon(*button_minus);
+		setup_button(*button_alpha);
+		setup_button(*button_beta);
+		setup_button(*button_gamma);
+		setup_button(*button_plus);
+		setup_button(*button_minus);
 
-		auto		button_pack_higher = gui.generate<gui::button_pack>(gui::button_pack::activation_type::one);
+		auto		button_pack_higher = gui.generate<gui::button_pack>(gui::orientation::horizontal, true);
 
 		button_pack_higher->body_color = glm::vec3(0.2f, 0.2f, 0.2f);
 		button_pack_higher->frame_color = glm::vec3(0.25f, 0.25f, 0.25f);
@@ -94,7 +91,7 @@ public :
 		button_pack_higher->add_button(button_beta);
 		button_pack_higher->add_button(button_gamma);
 
-		auto		button_pack_lower = gui.generate<gui::button_pack>(gui::button_pack::activation_type::one);
+		auto		button_pack_lower = gui.generate<gui::button_pack>(gui::orientation::horizontal, true);
 
 		button_pack_lower->id = 8;
 
@@ -107,7 +104,7 @@ public :
 		button_pack_lower->add_button(button_plus);
 		button_pack_lower->add_button(button_minus);
 
-		auto		vertical_pack = gui.generate<gui::vertical_pack>(gui::point());
+		auto		vertical_pack = gui.generate<gui::pack>(gui::orientation::vertical, false, gui::point());
 
 		vertical_pack->body_color = glm::vec3(1.f, 0.f, 0.f);
 		vertical_pack->frame_color = glm::vec3(0.25f, 0.25f, 0.25f);

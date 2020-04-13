@@ -31,7 +31,7 @@ glm::mat4			camera::receive_projection_matrix() const
 {
 	return (glm::perspective(
 		glm::radians(45.f),
-		(float)core::window_width / (float)core::window_height,
+		(float)core::read_window_size().x / (float)core::read_window_size().y,
 		near_plane, far_plane));
 }
 

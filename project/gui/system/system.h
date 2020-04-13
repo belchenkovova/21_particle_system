@@ -3,14 +3,23 @@
 #include "gui/namespace.h"
 #include "gui/font/font.h"
 #include "gui/label/label.h"
-#include "gui/button/button_with_label.h"
-#include "gui/container/horizontal_pack.h"
-#include "gui/container/vertical_pack.h"
-#include "gui/container/button_pack.h"
+#include "gui/icon/icon.h"
+#include "gui/button/button.h"
+#include "gui/pack/pack.h"
+#include "gui/pack/button_pack.h"
 
 class						gui::system final
 {
 public :
+
+#pragma message "Debug only"
+	void					info()
+	{
+		std::cout << "GUI, System : " << std::endl;
+		for (int i = 0; i < objects.size(); i++)
+			std::cout << "[" << i << "] : id = " << objects[i]->id << std::endl;
+		std::cout << std::endl;
+	}
 
 	explicit				system(engine::core &engine);
 							~system() = default;
@@ -27,13 +36,13 @@ public :
 	template				<typename type, typename ...args_type>
 	auto					generate(args_type &&...args)
 	{
-		if constexpr (is_same_v<type, button_with_label>);
-		else if constexpr (is_same_v<type, button_with_icon>);
-		else if constexpr (is_same_v<type, horizontal_pack>);
-		else if constexpr (is_same_v<type, vertical_pack>);
+		if constexpr (is_same_v<type, label>);
+		else if constexpr (is_same_v<type, icon>);
+		else if constexpr (is_same_v<type, button>);
+		else if constexpr (is_same_v<type, pack>);
 		else if constexpr (is_same_v<type, button_pack>);
 		else
-			static_assert(not is_same_v<type, type>, "GUI, System : Should generate value of given type");
+			static_assert(not is_same_v<type, type>, "GUI, System : Should generate instance of given type");
 
 		auto 				pointer = make_shared<type>(args...);
 

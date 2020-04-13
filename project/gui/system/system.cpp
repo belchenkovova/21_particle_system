@@ -9,7 +9,7 @@ renderers_type			gui::renderers;
 						core(core),
 						renderer(objects)
 {
-	renderers = make_unique<class renderers>(core);
+	renderers = make_unique<class renderers>();
 
 	core.generate_callback(event::type::mouse_press, &system::functor_press, this);
 	core.generate_callback(event::type::mouse_release, &system::functor_release, this);

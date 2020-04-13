@@ -14,7 +14,9 @@ public :
 	glm::vec3		frame_color = glm::vec3(0.f, 0.f, 0.f);
 	int				frame_width = 0;
 
-	void			render() const override;
+protected :
+
+	void			render_virtual() const override;
 };
 
 

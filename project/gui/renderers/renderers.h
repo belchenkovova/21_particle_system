@@ -6,7 +6,7 @@ class					gui::renderers
 {
 public :
 
-	explicit			renderers(const engine::core &core);
+	explicit			renderers();
 						~renderers() = default;
 
 	using				vertex_type = engine::vbo::real<float, 2>;

@@ -8,8 +8,13 @@
 
 using namespace		gui;
 
-					renderers::renderers(const engine::core &core) :
-					projection(glm::ortho(0.f, (float)core.read_width(), (float)core.read_height(), 0.f)),
+					renderers::renderers() :
+					projection(
+						glm::ortho(
+							0.f,
+							(float)engine::core::read_window_size().x,
+							(float)engine::core::read_window_size().y,
+							0.f)),
 					text(projection),
 					texture(projection),
 					rectangle(projection)

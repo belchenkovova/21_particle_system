@@ -14,9 +14,9 @@ public :
 								const shared_ptr<font> &font);
 								~label() override = default;
 
-	void						render() const override;
-
 private :
+
+	void						render_virtual() const override;
 
 	string						text;
 	const shared_ptr<font>		font;

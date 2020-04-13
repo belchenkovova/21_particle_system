@@ -14,13 +14,17 @@
 namespace					gui
 {
 	using					std::is_same_v;
+	using					std::is_base_of_v;
 	using					std::for_each;
+	using					std::piecewise_construct;
+	using					std::forward_as_tuple;
 
 	using					std::string;
 	using					std::set;
 	using					std::map;
 	using					std::list;
 	using					std::vector;
+	using					std::pair;
 	using					std::optional;
 	using					std::numeric_limits;
 
@@ -53,17 +57,24 @@ namespace					gui
 	extern renderers_type	renderers;
 
 	class					object;
-	class					editor;
+	class					property;
+	class					owner;
+	class					container;
+
+	enum class				orientation
+	{
+		horizontal,
+		vertical
+	};
+
 	class					rectangle;
 	class 					label;
 	class 					icon;
 	class 					button;
-	class 					button_with_label;
-	class 					button_with_icon;
 	class					container;
-	class					horizontal_pack;
-	class					vertical_pack;
+	class					pack;
 	class					button_pack;
+	class					drawer;
 
 	class					system;
 }

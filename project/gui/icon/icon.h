@@ -9,10 +9,9 @@ public :
 
 	explicit		icon(const string &source);
 					~icon() override = default;
-
-	void			render() const override;
-
 private :
+
+	void			render_virtual() const override;
 
 	engine::texture	texture;
 };

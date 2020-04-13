@@ -9,8 +9,7 @@ class							engine::core final
 {
 public :
 
-	inline static int			window_width = 0;
-	inline static int			window_height = 0;
+	inline static point			initial_window_size;
 	inline static string		window_name;
 	inline static glm::vec3		background = glm::vec3(0.f, 0.f, 0.f);
 	inline static bool			use_blending = false;
@@ -50,16 +49,17 @@ public :
 	};
 
 	[[nodiscard]]
-	int 						read_width() const;
-	[[nodiscard]]
-	int 						read_height() const;
+	static point				read_window_size()
+	{
+		return (window_size);
+	}
 
 protected :
 
 	inline static int			instance_count = 0;
+	inline static point			window_size;
+
 	GLFWwindow					*window = nullptr;
-	int							final_width = 0;
-	int							final_height = 0;
 	event						event;
 
 	using						renderer_refence = reference_wrapper<renderer>;

@@ -10,9 +10,8 @@ using namespace		gui;
 	required_size = texture.read_size();
 }
 
-void				icon::render() const
+void				icon::render_virtual() const
 {
-	revise_self();
 	renderers->texture.render(
 		*position + (*current_size - *required_size) / 2,
 		*required_size,

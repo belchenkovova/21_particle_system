@@ -3,9 +3,8 @@
 
 using namespace		gui;
 
-void				rectangle::render() const
+void				rectangle::render_virtual() const
 {
-	revise_self();
 	assert(renderers);
 
 	renderers->rectangle.render(

@@ -5,7 +5,7 @@
 class					gui::object
 {
 	friend class 		gui::system;
-	friend class 		gui::editor;
+	friend class 		gui::property;
 
 public :
 
@@ -27,13 +27,28 @@ public :
 						object() = default;
 	virtual				~object() = default;
 
+	void				reload()
+	{
+		if (is_locked)
+			throw (common::exception("GUI, Object : Object is locked for reloading"));
+		reload_virtual();
+	}
+
+	void				render() const
+	{
+		revise_self();
+		render_virtual();
+	}
+
+
 protected :
 
 	bool 				is_latent = false;
+	bool 				is_locked = false;
 
-	virtual void		render() const {}
+	virtual void		reload_virtual() {}
+	virtual void		render_virtual() const {}
 
-	virtual void		reload() {}
 
 	optional<point>		required_size;
 	optional<point>		current_size;
@@ -47,6 +62,8 @@ protected :
 		functor_type	release;
 	}					functors;
 
+private :
+
 	void 				revise_self() const
 	{
 		gui::revise_optional(required_size);
@@ -56,23 +73,6 @@ protected :
 		if (current_size < required_size)
 			throw (common::exception("GUI, Space : Bad current size"));
 	}
-
-public :
-
-	[[nodiscard]]
-	point				read_required_size() const
-	{
-		gui::revise_optional(required_size);
-		return (*required_size);
-	}
-
-	[[nodiscard]]
-	bool				have_position() const
-	{
-		return (position.has_value());
-	}
-
-private :
 
 	[[nodiscard]]
 	bool				test_point(const point &point) const

@@ -21,9 +21,8 @@ using namespace		gui;
 	}
 }
 
-void				label::render() const
+void				label::render_virtual() const
 {
-	revise_self();
 	assert(gui::renderers);
 
 	point			position_iterator;
