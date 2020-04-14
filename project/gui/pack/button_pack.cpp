@@ -30,7 +30,7 @@ void				button_pack::add_button(const shared_ptr<button> &new_button)
 		block = false;
 	};
 
-	new_button->is_toggle = true;
+	new_button->make_toggle();
 	new_button->functors.press.emplace_back(functor);
 	buttons.emplace(
 		piecewise_construct,

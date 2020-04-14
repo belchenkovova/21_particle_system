@@ -20,7 +20,11 @@ private :
 	const int 				min_shift = 0;
 	int 					max_shift;
 
-	shared_ptr<icon>		icon;
+	struct
+	{
+		shared_ptr<icon>	left;
+		shared_ptr<icon>	right;
+	}						icons;
 	shared_ptr<button>		button;
 
 	static inline int 		transition_step = 12;
@@ -32,7 +36,7 @@ private :
 	{
 		property			*button;
 		property			*target;
-	}						property;
+	}						properties;
 
 	void					reload_virtual() override;
 	void					render_virtual() const override;

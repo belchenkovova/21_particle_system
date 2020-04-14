@@ -6,7 +6,8 @@ using namespace		gui;
 
 					drawer::drawer(const shared_ptr<object> &target, float relative_position) :
 					relative_position(relative_position),
-					property{}
+					icons{},
+					properties{}
 {
 	auto 			functor = [this]()
 	{
@@ -14,14 +15,16 @@ using namespace		gui;
 		transition_timer->block = false;
 	};
 
-	icon = make_shared<class icon>("project/resources/GUI/right.png");
-	button = make_shared<class button>((class functor)(functor), icon);
+	icons.left = make_shared<class icon>("project/resources/GUI/left.png");
+	icons.right = make_shared<class icon>("project/resources/GUI/right.png");
+	button = make_shared<class button>((class functor)(functor), icons.left, icons.right);
+	button->select(1);
 
-	property.button = &container::add_item(button);
-	property.target = &container::add_item(target);
+	properties.button = &container::add_item(button);
+	properties.target = &container::add_item(target);
 
 	current_shift = 0;
-	max_shift = property.target->read_required_size().x;
+	max_shift = properties.target->read_required_size().x;
 
 	drawer::reload_virtual();
 }
@@ -33,25 +36,25 @@ void				drawer::reload_virtual()
 
 //					Target
 
-	const auto		&target_size = property.target->read_required_size();
-	auto			&target_position = property.target->open_position();
+	const auto		&target_size = properties.target->read_required_size();
+	auto			&target_position = properties.target->open_position();
 
 	target_position = window_edge;
 	target_position->x += -1 * target_size.x + current_shift;
 	target_position->y -= target_size.y / 2;
-	property.target->open_current_size() = target_size;
-	property.target->reload();
+	properties.target->open_current_size() = target_size;
+	properties.target->reload();
 
 //					Button
 
-	const auto		&button_size = property.button->read_required_size();
-	auto			&button_position = property.button->open_position();
+	const auto		&button_size = properties.button->read_required_size();
+	auto			&button_position = properties.button->open_position();
 
 	button_position = window_edge;
 	button_position->x += -1 * (target_size.x + button_size.x) + current_shift;
 	button_position->y -= button_size.y / 2;
-	property.button->open_current_size() = button_size;
-	property.button->reload();
+	properties.button->open_current_size() = button_size;
+	properties.button->reload();
 
 //					Self
 
@@ -62,6 +65,7 @@ void				drawer::reload_virtual()
 
 void				drawer::transition_function()
 {
+	bool			is_end = false;
 	assert(transition_timer);
 
 	current_shift += transition_step * static_cast<int>(current_direction);
@@ -70,17 +74,24 @@ void				drawer::transition_function()
 		case sign::minus :
 			if (current_shift <= min_shift)
 			{
+				is_end = true;
 				current_direction = sign::plus;
-				transition_timer->block = true;
+				button->select(1);
 			}
 			break ;
 		case sign::plus :
 			if (current_shift >= max_shift)
 			{
+				is_end = true;
 				current_direction = sign::minus;
-				transition_timer->block = true;
+				button->select(0);
 			}
 			break ;
+	}
+	if (is_end)
+	{
+		transition_timer->block = true;
+		properties.button->reload();
 	}
 	drawer::reload_virtual();
 	engine::core::should_render = true;
@@ -88,6 +99,6 @@ void				drawer::transition_function()
 
 void				drawer::render_virtual() const
 {
-	property.button->render();
-	property.target->render();
+	properties.button->render();
+	properties.target->render();
 }
