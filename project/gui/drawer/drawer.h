@@ -12,13 +12,21 @@ public :
 	explicit				drawer(const shared_ptr<object> &target, float relative_position = 0.5f);
 							~drawer() override = default;
 
-	void					show(bool state);
-
 private :
+
+	const float				relative_position;
+	sign					current_direction = sign::plus;
+	int 					current_shift;
+	const int 				min_shift = 0;
+	int 					max_shift;
 
 	shared_ptr<icon>		icon;
 	shared_ptr<button>		button;
 
+	static inline int 		transition_step = 12;
+	static inline float		transition_period = 1 / 60.f;
+	void					transition_function();
+	timer					*transition_timer = nullptr;
 
 	struct
 	{
@@ -26,6 +34,7 @@ private :
 		property			*target;
 	}						property;
 
+	void					reload_virtual() override;
 	void					render_virtual() const override;
 };
 

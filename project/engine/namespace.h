@@ -110,8 +110,8 @@ namespace						engine
 
 	enum class					sign
 	{
-		negative = -1,
-		positive = 1
+		minus = -1,
+		plus = 1
 	};
 
 	class						camera;

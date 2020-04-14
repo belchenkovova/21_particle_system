@@ -8,5 +8,6 @@ using namespace			engine;
 
 void 					functor::run() const
 {
-	function();
+	if (not block)
+		function();
 }

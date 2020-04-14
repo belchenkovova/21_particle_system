@@ -23,15 +23,15 @@ public :
 	void 						attach_renderer(engine::renderer &renderer);
 
 	template					<typename ...t_args>
-	void						generate_callback(event::type type, t_args ...args)
+	callback					&generate_callback(event::type type, t_args ...args)
 	{
-		callbacks.emplace_back(type, args...);
+		return (callbacks.emplace_back(type, args...));
 	}
 
 	template					<typename ...t_args>
-	void						generate_timer(float period, t_args ...args)
+	timer						&generate_timer(float period, t_args ...args)
 	{
-		timers.emplace_back(period, args...);
+		return (timers.emplace_back(period, args...));
 	}
 
 	void 						start();

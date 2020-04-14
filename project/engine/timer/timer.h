@@ -16,6 +16,8 @@ public :
 
 	void 			test(float new_time);
 
+	using			functor::block;
+
 private :
 
 	const float		period = 0.f;

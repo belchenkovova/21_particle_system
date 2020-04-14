@@ -17,6 +17,8 @@ public :
 
 	void 					run() const;
 
+	bool					block = false;
+
 private :
 
 	std::function<void()>	function;

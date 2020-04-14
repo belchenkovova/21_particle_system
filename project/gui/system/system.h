@@ -44,6 +44,9 @@ public :
 			fonts.push_back(pointer);
 		else if constexpr (is_same_v<type, drawer>)
 		{
+			pointer->transition_timer = &core.generate_timer(
+				drawer::transition_period, &drawer::transition_function, pointer.get());
+			pointer->transition_timer->block = true;
 			objects.push_back(static_pointer_cast<object>(pointer->button));
 			objects.push_back(static_pointer_cast<object>(pointer));
 		}

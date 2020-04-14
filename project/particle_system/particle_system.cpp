@@ -82,25 +82,25 @@ void 					particle_system::callback()
 	if (event.read_key() == engine::event::key::escape)
 		engine.finish();
 	else if (event.read_key() == engine::event::key::letter_a)
-		renderers.camera.move(engine::axis::x, engine::sign::negative);
+		renderers.camera.move(engine::axis::x, engine::sign::minus);
 	else if (event.read_key() == engine::event::key::letter_d)
-		renderers.camera.move(engine::axis::x, engine::sign::positive);
+		renderers.camera.move(engine::axis::x, engine::sign::plus);
 	else if (event.read_key() == engine::event::key::letter_w)
-		renderers.camera.move(engine::axis::z, engine::sign::negative);
+		renderers.camera.move(engine::axis::z, engine::sign::minus);
 	else if (event.read_key() == engine::event::key::letter_s)
-		renderers.camera.move(engine::axis::z, engine::sign::positive);
+		renderers.camera.move(engine::axis::z, engine::sign::plus);
 	else if (event.read_key() == engine::event::key::letter_q)
-		renderers.camera.move(engine::axis::y, engine::sign::positive);
+		renderers.camera.move(engine::axis::y, engine::sign::plus);
 	else if (event.read_key() == engine::event::key::letter_e)
-		renderers.camera.move(engine::axis::y, engine::sign::negative);
+		renderers.camera.move(engine::axis::y, engine::sign::minus);
 	else if (event.read_key() == engine::event::key::left)
-		renderers.camera.rotate(engine::axis::y, engine::sign::positive);
+		renderers.camera.rotate(engine::axis::y, engine::sign::plus);
 	else if (event.read_key() == engine::event::key::right)
-		renderers.camera.rotate(engine::axis::y, engine::sign::negative);
+		renderers.camera.rotate(engine::axis::y, engine::sign::minus);
 	else if (event.read_key() == engine::event::key::up)
-		renderers.camera.rotate(engine::axis::x, engine::sign::positive);
+		renderers.camera.rotate(engine::axis::x, engine::sign::plus);
 	else if (event.read_key() == engine::event::key::down)
-		renderers.camera.rotate(engine::axis::x, engine::sign::negative);
+		renderers.camera.rotate(engine::axis::x, engine::sign::minus);
 	else
 		return ;
 	engine::core::should_render = true;

@@ -11,9 +11,7 @@ public :
 
 	template			<typename t_function, typename... t_args >
 						callback(event::type type, t_function function, t_args ...args) :
-						engine::functor(function, args...),
-						type(type)
-	{}
+						engine::functor(function, args...), type(type) {}
 						~callback() override = default;
 
 	void				test(event::type type);

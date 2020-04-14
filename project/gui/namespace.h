@@ -37,9 +37,11 @@ namespace					gui
 	using					std::make_unique;
 
 	using					engine::point;
-	using 					engine::functor;
 	using 					engine::event;
+	using 					engine::functor;
 	using 					engine::callback;
+	using 					engine::timer;
+	using 					engine::sign;
 
 	template				<typename type>
 	void 					revise_optional(const optional<type> &data)
