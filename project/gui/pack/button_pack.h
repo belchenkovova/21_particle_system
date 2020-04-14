@@ -15,7 +15,7 @@ public :
 
 private :
 
-	using					buttons_type = map<shared_ptr<button>, reference_wrapper<property>>;
+	using					buttons_type = std::map<shared_ptr<button>, reference_wrapper<property>>;
 	buttons_type			buttons;
 };
 

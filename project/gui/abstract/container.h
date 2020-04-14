@@ -3,25 +3,21 @@
 #include "gui/namespace.h"
 #include "gui/abstract/property.h"
 
-class				gui::container
+class					gui::container : private map<shared_ptr<object>, property>
 {
 public :
-					container() = default;
-	virtual			~container() = default;
+						container() = default;
+	virtual				~container() = default;
 
-	virtual auto	add_item(const shared_ptr<object> &item) -> property &
+	virtual property	&add_item(const shared_ptr<object> &item)
 	{
-		auto		result = items.emplace(
-			piecewise_construct,
-			forward_as_tuple(item),
-			forward_as_tuple(item));
+		auto			result = emplace(piecewise_construct, forward_as_tuple(item), forward_as_tuple(item));
 		if (not result.second)
 			throw (common::exception("GUI, Container : Can't add item to container"));
 		return (result.first->second);
 	}
 
-protected :
-
-	using			propeties_type = map<shared_ptr<object>, property>;
-	propeties_type	items;
+	using 				map<shared_ptr<object>, property>::begin;
+	using 				map<shared_ptr<object>, property>::end;
+	using 				map<shared_ptr<object>, property>::size;
 };

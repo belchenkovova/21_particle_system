@@ -42,7 +42,7 @@ public :
 
 	void			setup_gui()
 	{
-		auto		font = gui.generate_font("project/resources/GUI/Courier New.ttf", 20);
+		auto		font = gui.generate<gui::font>("project/resources/GUI/Courier New.ttf", 20);
 
 		auto		button_alpha = gui.generate<gui::button>(
 			gui::functor([](){std::cout << "Alpha" << std::endl;}),
@@ -114,6 +114,8 @@ public :
 
 		vertical_pack->add_item(button_pack_higher);
 		vertical_pack->add_item(button_pack_lower);
+
+		auto 		drawer = gui.generate<gui::drawer>(vertical_pack);
 	}
 
 	void			start()

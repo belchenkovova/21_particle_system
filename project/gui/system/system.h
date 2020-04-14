@@ -7,6 +7,7 @@
 #include "gui/button/button.h"
 #include "gui/pack/pack.h"
 #include "gui/pack/button_pack.h"
+#include "gui/drawer/drawer.h"
 
 class						gui::system final
 {
@@ -24,29 +25,30 @@ public :
 	explicit				system(engine::core &engine);
 							~system() = default;
 
-	template				<typename ...args_type>
-	auto					generate_font(args_type &&...args)
-	{
-		auto 				pointer = make_shared<font>(args...);
-
-		fonts.push_back(pointer);
-		return (pointer);
-	}
-
 	template				<typename type, typename ...args_type>
 	auto					generate(args_type &&...args)
 	{
-		if constexpr (is_same_v<type, label>);
+		if constexpr (is_same_v<type, font>);
+		else if constexpr (is_same_v<type, label>);
 		else if constexpr (is_same_v<type, icon>);
 		else if constexpr (is_same_v<type, button>);
 		else if constexpr (is_same_v<type, pack>);
 		else if constexpr (is_same_v<type, button_pack>);
+		else if constexpr (is_same_v<type, drawer>);
 		else
 			static_assert(not is_same_v<type, type>, "GUI, System : Should generate instance of given type");
 
 		auto 				pointer = make_shared<type>(args...);
 
-		objects.push_back(static_pointer_cast<object>(pointer));
+		if constexpr (is_same_v<type, font>)
+			fonts.push_back(pointer);
+		else if constexpr (is_same_v<type, drawer>)
+		{
+			objects.push_back(static_pointer_cast<object>(pointer->button));
+			objects.push_back(static_pointer_cast<object>(pointer));
+		}
+		else
+			objects.push_back(static_pointer_cast<object>(pointer));
 		return (pointer);
 	}
 

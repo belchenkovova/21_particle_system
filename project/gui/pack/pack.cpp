@@ -31,7 +31,7 @@ void				pack::reload_virtual()
 	point			size_common;
 	point			size_sum;
 
-	for (const auto &[ignore, item] : items)
+	for (const auto &[ignore, item] : *this)
 	{
 		size_common = point::max(item.read_required_size(), size_common);
 		size_sum += item.read_required_size();
@@ -39,7 +39,7 @@ void				pack::reload_virtual()
 
 	//				Calculating own size
 
-	const auto		number_of_items = (int)items.size();
+	const auto		number_of_items = (int)this->size();
 	const auto		size_spaces = point(spacing * (number_of_items - 1));
 
 	required_size = indent * 2;
@@ -60,7 +60,7 @@ void				pack::reload_virtual()
 	//				If own size is given by owner, recalculate item size
 
 	if (current_size >= required_size)
-		size_common += (*current_size - *required_size) / (int)items.size();
+		size_common += (*current_size - *required_size) / (int)this->size();
 	else
 		current_size = required_size;
 
@@ -68,7 +68,7 @@ void				pack::reload_virtual()
 
 	point			position_iter = position.value_or(point()) + indent;
 
-	for (auto &[ignore, item] : items)
+	for (auto &[ignore, item] : *this)
 	{
 		auto		&current_size = item.open_current_size();
 		auto		required_size = item.read_required_size();
@@ -106,6 +106,6 @@ void				pack::reload_virtual()
 void				pack::render_virtual() const
 {
 	rectangle::render_virtual();
-	for (const auto &[ignore, item] : items)
+	for (const auto &[ignore, item] : *this)
 		item.render();
 }
