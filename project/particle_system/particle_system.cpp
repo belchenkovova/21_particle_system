@@ -10,7 +10,7 @@
 	arguments.position.acquire();
 	kernels.seed_xorshift.run();
 	kernels.reset.run();
-	kernels.initialize_as_cube.run();
+	kernels.initialize_as_sphere.run();
 	kernels.update.run();
 	arguments.position.release();
 }
@@ -46,10 +46,16 @@ void					particle_system::initialize_computer()
 	kernels.reset.build("reset", number_of_particles);
 
 	kernels.initialize_as_cube = computer.generate_kernel();
-	kernels.initialize_as_cube.add_source("project/resources/OpenCL/xorshift.txt");
 	kernels.initialize_as_cube.add_source("project/resources/OpenCL/vector.txt");
+	kernels.initialize_as_cube.add_source("project/resources/OpenCL/xorshift.txt");
 	kernels.initialize_as_cube.add_source("project/resources/OpenCL/initialize_as_x.txt");
 	kernels.initialize_as_cube.build("initialize_as_cube", number_of_particles);
+
+	kernels.initialize_as_sphere = computer.generate_kernel();
+	kernels.initialize_as_sphere.add_source("project/resources/OpenCL/vector.txt");
+	kernels.initialize_as_sphere.add_source("project/resources/OpenCL/xorshift.txt");
+	kernels.initialize_as_sphere.add_source("project/resources/OpenCL/initialize_as_x.txt");
+	kernels.initialize_as_sphere.build("initialize_as_sphere", number_of_particles);
 
 	kernels.update = computer.generate_kernel();
 	kernels.update.add_source("project/resources/OpenCL/vector.txt");
@@ -75,6 +81,9 @@ void					particle_system::initialize_computer()
 
 	kernels.initialize_as_cube.link_argument(arguments.xorshift_state);
 	kernels.initialize_as_cube.link_argument(arguments.position);
+
+	kernels.initialize_as_sphere.link_argument(arguments.xorshift_state);
+	kernels.initialize_as_sphere.link_argument(arguments.position);
 
 	kernels.update.link_argument(arguments.position);
 	kernels.update.link_argument(arguments.velocity);

@@ -4,7 +4,7 @@ kernel void			physics(
 					global vector *acceleration)
 {
 	const int		global_id = get_global_id(0);
-	const vector	attractor = {50, 50, 0};
+	const vector	attractor = {0, 0, 0};
 	const float		g = 0.1;
 
 	vector			force;
@@ -13,7 +13,7 @@ kernel void			physics(
 
 	force = vector_subtract(attractor, position[global_id]);
 	distance_squared = vector_length_squared(force);
-	 distance_squared = CLAMP(distance_squared, 15, 80);
+	distance_squared = CLAMP(distance_squared, 15, 80);
 	strength = g / distance_squared;
 	force = vector_normalize(force);
 	force = vector_multiply(force, strength);

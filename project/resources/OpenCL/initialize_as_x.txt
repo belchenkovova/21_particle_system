@@ -1,23 +1,24 @@
-#define CUBE_SIDE	100
+#define CUBE_SIDE		100
+#define CUBE_POSITION	((vector){0, 0, 0})
 
-#define AXIS_X		0
-#define AXIS_Y		1
-#define AXIS_Z		2
+#define AXIS_X			0
+#define AXIS_Y			1
+#define AXIS_Z			2
 
-#define SIDE_LEFT	0
-#define SIDE_RIGHT	1
+#define SIDE_LEFT		0
+#define SIDE_RIGHT		1
 
-kernel void			initialize_as_cube(
-					global xorshift_state *state,
-					global vector *position)
+kernel void				initialize_as_cube(
+						global xorshift_state *state,
+						global vector *position)
 {
-	const int		global_id = get_global_id(0);
+	const int			global_id = get_global_id(0);
 
-	const int		axis = xorshift_next_in_range(state + global_id, AXIS_X, AXIS_Z);
-	const int		side = xorshift_next_in_range(state + global_id, SIDE_LEFT, SIDE_RIGHT);
+	const int			axis = xorshift_next_in_range(state + global_id, AXIS_X, AXIS_Z);
+	const int			side = xorshift_next_in_range(state + global_id, SIDE_LEFT, SIDE_RIGHT);
 
-	const float		random_a = xorshift_next_float(state + global_id) * CUBE_SIDE;
-	const float		random_b = xorshift_next_float(state + global_id) * CUBE_SIDE;
+	const float			random_a = xorshift_next_float(state + global_id) * CUBE_SIDE;
+	const float			random_b = xorshift_next_float(state + global_id) * CUBE_SIDE;
 
 	switch (axis)
 	{
@@ -42,4 +43,31 @@ kernel void			initialize_as_cube(
 		default :
 			break ;
 	}
+
+	position[global_id].x -= CUBE_SIDE / 2 + CUBE_POSITION.x;
+	position[global_id].y -= CUBE_SIDE / 2 + CUBE_POSITION.y;
+	position[global_id].z -= CUBE_SIDE / 2 + CUBE_POSITION.z;
+}
+
+#define SPHERE_RADIUS	100
+#define SPHERE_POSITION	((vector){0, 0, 0})
+#define PI_ON_2			6.28318530718
+
+kernel void				initialize_as_sphere(
+						global xorshift_state *state,
+						global vector *position)
+{
+	const int			global_id = get_global_id(0);
+
+	const float			theta = xorshift_next_float(state + global_id) * PI_ON_2;
+	const float			v = xorshift_next_float(state + global_id);
+	const float			phi = acos((2 * v) - 1);
+
+	position[global_id].x = SPHERE_RADIUS * sin(phi) * cos(theta);
+	position[global_id].y = SPHERE_RADIUS * sin(phi) * sin(theta);
+	position[global_id].z = SPHERE_RADIUS * cos(phi);
+
+	position[global_id].x += SPHERE_POSITION.x;
+	position[global_id].y += SPHERE_POSITION.y;
+	position[global_id].z += SPHERE_POSITION.z;
 }

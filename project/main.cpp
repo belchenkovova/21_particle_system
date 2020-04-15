@@ -19,7 +19,7 @@ public :
 		engine::core::number_of_samples = 2;
 		engine::core::use_blending = true;
 
-		engine::camera::start_position = glm::vec3(50.f, 50.f, 120.f);
+		engine::camera::start_position = glm::vec3(0.f, 0.f, 120.f);
 		engine::camera::movement_speed = .1f;
 		engine::camera::rotation_speed = .1f;
 		engine::camera::near_plane = .1f;
