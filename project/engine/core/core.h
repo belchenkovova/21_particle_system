@@ -73,6 +73,8 @@ protected :
 
 	void 						launch_callbacks();
 	void 						launch_timers();
+
+	static void 				calculate_fps();
 };
 
 

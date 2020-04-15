@@ -27,7 +27,7 @@ engine::renderer		&particle_system::receive_cube_renderer()
 
 void					particle_system::initialize_engine()
 {
-	timer = &engine.generate_timer(1.f / 60.f, &particle_system::timer_function, this);
+	timer = &engine.generate_timer(1.f / 100.f, &particle_system::timer_function, this);
 	timer->block = true;
 
 	engine.generate_callback(engine::event::type::key_press, &particle_system::callback_function, this);

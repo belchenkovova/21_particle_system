@@ -63,6 +63,8 @@ void 				core::start()
 		launch_timers();
 		if (should_render)
 		{
+			calculate_fps();
+
 			glClearColor(background.x, background.y, background.z, 1.f);
 			glClear(GL_COLOR_BUFFER_BIT);
 			glClear(GL_DEPTH_BUFFER_BIT);
@@ -95,4 +97,20 @@ void 				core::draw(draw_mode mode, const buffer &buffer)
 	else
 		glDrawArrays(static_cast<GLuint>(mode), 0, buffer.size);
 	buffer.bind(false);
+}
+
+void 				core::calculate_fps()
+{
+	static int		number_of_frames = 0;
+	static double	last = 0;
+	static double	now = 0;
+
+	now = glfwGetTime();
+	number_of_frames++;
+	if (now - last >= 1.)
+	{
+		std::cerr << (double)number_of_frames / (now - last) << " ms/frame" << std::endl;
+		number_of_frames = 0;
+		last = now;
+	}
 }
