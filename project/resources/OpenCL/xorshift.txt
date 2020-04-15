@@ -1,0 +1,36 @@
+#define XORSHIFT_TYPE	unsigned int
+#define XORSHIFT_SEED	42u
+#define XORSHIFT_MAX	4294967295u
+
+typedef struct
+{
+	 XORSHIFT_TYPE		value;
+}						xorshift_state;
+
+static XORSHIFT_TYPE	xorshift_next(global xorshift_state *state)
+{
+	XORSHIFT_TYPE		x = state->value;
+
+	x ^= x << 13;
+	x ^= x >> 17;
+	x ^= x << 5;
+
+	return (state->value = x);
+}
+
+static XORSHIFT_TYPE	xorshift_next_in_range(global xorshift_state *state, int min, int max)
+{
+	return ((xorshift_next(state) % (max - min + 1)) + min);
+}
+
+static float			xorshift_next_float(global xorshift_state *state)
+{
+	 return ((float)xorshift_next(state) / (float)XORSHIFT_MAX);
+}
+
+kernel void				seed_xorshift(global xorshift_state *state)
+{
+	const int			global_id = get_global_id(0);
+
+	state[global_id].value = XORSHIFT_SEED * (global_id + 1);
+}

@@ -15,11 +15,11 @@ public :
 		engine::core::initial_window_size = engine::point(1280, 720);
 		engine::core::window_name = "Particle System";
 		engine::core::background = glm::vec3(.05f, .05f, .05f);
-		engine::core::use_multisampling = false;
-		engine::core::number_of_samples = 0;
+		engine::core::use_multisampling = true;
+		engine::core::number_of_samples = 2;
 		engine::core::use_blending = true;
 
-		engine::camera::start_position = glm::vec3(0.f, 0.f, 5.f);
+		engine::camera::start_position = glm::vec3(50.f, 50.f, 120.f);
 		engine::camera::movement_speed = .1f;
 		engine::camera::rotation_speed = .1f;
 		engine::camera::near_plane = .1f;
@@ -32,7 +32,7 @@ public :
 
 	void			setup_dynamic()
 	{
-		engine::core::settings::point_size(2);
+		engine::core::settings::point_size(1);
 		engine::core::should_render = true;
 
 		engine.attach_renderer(system.receive_particle_renderer());

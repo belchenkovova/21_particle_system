@@ -47,10 +47,11 @@ public :
 		number_8 = GLFW_KEY_8,
 		number_9 = GLFW_KEY_9,
 		escape = GLFW_KEY_ESCAPE,
+		enter = GLFW_KEY_ENTER,
 		left = GLFW_KEY_LEFT,
 		up = GLFW_KEY_UP,
 		right = GLFW_KEY_RIGHT,
-		down = GLFW_KEY_DOWN,
+		down = GLFW_KEY_DOWN
 
 	};
 

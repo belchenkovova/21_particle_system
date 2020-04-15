@@ -61,7 +61,10 @@ private :
 	class
 	{
 	public :
+		computer::kernel	seed_xorshift;
 		computer::kernel	reset;
+		computer::kernel	initialize_as_cube;
+		computer::kernel	initialize_as_sphere;
 		computer::kernel	update;
 		computer::kernel	physics;
 	}						kernels;
@@ -69,6 +72,7 @@ private :
 	class
 	{
 	public :
+		computer::argument	xorshift_state;
 		computer::argument	position;
 		computer::argument	velocity;
 		computer::argument	acceleration;
@@ -77,8 +81,10 @@ private :
 	void					initialize_engine();
 	void					initialize_computer();
 
-	void 					timer();
-	void 					callback();
+	void 					timer_function();
+	void 					callback_function();
+
+	engine::timer			*timer = nullptr;
 };
 
 

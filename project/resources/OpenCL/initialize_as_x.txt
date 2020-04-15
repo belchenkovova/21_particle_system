@@ -1,0 +1,45 @@
+#define CUBE_SIDE	100
+
+#define AXIS_X		0
+#define AXIS_Y		1
+#define AXIS_Z		2
+
+#define SIDE_LEFT	0
+#define SIDE_RIGHT	1
+
+kernel void			initialize_as_cube(
+					global xorshift_state *state,
+					global vector *position)
+{
+	const int		global_id = get_global_id(0);
+
+	const int		axis = xorshift_next_in_range(state + global_id, AXIS_X, AXIS_Z);
+	const int		side = xorshift_next_in_range(state + global_id, SIDE_LEFT, SIDE_RIGHT);
+
+	const float		random_a = xorshift_next_float(state + global_id) * CUBE_SIDE;
+	const float		random_b = xorshift_next_float(state + global_id) * CUBE_SIDE;
+
+	switch (axis)
+	{
+		case AXIS_X :
+			position[global_id].x = side * CUBE_SIDE;
+			position[global_id].y = random_a;
+			position[global_id].z = random_b;
+			break ;
+
+		case AXIS_Y :
+            position[global_id].x = random_a;
+            position[global_id].y = side * CUBE_SIDE;
+            position[global_id].z = random_b;
+            break ;
+
+		case AXIS_Z :
+			position[global_id].x = random_a;
+			position[global_id].y = random_b;
+			position[global_id].z = side * CUBE_SIDE;
+			break ;
+
+		default :
+			break ;
+	}
+}
