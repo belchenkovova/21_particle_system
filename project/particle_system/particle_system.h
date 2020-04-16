@@ -61,21 +61,28 @@ private :
 	class
 	{
 	public :
-		computer::kernel	seed_xorshift;
+		computer::kernel	xorshift_seed;
 		computer::kernel	reset;
 		computer::kernel	initialize_as_cube;
 		computer::kernel	initialize_as_sphere;
 		computer::kernel	update;
 		computer::kernel	physics;
+		computer::kernel	emitter_start;
+		computer::kernel	emitter_finish;
+		computer::kernel	emitter_execute;
+		computer::kernel	consumer_execute;
 	}						kernels;
 
 	class
 	{
 	public :
+		computer::argument	number_of_particles;
 		computer::argument	xorshift_state;
 		computer::argument	position;
 		computer::argument	velocity;
 		computer::argument	acceleration;
+		computer::argument	is_alive;
+		computer::argument	is_born;
 	}						arguments;
 
 	void					initialize_engine();

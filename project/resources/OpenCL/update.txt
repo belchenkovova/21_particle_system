@@ -5,7 +5,11 @@ kernel void			update(
 {
 	const int		global_id = get_global_id(0);
 
-	velocity[global_id] = vector_add(velocity[global_id], acceleration[global_id]);
+	const vector	change = vector_add(velocity[global_id], acceleration[global_id]);
+
 	position[global_id] = vector_add(position[global_id], velocity[global_id]);
+
+	velocity[global_id] = vector_add(vector_multiply(velocity[global_id], 0.9995), acceleration[global_id]);
+
 	acceleration[global_id] = vector_multiply(acceleration[global_id], 0.f);
 }

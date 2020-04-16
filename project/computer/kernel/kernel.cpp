@@ -30,14 +30,11 @@ void 						kernel::run()
 	queue.finish();
 }
 
-argument 						kernel::generate_argument(const engine::vbo::abstract &vbo, const memory_management &memory)
+argument 					kernel::generate_argument(const engine::vbo::abstract &vbo, const memory_management &memory)
 {
-	argument					argument;
-
 	if (not is_built)
 		throw (common::exception("Computer, Kernel : Object is not built"));
-	argument = computer::argument(context, &queue, vbo, memory);
-	return (argument);
+	return (computer::argument(context, queue, vbo, memory));
 }
 
 void 						kernel::link_argument(argument &argument)

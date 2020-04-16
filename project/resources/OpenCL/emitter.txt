@@ -1,0 +1,57 @@
+#define EMISSION_POWER	10
+#define EMISSION_FORCE	1
+
+kernel void				emitter_start(
+						global int *number_of_particles,
+						global char *is_alive,
+                        global char *is_born)
+{
+	int					counter = 0;
+	for (int i = 0; i < *number_of_particles; i++)
+		if (is_alive[i] == 0)
+		{
+			is_born[i] = 1;
+			if (++counter == EMISSION_POWER)
+				break ;
+		}
+}
+
+kernel void				emitter_finish(
+						global char *is_alive,
+						global char *is_born)
+{
+	const int			global_id = get_global_id(0);
+
+	if (is_born[global_id])
+		is_alive[global_id] = 1;
+	is_born[global_id] = 0;
+}
+
+kernel void				emitter_execute(
+						global xorshift_state *state,
+						global vector *position,
+                        global vector *velocity,
+                        global vector *acceleration,
+						global char *is_born)
+{
+	const int			global_id = get_global_id(0);
+
+	if (is_born[global_id] == 1)
+	{
+		position[global_id].x = 400;
+    	position[global_id].y = 0;
+    	position[global_id].z = 0;
+
+		velocity[global_id].x = xorshift_next_float(state) - 0.5f;
+		velocity[global_id].y = xorshift_next_float(state) - 0.5f;
+		velocity[global_id].z = xorshift_next_float(state) - 0.5f;
+		velocity[global_id] = vector_normalize(velocity[global_id]);
+		velocity[global_id].x *= EMISSION_FORCE;
+        velocity[global_id].y *= EMISSION_FORCE;
+        velocity[global_id].z *= EMISSION_FORCE;
+
+		acceleration[global_id].x = 0;
+		acceleration[global_id].y = 0;
+		acceleration[global_id].z = 0;
+	}
+}

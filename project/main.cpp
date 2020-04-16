@@ -19,15 +19,15 @@ public :
 		engine::core::number_of_samples = 2;
 		engine::core::use_blending = true;
 
-		engine::camera::start_position = glm::vec3(0.f, 0.f, 120.f);
-		engine::camera::movement_speed = .1f;
-		engine::camera::rotation_speed = .1f;
-		engine::camera::near_plane = .1f;
-		engine::camera::far_plane = 1000.f;
+		engine::camera::start_position = glm::vec3(200.f, 0.f, 1000.f);
+		engine::camera::movement_speed = 10.f;
+		engine::camera::rotation_speed = .2f;
+		engine::camera::near_plane = 10.f;
+		engine::camera::far_plane = 5000.f;
 
 		computer::core::use_OpenGL = true;
 
-		particle_system::number_of_particles = 100 * 100;
+		particle_system::number_of_particles = 10000;
 	}
 
 	void			setup_dynamic()

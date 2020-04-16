@@ -1,23 +1,26 @@
+static void			reset_target(
+					global vector *position,
+					global vector *velocity,
+					global vector *acceleration,
+					int id)
+{
+	position[id].x = 0;
+    position[id].y = 0;
+    position[id].z = 0;
+
+	velocity[id].x = 0;
+	velocity[id].y = 0;
+	velocity[id].z = 0;
+
+	acceleration[id].x = 0;
+	acceleration[id].y = 0;
+	acceleration[id].z = 0;
+}
+
 kernel void			reset(
 					global vector *position,
 					global vector *velocity,
 					global vector *acceleration)
 {
-	const int		global_id = get_global_id(0);
-
-	const int		side = 100;
-	const float		x = global_id % side;
-	const float		y = global_id / side;
-
-	position[global_id].x = x;
-    position[global_id].y = y;
-    position[global_id].z = 0;
-
-	velocity[global_id].x = 0;
-	velocity[global_id].y = 0;
-	velocity[global_id].z = 0;
-
-	acceleration[global_id].x = 0;
-	acceleration[global_id].y = 0;
-	acceleration[global_id].z = 0;
+	reset_target(position, velocity, acceleration, get_global_id(0));
 }

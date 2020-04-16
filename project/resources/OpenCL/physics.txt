@@ -5,18 +5,31 @@ kernel void			physics(
 {
 	const int		global_id = get_global_id(0);
 	const vector	attractor = {0, 0, 0};
-	const float		g = 0.1;
 
+	const float		time = 2.f;
+
+	const vector	direction = vector_subtract(attractor, position[global_id]);
 	vector			force;
 	float			distance_squared;
 	float			strength;
 
-	force = vector_subtract(attractor, position[global_id]);
-	distance_squared = vector_length_squared(force);
+	force = vector_normalize(direction);
+
+	distance_squared = vector_length_squared(direction);
 	distance_squared = CLAMP(distance_squared, 15, 80);
-	strength = g / distance_squared;
-	force = vector_normalize(force);
+	strength = time / distance_squared;
+
 	force = vector_multiply(force, strength);
 
 	acceleration[global_id] = force;
+
+	float			how_close;
+	float			velocity_multiplier;
+
+	how_close = vector_length(direction);
+	how_close = 1 - MIN(how_close / 200, 1);
+
+	velocity_multiplier = 1 - 0.08 * how_close;
+
+	velocity[global_id] = vector_multiply(velocity[global_id], velocity_multiplier);
 }

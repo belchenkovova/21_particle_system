@@ -28,7 +28,7 @@ static float			xorshift_next_float(global xorshift_state *state)
 	 return ((float)xorshift_next(state) / (float)XORSHIFT_MAX);
 }
 
-kernel void				seed_xorshift(global xorshift_state *state)
+kernel void				xorshift_seed(global xorshift_state *state)
 {
 	const int			global_id = get_global_id(0);
 

@@ -8,9 +8,8 @@
 	initialize_computer();
 	
 	arguments.position.acquire();
-	kernels.seed_xorshift.run();
+	kernels.xorshift_seed.run();
 	kernels.reset.run();
-	kernels.initialize_as_sphere.run();
 	kernels.update.run();
 	arguments.position.release();
 }
@@ -36,9 +35,11 @@ void					particle_system::initialize_engine()
 
 void					particle_system::initialize_computer()
 {
-	kernels.seed_xorshift = computer.generate_kernel();
-	kernels.seed_xorshift.add_source("project/resources/OpenCL/xorshift.txt");
-	kernels.seed_xorshift.build("seed_xorshift", number_of_particles);
+//						KERNELS
+
+	kernels.xorshift_seed = computer.generate_kernel();
+	kernels.xorshift_seed.add_source("project/resources/OpenCL/xorshift.txt");
+	kernels.xorshift_seed.build("xorshift_seed", number_of_particles);
 
 	kernels.reset = computer.generate_kernel();
 	kernels.reset.add_source("project/resources/OpenCL/vector.txt");
@@ -46,14 +47,14 @@ void					particle_system::initialize_computer()
 	kernels.reset.build("reset", number_of_particles);
 
 	kernels.initialize_as_cube = computer.generate_kernel();
-	kernels.initialize_as_cube.add_source("project/resources/OpenCL/vector.txt");
 	kernels.initialize_as_cube.add_source("project/resources/OpenCL/xorshift.txt");
+	kernels.initialize_as_cube.add_source("project/resources/OpenCL/vector.txt");
 	kernels.initialize_as_cube.add_source("project/resources/OpenCL/initialize_as_x.txt");
 	kernels.initialize_as_cube.build("initialize_as_cube", number_of_particles);
 
 	kernels.initialize_as_sphere = computer.generate_kernel();
-	kernels.initialize_as_sphere.add_source("project/resources/OpenCL/vector.txt");
 	kernels.initialize_as_sphere.add_source("project/resources/OpenCL/xorshift.txt");
+	kernels.initialize_as_sphere.add_source("project/resources/OpenCL/vector.txt");
 	kernels.initialize_as_sphere.add_source("project/resources/OpenCL/initialize_as_x.txt");
 	kernels.initialize_as_sphere.build("initialize_as_sphere", number_of_particles);
 
@@ -68,12 +69,41 @@ void					particle_system::initialize_computer()
 	kernels.physics.add_source("project/resources/OpenCL/physics.txt");
 	kernels.physics.build("physics", number_of_particles);
 
-	arguments.xorshift_state = kernels.reset.generate_argument<uint32_t>(number_of_particles);
+	kernels.emitter_start = computer.generate_kernel();
+	kernels.emitter_start.add_source("project/resources/OpenCL/xorshift.txt");
+	kernels.emitter_start.add_source("project/resources/OpenCL/vector.txt");
+	kernels.emitter_start.add_source("project/resources/OpenCL/emitter.txt");
+	kernels.emitter_start.build("emitter_start", 1);
+
+	kernels.emitter_finish = computer.generate_kernel();
+	kernels.emitter_finish.add_source("project/resources/OpenCL/xorshift.txt");
+	kernels.emitter_finish.add_source("project/resources/OpenCL/vector.txt");
+	kernels.emitter_finish.add_source("project/resources/OpenCL/emitter.txt");
+	kernels.emitter_finish.build("emitter_finish", number_of_particles);
+
+	kernels.emitter_execute = computer.generate_kernel();
+	kernels.emitter_execute.add_source("project/resources/OpenCL/xorshift.txt");
+	kernels.emitter_execute.add_source("project/resources/OpenCL/vector.txt");
+	kernels.emitter_execute.add_source("project/resources/OpenCL/emitter.txt");
+	kernels.emitter_execute.build("emitter_execute", number_of_particles);
+
+	kernels.consumer_execute = computer.generate_kernel();
+	kernels.consumer_execute.add_source("project/resources/OpenCL/vector.txt");
+	kernels.consumer_execute.add_source("project/resources/OpenCL/reset.txt");
+	kernels.consumer_execute.add_source("project/resources/OpenCL/consumer.txt");
+	kernels.consumer_execute.build("consumer_execute", number_of_particles);
+
+//						ARGUMENTS
+
+	arguments.number_of_particles = kernels.emitter_start.generate_argument<int>(100000);
+	arguments.xorshift_state = kernels.xorshift_seed.generate_argument<uint32_t>(number_of_particles);
 	arguments.position = kernels.reset.generate_argument(renderers.particle.buffer->receive_attribute(0));
 	arguments.velocity = kernels.reset.generate_argument<float>(number_of_particles * 3);
 	arguments.acceleration = kernels.reset.generate_argument<float>(number_of_particles * 3);
+	arguments.is_alive = kernels.emitter_start.generate_argument<char>(number_of_particles);
+	arguments.is_born = kernels.emitter_start.generate_argument<char>(number_of_particles);
 
-	kernels.seed_xorshift.link_argument(arguments.xorshift_state);
+	kernels.xorshift_seed.link_argument(arguments.xorshift_state);
 
 	kernels.reset.link_argument(arguments.position);
 	kernels.reset.link_argument(arguments.velocity);
@@ -92,13 +122,48 @@ void					particle_system::initialize_computer()
 	kernels.physics.link_argument(arguments.position);
 	kernels.physics.link_argument(arguments.velocity);
 	kernels.physics.link_argument(arguments.acceleration);
+
+	kernels.emitter_start.link_argument(arguments.number_of_particles);
+	kernels.emitter_start.link_argument(arguments.is_alive);
+	kernels.emitter_start.link_argument(arguments.is_born);
+
+	kernels.emitter_finish.link_argument(arguments.is_alive);
+	kernels.emitter_finish.link_argument(arguments.is_born);
+
+	kernels.emitter_execute.link_argument(arguments.xorshift_state);
+	kernels.emitter_execute.link_argument(arguments.position);
+	kernels.emitter_execute.link_argument(arguments.velocity);
+	kernels.emitter_execute.link_argument(arguments.acceleration);
+	kernels.emitter_execute.link_argument(arguments.is_born);
+
+	kernels.consumer_execute.link_argument(arguments.position);
+	kernels.consumer_execute.link_argument(arguments.velocity);
+	kernels.consumer_execute.link_argument(arguments.acceleration);
+	kernels.consumer_execute.link_argument(arguments.is_alive);
+
+	arguments.number_of_particles.write(&number_of_particles);
 }
 
 void 					particle_system::timer_function()
 {
 	arguments.position.acquire();
+
+//						Emitter
+	kernels.emitter_start.run();
+	kernels.emitter_execute.run();
+	kernels.emitter_finish.run();
+
+//						Consumer
+	kernels.consumer_execute.run();
+
+//						Physics
+#pragma message "Divide to attractor and repulsor"
 	kernels.physics.run();
+
+//						Update particle
+#pragma message "Rename to particle_update"
 	kernels.update.run();
+
 	arguments.position.release();
 	engine::core::should_render = true;
 }
