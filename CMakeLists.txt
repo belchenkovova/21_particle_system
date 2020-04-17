@@ -9,8 +9,7 @@ include_directories(
 
 include_directories(
 	/usr/local/include
-	/opt/local/include
-	/usr/local/include/freetype2)
+	/opt/local/include)
 
 link_directories(
 	/usr/local/lib
@@ -21,7 +20,6 @@ link_libraries(
 	"-framework OpenCL"
 	GLFW
 	GLEW
-	Freetype
 	SOIL)
 
 set(MAIN
@@ -56,8 +54,8 @@ set(COMPUTER
 	project/computer/argument/argument.cpp)
 
 set(PARTICLE_SYSTEM
-	project/particle_system/particle_system.cpp
-	project/particle_system/renderer.cpp)
+	project/particle_system/core/core.cpp
+	project/particle_system/renderers/renderers.cpp)
 
 add_executable(21_particle_system
 	${MAIN}

@@ -1,8 +1,11 @@
-#include "particle_system.h"
+#include "particle_system/core/core.h"
 
-						particle_system::particle_system(engine::core &engine, computer::core &computer) :
+using namespace			particle_system;
+
+						core::core(engine::core &engine, computer::core &computer) :
 						engine(engine),
-						computer(computer)
+						computer(computer),
+						renderers(number_of_particles)
 {
 	initialize_engine();
 	initialize_computer();
@@ -14,26 +17,26 @@
 	arguments.position.release();
 }
 
-engine::renderer		&particle_system::receive_particle_renderer()
+engine::renderer		&core::receive_particle_renderer()
 {
 	return (renderers.particle);
 }
 
-engine::renderer		&particle_system::receive_cube_renderer()
+engine::renderer		&core::receive_cube_renderer()
 {
 	return (renderers.cube);
 }
 
-void					particle_system::initialize_engine()
+void					core::initialize_engine()
 {
-	timer = &engine.generate_timer(1.f / 100.f, &particle_system::timer_function, this);
+	timer = &engine.generate_timer(1.f / 100.f, &core::timer_function, this);
 	timer->block = true;
 
-	engine.generate_callback(engine::event::type::key_press, &particle_system::callback_function, this);
-	engine.generate_callback(engine::event::type::key_hold, &particle_system::callback_function, this);
+	engine.generate_callback(engine::event::type::key_press, &core::callback_function, this);
+	engine.generate_callback(engine::event::type::key_hold, &core::callback_function, this);
 }
 
-void					particle_system::initialize_computer()
+void					core::initialize_computer()
 {
 //						KERNELS
 
@@ -112,7 +115,7 @@ void					particle_system::initialize_computer()
 	arguments.object_id = kernels.emitter_start.generate_argument<int>(number_of_objects);
 	arguments.object_position = kernels.emitter_start.generate_argument<float, 3>(number_of_objects);
 	arguments.is_alive = kernels.emitter_start.generate_argument<char>(number_of_particles);
-	arguments.position = kernels.particle_reset.generate_argument(renderers.particle.buffer->receive_attribute(0));
+	arguments.position = kernels.particle_reset.generate_argument(renderers.particle.buffer.receive_attribute(0));
 	arguments.velocity = kernels.particle_reset.generate_argument<float, 3>(number_of_particles );
 	arguments.acceleration = kernels.particle_reset.generate_argument<float, 3>(number_of_particles);
 	arguments.xorshift_state = kernels.xorshift_seed.generate_argument<uint32_t>(number_of_particles);
@@ -203,7 +206,7 @@ void					particle_system::initialize_computer()
 	kernels.consumer_execute.link_argument(arguments.acceleration);
 }
 
-void 					particle_system::timer_function()
+void 					core::timer_function()
 {
 	arguments.position.acquire();
 
@@ -229,7 +232,7 @@ void 					particle_system::timer_function()
 //		std::terminate();
 }
 
-void 					particle_system::callback_function()
+void 					core::callback_function()
 {
 	engine::event		&event = engine.receive_event();
 

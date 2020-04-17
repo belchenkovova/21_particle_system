@@ -2,14 +2,13 @@
 #include "computer/computer.h"
 #include "particle_system/particle_system.h"
 
-class				final
+class						final
 {
 public :
+							final() = default;
+							~final() = default;
 
-					final() = default;
-					~final() = default;
-
-	static void		setup_static()
+	static void				setup_static()
 	{
 		engine::core::initial_window_size = engine::point(1280, 720);
 		engine::core::window_name = "Particle System";
@@ -26,10 +25,10 @@ public :
 
 		computer::core::use_OpenGL = true;
 
-		particle_system::number_of_particles = 10000;
+		particle_system::core::number_of_particles = 10000;
 	}
 
-	void			setup()
+	void					setup_dynamic()
 	{
 		engine::core::settings::point_size(1);
 		engine::core::should_render = true;
@@ -38,27 +37,27 @@ public :
 		engine.attach_renderer(system.receive_cube_renderer());
 	}
 
-	void			start()
+	void					start()
 	{
 		engine.start();
 	}
 
 private :
 
-	engine::core	engine;
-	computer::core	computer;
-	particle_system	system = particle_system(engine, computer);
+	engine::core			engine;
+	computer::core			computer;
+	particle_system::core	system = particle_system::core(engine, computer);
 };
 
-int					main()
+int							main()
 {
 	try
 	{
-		final		*final = nullptr;
+		final				*final = nullptr;
 
 		final::setup_static();
 		final = new class final;
-		final->setup();
+		final->setup_dynamic();
 		final->start();
 		delete final;
 		return (0);

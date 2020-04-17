@@ -8,20 +8,13 @@ class					engine::renderer
 {
 public :
 
-	explicit			renderer(bool should_initialize = true)
-	{
-		if (should_initialize)
-		{
-			program.emplace();
-			buffer.emplace();
-		}
-	}
+						renderer() = default;
 	virtual				~renderer() = default;
 
 	virtual void		render() = 0;
 
 protected :
 
-	optional<program>	program;
-	optional<buffer>	buffer;
+	program				program;
+	buffer				buffer;
 };
