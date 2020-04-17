@@ -55,21 +55,6 @@ set(COMPUTER
 	project/computer/kernel/kernel.cpp
 	project/computer/argument/argument.cpp)
 
-set(GUI
-	project/gui/symbol/symbol.cpp
-	project/gui/font/font.cpp
-	project/gui/renderers/renderers.cpp
-	project/gui/rectangle/rectangle.cpp
-	project/gui/label/label.cpp
-	project/gui/icon/icon.cpp
-	project/gui/button/button.cpp
-	project/gui/pack/pack.cpp
-	project/gui/pack/button_pack.cpp
-	project/gui/pack/button_pack.cpp
-	project/gui/drawer/drawer.cpp
-	project/gui/system/system.cpp
-	project/gui/system/renderer.cpp)
-
 set(PARTICLE_SYSTEM
 	project/particle_system/particle_system.cpp
 	project/particle_system/renderer.cpp)
@@ -79,5 +64,4 @@ add_executable(21_particle_system
 	${COMMON}
 	${ENGINE}
 	${COMPUTER}
-	${GUI}
 	${PARTICLE_SYSTEM})
