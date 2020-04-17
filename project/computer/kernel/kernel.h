@@ -15,14 +15,14 @@ public :
 	void					build(const string &function, const int &number);
 	void					run();
 
-	template 				<typename type>
+	template 				<typename type, int group = 1>
 	argument 				generate_argument(
-							const int &size,
+							const int &size = 1,
 							const memory_management &memory = memory_management::read_write)
 	{
 		if (not is_built)
 			throw (common::exception("Computer, Kernel : Object is not built"));
-		return (computer::argument(context, queue, size * sizeof(type), memory));
+		return (computer::argument(context, queue, size * sizeof(type) * group, memory));
 	}
 	argument 				generate_argument(
 							const engine::vbo::abstract &vbo,

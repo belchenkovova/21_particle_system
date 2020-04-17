@@ -7,6 +7,13 @@ typedef struct
 	 XORSHIFT_TYPE		value;
 }						xorshift_state;
 
+kernel void				xorshift_seed(global xorshift_state *state)
+{
+	const int			global_id = get_global_id(0);
+
+	state[global_id].value = XORSHIFT_SEED * (global_id + 1u) * (global_id + 1u);
+}
+
 static XORSHIFT_TYPE	xorshift_next(global xorshift_state *state)
 {
 	XORSHIFT_TYPE		x = state->value;
@@ -26,11 +33,4 @@ static XORSHIFT_TYPE	xorshift_next_in_range(global xorshift_state *state, int mi
 static float			xorshift_next_float(global xorshift_state *state)
 {
 	 return ((float)xorshift_next(state) / (float)XORSHIFT_MAX);
-}
-
-kernel void				xorshift_seed(global xorshift_state *state)
-{
-	const int			global_id = get_global_id(0);
-
-	state[global_id].value = XORSHIFT_SEED * (global_id + 1);
 }

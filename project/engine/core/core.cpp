@@ -109,7 +109,7 @@ void 				core::calculate_fps()
 	number_of_frames++;
 	if (now - last >= 1.)
 	{
-		std::cerr << (double)number_of_frames / (now - last) << " ms/frame" << std::endl;
+		std::cerr << (double)number_of_frames / (now - last) << " frames/second" << std::endl;
 		number_of_frames = 0;
 		last = now;
 	}

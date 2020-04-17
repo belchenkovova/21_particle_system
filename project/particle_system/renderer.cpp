@@ -72,7 +72,7 @@ void				particle_system::renderers::particle::render()
 	};
 
 	for (auto &value : points_data)
-		value *= 8;
+		value *= 10;
 
 	unsigned int	indices_data[] =
 	{

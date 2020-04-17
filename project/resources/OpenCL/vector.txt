@@ -5,6 +5,11 @@ typedef struct
 	float			z;
 }					vector;
 
+static vector		vector_empty()
+{
+	return ((vector){0, 0, 0});
+}
+
 static vector		vector_add(vector a, vector b)
 {
 	return ((vector){a.x + b.x, a.y + b.y, a.z + b.z});
@@ -38,4 +43,9 @@ static float		vector_length(vector v)
 static vector		vector_normalize(vector v)
 {
 	return (vector_divide(v, vector_length(v)));
+}
+
+static void			vector_print(vector v)
+{
+	printf("{%f, %f, %f}", v.x, v.y, v.z);
 }

@@ -1,0 +1,32 @@
+static void			particle_reset_target(
+					global vector *position,
+					global vector *velocity,
+					global vector *acceleration,
+					int id)
+{
+	position[id] = vector_empty();
+	velocity[id] = vector_empty();
+	acceleration[id] = vector_empty();
+}
+
+kernel void			particle_reset(
+					global vector *position,
+					global vector *velocity,
+					global vector *acceleration)
+{
+	particle_reset_target(position, velocity, acceleration, get_global_id(0));
+}
+
+kernel void			particle_update(
+					global vector *position,
+					global vector *velocity,
+					global vector *acceleration)
+{
+	const int		global_id = get_global_id(0);
+
+	const vector	change = vector_add(velocity[global_id], acceleration[global_id]);
+
+	position[global_id] = vector_add(position[global_id], change);
+	velocity[global_id] = vector_add(vector_multiply(velocity[global_id], 0.9999), acceleration[global_id]);
+	acceleration[global_id] = vector_multiply(acceleration[global_id], 0.f);
+}

@@ -1,0 +1,55 @@
+kernel void			consumer_execute(
+					global int *number_of_objects,
+					global object_id *object_id,
+                    global vector *object_position,
+                    global char *is_alive,
+                    global vector *position,
+					global vector *velocity,
+					global vector *acceleration)
+{
+	const int		global_id = get_global_id(0);
+
+	const vector	half_object_size = vector_divide(OBJECT_SIZE, 2);
+	vector			min;
+	vector			max;
+
+	float			how_close;
+	float			velocity_multiplier;
+
+	for (int object_i = 0; object_i < *number_of_objects; object_i++)
+	{
+		if (object_id[object_i] != object_id_consumer)
+			continue ;
+
+		if (is_alive[global_id] == 0)
+        	continue ;
+
+//					///////////////////////////////////////////////////////////
+//					Gravity field
+//					///////////////////////////////////////////////////////////
+
+    how_close = vector_length(vector_subtract(object_position[object_i], position[global_id]));
+    how_close = 1 - MIN(how_close / 200, 1);
+
+    velocity_multiplier = 1 - 0.08 * how_close;
+
+    velocity[global_id] = vector_multiply(velocity[global_id], velocity_multiplier);
+
+//					///////////////////////////////////////////////////////////
+//					Consuming
+//					///////////////////////////////////////////////////////////
+
+		min = vector_subtract(object_position[object_i], half_object_size);
+        max = vector_add(object_position[object_i], half_object_size);
+
+		if (position[global_id].x < min.x || position[global_id].x > max.x)
+			continue ;
+		if (position[global_id].y < min.y || position[global_id].y > max.y)
+			continue ;
+		if (position[global_id].z < min.z || position[global_id].z > max.z)
+			continue ;
+
+		is_alive[global_id] = 0;
+		particle_reset_target(position, velocity, acceleration, global_id);
+	}
+}
