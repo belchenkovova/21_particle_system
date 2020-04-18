@@ -52,11 +52,10 @@ kernel void			consumer_execute(
 		if (position[global_id].z < min.z || position[global_id].z > max.z)
 			continue ;
 
-		is_alive[global_id] = 0;
 		particle_reset_target(
 			global_color,
-			position,
 			is_alive,
+			position,
 			velocity,
 			acceleration,
 			color,

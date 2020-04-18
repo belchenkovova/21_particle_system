@@ -1,0 +1,21 @@
+[
+	{
+		"type" : "attractor",
+		"position" : [200.0, 200.0, 0.0]
+	},
+
+	{
+		"type" : "attractor",
+		"position" : [-200.0, 200.0, 0.0]
+	},
+
+	{
+		"type" : "attractor",
+		"position" : [200.0, -200.0, 0.0]
+	},
+
+	{
+		"type" : "attractor",
+		"position" : [-200.0, -200.0, 0.0]
+	}
+]

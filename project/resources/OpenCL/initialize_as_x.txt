@@ -7,6 +7,8 @@ kernel void				initialize_as_null(
                         global vector4 *color,
 						global int *born_by_emitter)
 {
+	const int			global_id = get_global_id(0);
+
 	particle_reset_target(
 		global_color,
 		is_alive,
@@ -15,7 +17,8 @@ kernel void				initialize_as_null(
 		acceleration,
 		color,
 		born_by_emitter,
-		get_global_id(0));
+		global_id);
+	is_alive[global_id] = 0;
 }
 
 #define CUBE_SIDE		1000

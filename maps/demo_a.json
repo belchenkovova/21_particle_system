@@ -1,21 +1,12 @@
 [
+
 	{
-		"type" : "attractor",
-		"position" : [200.0, 200.0, 0.0]
+		"type" : "consumer",
+		"position" : [-300.0, 0.0, 0.0]
 	},
 
 	{
 		"type" : "attractor",
-		"position" : [-200.0, 200.0, 0.0]
-	},
-
-	{
-		"type" : "attractor",
-		"position" : [200.0, -200.0, 0.0]
-	},
-
-	{
-		"type" : "attractor",
-		"position" : [-200.0, -200.0, 0.0]
+		"position" : [100.0, 0.0, 0.0]
 	}
 ]

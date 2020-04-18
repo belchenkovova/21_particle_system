@@ -160,6 +160,7 @@ void					manager::computer_link_arguments()
 	kernels.particle_reset.link_argument(arguments.born_by_emitter);
 
 	kernels.particle_update.link_argument(arguments.particle_color);
+	kernels.particle_update.link_argument(arguments.is_alive);
 	kernels.particle_update.link_argument(arguments.position);
 	kernels.particle_update.link_argument(arguments.velocity);
 	kernels.particle_update.link_argument(arguments.acceleration);

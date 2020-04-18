@@ -5,3 +5,8 @@ typedef struct
 	float			z;
 	float			w;
 }					vector4;
+
+static vector4		vector4_empty()
+{
+	return ((vector4){0, 0, 0, 0});
+}
