@@ -54,8 +54,9 @@ set(COMPUTER
 	project/computer/argument/argument.cpp)
 
 set(PARTICLE_SYSTEM
-	project/particle_system/core/core.cpp
-	project/particle_system/renderers/renderers.cpp)
+	project/particle_system/map/map.cpp
+	project/particle_system/renderers/renderers.cpp
+	project/particle_system/manager/manager.cpp)
 
 add_executable(21_particle_system
 	${MAIN}

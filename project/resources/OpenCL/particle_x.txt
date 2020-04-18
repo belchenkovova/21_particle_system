@@ -27,6 +27,6 @@ kernel void			particle_update(
 	const vector	change = vector_add(velocity[global_id], acceleration[global_id]);
 
 	position[global_id] = vector_add(position[global_id], change);
-	velocity[global_id] = vector_add(vector_multiply(velocity[global_id], 0.9999), acceleration[global_id]);
+	velocity[global_id] = vector_add(vector_multiply(velocity[global_id], 1), acceleration[global_id]);
 	acceleration[global_id] = vector_multiply(acceleration[global_id], 0.f);
 }

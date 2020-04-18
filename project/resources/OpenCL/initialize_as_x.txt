@@ -9,7 +9,7 @@ kernel void				initialize_as_null(
 	born_by_emitter[global_id] = -1;
 }
 
-#define CUBE_SIDE		100
+#define CUBE_SIDE		1000
 #define CUBE_POSITION	((vector){0, 0, 0})
 
 #define AXIS_X			0
@@ -65,7 +65,7 @@ kernel void				initialize_as_cube(
 	position[global_id].z -= CUBE_SIDE / 2 + CUBE_POSITION.z;
 }
 
-#define SPHERE_RADIUS	100
+#define SPHERE_RADIUS	500
 #define SPHERE_POSITION	((vector){0, 0, 0})
 #define PI_ON_2			6.28318530718
 

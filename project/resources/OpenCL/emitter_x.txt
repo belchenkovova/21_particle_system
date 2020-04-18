@@ -4,7 +4,7 @@
 kernel void				emitter_start(
 						global int *number_of_particles,
 						global int *number_of_objects,
-						global object_id *object_id,
+						global object_type *object_type,
 						global vector *object_position,
 						global char *is_alive,
                         global int *born_by_emitter)
@@ -15,7 +15,7 @@ kernel void				emitter_start(
 
 	for (; object_i < *number_of_objects && particle_i < *number_of_particles; object_i++)
 	{
-		if (object_id[object_i] != object_id_emitter)
+		if (object_type[object_i] != object_type_emitter)
 			continue ;
 
 		counter = 0;

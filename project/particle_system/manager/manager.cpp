@@ -1,8 +1,8 @@
-#include "particle_system/core/core.h"
+#include "particle_system/manager/manager.h"
 
 using namespace			particle_system;
 
-						core::core(engine::core &engine, computer::core &computer) :
+						manager::manager(engine::core &engine, computer::core &computer) :
 						engine(engine),
 						computer(computer),
 						renderers(number_of_particles)
@@ -13,30 +13,35 @@ using namespace			particle_system;
 	arguments.position.acquire();
 	kernels.xorshift_seed.run();
 	kernels.particle_reset.run();
-	kernels.initialize_as_null.run();
+	kernels.initialize_as_sphere.run();
 	arguments.position.release();
 }
 
-engine::renderer		&core::receive_particle_renderer()
+engine::renderer		&manager::receive_particle_renderer()
 {
 	return (renderers.particle);
 }
 
-engine::renderer		&core::receive_cube_renderer()
+engine::renderer		&manager::receive_cube_renderer()
 {
 	return (renderers.cube);
 }
 
-void					core::initialize_engine()
+void					manager::parse(const string &source)
 {
-	timer = &engine.generate_timer(1.f / 100.f, &core::timer_function, this);
-	timer->block = true;
-
-	engine.generate_callback(engine::event::type::key_press, &core::callback_function, this);
-	engine.generate_callback(engine::event::type::key_hold, &core::callback_function, this);
+	map.emplace(source);
 }
 
-void					core::initialize_computer()
+void					manager::initialize_engine()
+{
+	timer = &engine.generate_timer(1.f / 100.f, &manager::timer_function, this);
+	timer->block = true;
+
+	engine.generate_callback(engine::event::type::key_press, &manager::callback_function, this);
+	engine.generate_callback(engine::event::type::key_hold, &manager::callback_function, this);
+}
+
+void					manager::initialize_computer()
 {
 //						KERNELS
 
@@ -112,7 +117,7 @@ void					core::initialize_computer()
 
 	arguments.number_of_particles = kernels.emitter_start.generate_argument<int>();
 	arguments.number_of_objects = kernels.emitter_start.generate_argument<int>();
-	arguments.object_id = kernels.emitter_start.generate_argument<int>(number_of_objects);
+	arguments.object_type = kernels.emitter_start.generate_argument<int>(number_of_objects);
 	arguments.object_position = kernels.emitter_start.generate_argument<float, 3>(number_of_objects);
 	arguments.is_alive = kernels.emitter_start.generate_argument<char>(number_of_particles);
 	arguments.position = kernels.particle_reset.generate_argument(renderers.particle.buffer.receive_attribute(0));
@@ -126,25 +131,25 @@ void					core::initialize_computer()
 	arguments.number_of_particles.write(&number_of_particles);
 	arguments.number_of_objects.write(&number_of_objects);
 
-	object_id ids[] =
-	{
-		object_id::emitter,
-		object_id::attractor,
-		object_id::attractor,
-		object_id::attractor,
-		object_id::attractor,
-	};
+#pragma message "Default scene"
+	if (!map)
+		parse("maps/demo_a.json");
 
-	float positions[] =
-	{
-		0, 0, 0,
-		0, 500, 500,
-		0, 500, -500,
-		0, -500, 500,
-		0, -500, -500
-	};
-	arguments.object_id.write(&ids);
-	arguments.object_position.write(&positions);
+	object::type		type_data[number_of_objects];
+	float				position_data[number_of_objects * 3];
+
+	fill(type_data, type_data + number_of_objects, object::type::empty);
+	fill(position_data, position_data + number_of_objects, 0.f);
+
+	for (int i = 0; i < map->size() and i < number_of_objects; i++)
+		type_data[i] = map->at(i).read_type();
+
+	for (int i = 0; i < map->size() and i < number_of_objects; i++)
+		for (int j = 0; j < 3; j++)
+			position_data[i * 3 + j] = map->at(i).read_position()[j];
+
+	arguments.object_type.write(&type_data);
+	arguments.object_position.write(&position_data);
 
 //						ARGUMENTS LINKING
 
@@ -173,7 +178,7 @@ void					core::initialize_computer()
 	kernels.particle_update.link_argument(arguments.acceleration);
 
 	kernels.attractor_execute.link_argument(arguments.number_of_objects);
-	kernels.attractor_execute.link_argument(arguments.object_id);
+	kernels.attractor_execute.link_argument(arguments.object_type);
 	kernels.attractor_execute.link_argument(arguments.object_position);
 	kernels.attractor_execute.link_argument(arguments.is_alive);
 	kernels.attractor_execute.link_argument(arguments.position);
@@ -182,7 +187,7 @@ void					core::initialize_computer()
 
 	kernels.emitter_start.link_argument(arguments.number_of_particles);
 	kernels.emitter_start.link_argument(arguments.number_of_objects);
-	kernels.emitter_start.link_argument(arguments.object_id);
+	kernels.emitter_start.link_argument(arguments.object_type);
 	kernels.emitter_start.link_argument(arguments.object_position);
 	kernels.emitter_start.link_argument(arguments.is_alive);
 	kernels.emitter_start.link_argument(arguments.born_by_emitter);
@@ -198,7 +203,7 @@ void					core::initialize_computer()
 	kernels.emitter_execute.link_argument(arguments.xorshift_state);
 
 	kernels.consumer_execute.link_argument(arguments.number_of_objects);
-	kernels.consumer_execute.link_argument(arguments.object_id);
+	kernels.consumer_execute.link_argument(arguments.object_type);
 	kernels.consumer_execute.link_argument(arguments.object_position);
 	kernels.consumer_execute.link_argument(arguments.is_alive);
 	kernels.consumer_execute.link_argument(arguments.position);
@@ -206,7 +211,7 @@ void					core::initialize_computer()
 	kernels.consumer_execute.link_argument(arguments.acceleration);
 }
 
-void 					core::timer_function()
+void 					manager::timer_function()
 {
 	arguments.position.acquire();
 
@@ -225,14 +230,9 @@ void 					core::timer_function()
 
 	arguments.position.release();
 	engine::core::should_render = true;
-
-	static int i;
-
-//	if (++i == 5)
-//		std::terminate();
 }
 
-void 					core::callback_function()
+void 					manager::callback_function()
 {
 	engine::event		&event = engine.receive_event();
 

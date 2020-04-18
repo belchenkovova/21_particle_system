@@ -1,6 +1,6 @@
 kernel void			attractor_execute(
 					global int *number_of_objects,
-					global object_id *object_id,
+					global object_type *object_type,
                     global vector *object_position,
                     global char *is_alive,
 					global vector *position,
@@ -17,7 +17,7 @@ kernel void			attractor_execute(
 
 	for (int object_i = 0; object_i < *number_of_objects; object_i++)
     {
-    	if (object_id[object_i] != object_id_attractor && object_id[object_i] != object_id_consumer)
+    	if (object_type[object_i] != object_type_attractor && object_type[object_i] != object_type_consumer)
     		continue ;
 
 		direction = vector_subtract(object_position[object_i], position[global_id]);

@@ -1,8 +1,8 @@
 typedef enum
 {
-	object_id_empty,
-	object_id_attractor,
-	object_id_repeller,
-	object_id_emitter,
-	object_id_consumer
-}					object_id;
+	object_type_empty,
+	object_type_attractor,
+	object_type_repeller,
+	object_type_emitter,
+	object_type_consumer
+}					object_type;

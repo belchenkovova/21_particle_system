@@ -1,0 +1,21 @@
+[
+	{
+		"type" : "consumer",
+		"position" : [200.0, 200.0, 0.0]
+	},
+
+	{
+		"type" : "consumer",
+		"position" : [-200.0, 200.0, 0.0]
+	},
+
+	{
+		"type" : "consumer",
+		"position" : [200.0, -200.0, 0.0]
+	},
+
+	{
+		"type" : "consumer",
+		"position" : [-200.0, -200.0, 0.0]
+	}
+]
