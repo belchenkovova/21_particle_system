@@ -1,17 +1,17 @@
 kernel void			attractor_execute(
 					global int *number_of_objects,
 					global object_type *object_type,
-                    global vector *object_position,
+                    global vector3 *object_position,
                     global char *is_alive,
-					global vector *position,
-					global vector *velocity,
-					global vector *acceleration)
+					global vector3 *position,
+					global vector3 *velocity,
+					global vector3 *acceleration)
 {
 	const int		global_id = get_global_id(0);
 	const float		time = 2.f;
 
-	vector			direction;
-	vector			force;
+	vector3			direction;
+	vector3			force;
 	float			distance_squared;
 	float			strength;
 
@@ -20,15 +20,15 @@ kernel void			attractor_execute(
     	if (object_type[object_i] != object_type_attractor && object_type[object_i] != object_type_consumer)
     		continue ;
 
-		direction = vector_subtract(object_position[object_i], position[global_id]);
+		direction = vector3_subtract(object_position[object_i], position[global_id]);
 
-		distance_squared = vector_length_squared(direction);
+		distance_squared = vector3_length_squared(direction);
 		distance_squared = CLAMP(distance_squared, 15, 80);
 		strength = time / distance_squared;
 
-		force = vector_normalize(direction);
-		force = vector_multiply(force, strength);
+		force = vector3_normalize(direction);
+		force = vector3_multiply(force, strength);
 
-		acceleration[global_id] = vector_add(acceleration[global_id], force);
+		acceleration[global_id] = vector3_add(acceleration[global_id], force);
 	}
 }

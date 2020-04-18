@@ -1,17 +1,20 @@
 kernel void			consumer_execute(
 					global int *number_of_objects,
+					constant vector3 *global_color,
 					global object_type *object_type,
-                    global vector *object_position,
+                    global vector3 *object_position,
                     global char *is_alive,
-                    global vector *position,
-					global vector *velocity,
-					global vector *acceleration)
+                    global vector3 *position,
+					global vector3 *velocity,
+					global vector3 *acceleration,
+					global vector4 *color,
+					global int *born_by_emitter)
 {
 	const int		global_id = get_global_id(0);
 
-	const vector	half_object_size = vector_divide(OBJECT_SIZE, 2);
-	vector			min;
-	vector			max;
+	const vector3	half_object_size = vector3_divide(OBJECT_SIZE, 2);
+	vector3			min;
+	vector3			max;
 
 	float			how_close;
 	float			velocity_multiplier;
@@ -28,19 +31,19 @@ kernel void			consumer_execute(
 //					Gravity field
 //					///////////////////////////////////////////////////////////
 
-    how_close = vector_length(vector_subtract(object_position[object_i], position[global_id]));
+    how_close = vector3_length(vector3_subtract(object_position[object_i], position[global_id]));
     how_close = 1 - MIN(how_close / 200, 1);
 
     velocity_multiplier = 1 - 0.08 * how_close;
 
-    velocity[global_id] = vector_multiply(velocity[global_id], velocity_multiplier);
+    velocity[global_id] = vector3_multiply(velocity[global_id], velocity_multiplier);
 
 //					///////////////////////////////////////////////////////////
 //					Consuming
 //					///////////////////////////////////////////////////////////
 
-		min = vector_subtract(object_position[object_i], half_object_size);
-        max = vector_add(object_position[object_i], half_object_size);
+		min = vector3_subtract(object_position[object_i], half_object_size);
+        max = vector3_add(object_position[object_i], half_object_size);
 
 		if (position[global_id].x < min.x || position[global_id].x > max.x)
 			continue ;
@@ -50,6 +53,14 @@ kernel void			consumer_execute(
 			continue ;
 
 		is_alive[global_id] = 0;
-		particle_reset_target(position, velocity, acceleration, global_id);
+		particle_reset_target(
+			global_color,
+			position,
+			is_alive,
+			velocity,
+			acceleration,
+			color,
+			born_by_emitter,
+			global_id);
 	}
 }

@@ -9,6 +9,7 @@ public :
 
 	static inline int		number_of_particles = 0;
 	static inline int		number_of_objects = 0;
+	static inline vec3		particle_color;
 
 							manager(engine::core &engine, computer::core &computer);
 							~manager() = default;
@@ -40,13 +41,16 @@ private :
 		using				engine::renderer::program;
 		using				engine::renderer::buffer;
 
-		using				points_type = engine::vbo::real<float, 3>;
-		using				points_ptr_type = std::shared_ptr<engine::vbo::real<float, 3>>;
-
 		engine::camera		camera;
 
+		using				point_type = engine::vbo::real<float, 3>;
+		using				point_ptr_type = std::shared_ptr<engine::vbo::real<float, 3>>;
 
-		points_ptr_type		points;
+		using				color_type = engine::vbo::real<float, 4>;
+		using				color_ptr_type = std::shared_ptr<engine::vbo::real<float, 4>>;
+
+		point_ptr_type		points;
+		color_ptr_type		colors;
 	}						renderer;
 
 	optional<class map>		map;
@@ -72,12 +76,14 @@ private :
 	public :
 		computer::argument	number_of_particles;
 		computer::argument	number_of_objects;
+		computer::argument	particle_color;
 		computer::argument	object_type;
 		computer::argument	object_position;
 		computer::argument	is_alive;
 		computer::argument	position;
 		computer::argument	velocity;
 		computer::argument	acceleration;
+		computer::argument	color;
 		computer::argument	born_by_emitter;
 		computer::argument	xorshift_state;
 	}						arguments;
@@ -90,8 +96,8 @@ private :
 	void					computer_link_arguments();
 	void					computer_fill_arguments();
 
-	void 					timer_function();
-	void 					callback_function();
+	void 					function_render();
+	void 					function_key();
 
 	engine::timer			*timer = nullptr;
 };

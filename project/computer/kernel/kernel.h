@@ -17,7 +17,7 @@ public :
 
 	template 				<typename type, int group = 1>
 	argument 				generate_argument(
-							const int &size = 1,
+							const int &size,
 							const memory_management &memory = memory_management::read_write)
 	{
 		if (not is_built)

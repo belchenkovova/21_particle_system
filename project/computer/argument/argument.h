@@ -4,8 +4,8 @@
 
 enum class						computer::memory_management : unsigned int
 {
-	read_only = CL_MEM_READ_ONLY,
-	write_only = CL_MEM_WRITE_ONLY,
+	read = CL_MEM_READ_ONLY,
+	write = CL_MEM_WRITE_ONLY,
 	read_write = CL_MEM_READ_WRITE
 };
 

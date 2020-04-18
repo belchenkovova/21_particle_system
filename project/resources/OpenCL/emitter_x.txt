@@ -5,7 +5,7 @@ kernel void				emitter_start(
 						global int *number_of_particles,
 						global int *number_of_objects,
 						global object_type *object_type,
-						global vector *object_position,
+						global vector3 *object_position,
 						global char *is_alive,
                         global int *born_by_emitter)
 {
@@ -41,10 +41,10 @@ kernel void				emitter_finish(
 }
 
 kernel void				emitter_execute(
-						global vector *object_position,
-						global vector *position,
-                        global vector *velocity,
-                        global vector *acceleration,
+						global vector3 *object_position,
+						global vector3 *position,
+                        global vector3 *velocity,
+                        global vector3 *acceleration,
 						global int *born_by_emitter,
 						global xorshift_state *state)
 {
@@ -57,9 +57,9 @@ kernel void				emitter_execute(
 		velocity[global_id].x = xorshift_next_float(state + global_id) - 0.5f;
 		velocity[global_id].y = xorshift_next_float(state + global_id) - 0.5f;
 		velocity[global_id].z = xorshift_next_float(state + global_id) - 0.5f;
-		velocity[global_id] = vector_normalize(velocity[global_id]);
-		velocity[global_id] = vector_multiply(velocity[global_id], EMISSION_FORCE);
+		velocity[global_id] = vector3_normalize(velocity[global_id]);
+		velocity[global_id] = vector3_multiply(velocity[global_id], EMISSION_FORCE);
 
-		acceleration[global_id] = vector_empty();
+		acceleration[global_id] = vector3_empty();
 	}
 }

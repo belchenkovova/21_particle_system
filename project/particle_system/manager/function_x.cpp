@@ -2,7 +2,7 @@
 
 using namespace			particle_system;
 
-void 					manager::timer_function()
+void 					manager::function_render()
 {
 	arguments.position.acquire();
 
@@ -20,7 +20,7 @@ void 					manager::timer_function()
 	engine::core::should_render = true;
 }
 
-void 					manager::callback_function()
+void 					manager::function_key()
 {
 	engine::event		&event = engine.receive_event();
 

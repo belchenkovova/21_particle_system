@@ -1,0 +1,51 @@
+typedef struct
+{
+	float			x;
+	float			y;
+	float			z;
+}					vector3;
+
+static vector3		vector3_empty()
+{
+	return ((vector3){0, 0, 0});
+}
+
+static vector3		vector3_add(vector3 a, vector3 b)
+{
+	return ((vector3){a.x + b.x, a.y + b.y, a.z + b.z});
+}
+
+static vector3		vector3_subtract(vector3 a, vector3 b)
+{
+	return ((vector3){a.x - b.x, a.y - b.y, a.z - b.z});
+}
+
+static vector3		vector3_multiply(vector3 a, float value)
+{
+	return ((vector3){a.x * value, a.y * value, a.z * value});
+}
+
+static vector3		vector3_divide(vector3 v, float value)
+{
+	return (vector3_multiply(v, 1.f / value));
+}
+
+static float		vector3_length_squared(vector3 v)
+{
+	return (v.x * v.x + v.y * v.y + v.z * v.z);
+}
+
+static float		vector3_length(vector3 v)
+{
+	return (sqrt(vector3_length_squared(v)));
+}
+
+static vector3		vector3_normalize(vector3 v)
+{
+	return (vector3_divide(v, vector3_length(v)));
+}
+
+static void			vector3_print(vector3 v)
+{
+	printf("{%f, %f, %f}", v.x, v.y, v.z);
+}

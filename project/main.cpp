@@ -28,8 +28,9 @@ public :
 
 		computer::core::use_OpenGL = true;
 
-		particle_system::manager::number_of_particles = 10000;
+		particle_system::manager::number_of_particles = 50000;
 		particle_system::manager::number_of_objects = 5;
+		particle_system::manager::particle_color = engine::vec3(1.f, 0.f, 0.f);
 	}
 
 	void			start()

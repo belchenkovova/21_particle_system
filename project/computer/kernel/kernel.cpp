@@ -61,7 +61,12 @@ void 						kernel::compile_program()
 	{
 		log = program.getBuildInfo<CL_PROGRAM_BUILD_LOG>(*device);
 
-		printf("Log : %s\n", log.c_str());
+		std::cout << "Source" << std::endl;
+		std::cout << source << std::endl;
+
+		std::cerr << "Compilation log" << std::endl;
+		std::cerr << log << std::endl;
+
 		throw (common::exception("Computer, Kernel : Compilation error"));
 	}
 }
