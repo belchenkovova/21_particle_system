@@ -31,22 +31,27 @@ set(COMMON
 
 set(ENGINE
 	project/engine/core/core.cpp
-	project/engine/point/point.cpp
-	project/engine/core/settings.cpp
-	project/engine/core/launch_x.cpp
+	project/engine/core/calculate_fps.cpp
+	project/engine/core/draw.cpp
+	project/engine/core/finish.cpp
+	project/engine/core/start.cpp
 	project/engine/core/glfw_callback_x.cpp
+	project/engine/core/launch_x.cpp
+	project/engine/core/receive_event.cpp
+
 	project/engine/shader/shader.cpp
 	project/engine/uniform/uniform.cpp
 	project/engine/program/program.cpp
-	project/engine/ebo/ebo.cpp
+
 	project/engine/vao/vao.cpp
 	project/engine/buffer/buffer.cpp
+
 	project/engine/camera/camera.cpp
+
 	project/engine/functor/functor.cpp
 	project/engine/timer/timer.cpp
 	project/engine/event/event.cpp
-	project/engine/callback/callback.cpp
-	project/engine/texture/texture.cpp)
+	project/engine/callback/callback.cpp)
 
 set(COMPUTER
 	project/computer/core/core.cpp
@@ -55,8 +60,14 @@ set(COMPUTER
 
 set(PARTICLE_SYSTEM
 	project/particle_system/map/map.cpp
-	project/particle_system/renderers/renderers.cpp
-	project/particle_system/manager/manager.cpp)
+
+	project/particle_system/manager/renderer.cpp
+
+	project/particle_system/manager/manager.cpp
+	project/particle_system/manager/function_x.cpp
+	project/particle_system/manager/engine_x.cpp
+	project/particle_system/manager/computer_x.cpp
+	)
 
 add_executable(21_particle_system
 	${MAIN}

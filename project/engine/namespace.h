@@ -41,6 +41,18 @@ namespace						engine
 	using						std::min;
 	using						std::max;
 
+	using						glm::lookAt;
+	using						glm::perspective;
+	using						glm::radians;
+	using						glm::normalize;
+	using						glm::cross;
+	using						glm::value_ptr;
+	using						glm::vec2;
+	using						glm::ivec2;
+	using						glm::vec3;
+	using						glm::vec4;
+	using						glm::mat4;
+
 	template					<typename type>
 	void 						revise_optional(const optional<type> &data)
 	{
@@ -77,8 +89,6 @@ namespace						engine
 	};
 
 	class 						core;
-
-	class 						point;
 
 	class 						shader;
 	class 						uniform;
@@ -120,8 +130,6 @@ namespace						engine
 	class						timer;
 	class						event;
 	class						callback;
-
-	class						texture;
 
 	class						renderer;
 }

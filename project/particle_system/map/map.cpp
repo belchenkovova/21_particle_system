@@ -26,7 +26,7 @@ using namespace			particle_system;
 			throw (common::exception("Particle System, Map : Bad object type"));
 	};
 
-	auto				parse_position = [](const json::iterator &iterator) -> glm::vec3
+	auto				parse_position = [](const json::iterator &iterator) -> vec3
 	{
 		auto			parse_float = [](const nlohmann::json &json) -> optional<float>
 		{
@@ -38,7 +38,7 @@ using namespace			particle_system;
 		if (not iterator.value().is_array())
 			throw (common::exception("Particle System, Map : Object position is not an array"));
 
-		glm::vec3		result;
+		vec3			result;
 
 		for (int i = 0; i < 3; i++)
 			if (auto	value = parse_float(iterator->at(i)); not value)

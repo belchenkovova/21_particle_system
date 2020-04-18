@@ -2,30 +2,53 @@
 
 #include "particle_system/namespace.h"
 #include "particle_system/map/map.h"
-#include "particle_system/renderers/renderers.h"
 
 class						particle_system::manager
 {
 public :
 
 	static inline int		number_of_particles = 0;
+	static inline int		number_of_objects = 0;
 
 							manager(engine::core &engine, computer::core &computer);
 							~manager() = default;
 
-	engine::renderer		&receive_particle_renderer();
-	engine::renderer		&receive_cube_renderer();
+	[[nodiscard]]
+	engine::renderer		&receive_renderer()
+	{
+		return (renderer);
+	}
 
-	void					parse(const string &source);
+	void					parse(const string &source)
+	{
+		map.emplace(source);
+	}
 
 private :
 
 	engine::core			&engine;
 	computer::core			&computer;
 
-	static inline int		number_of_objects = 5;
+	class 					renderer final : public engine::renderer
+	{
+	public :
+							renderer();
+							~renderer() override = default;
 
-	class renderers			renderers;
+		void 				render() override;
+
+		using				engine::renderer::program;
+		using				engine::renderer::buffer;
+
+		using				points_type = engine::vbo::real<float, 3>;
+		using				points_ptr_type = std::shared_ptr<engine::vbo::real<float, 3>>;
+
+		engine::camera		camera;
+
+
+		points_ptr_type		points;
+	}						renderer;
+
 	optional<class map>		map;
 
 	class
@@ -59,8 +82,13 @@ private :
 		computer::argument	xorshift_state;
 	}						arguments;
 
-	void					initialize_engine();
-	void					initialize_computer();
+	void					engine_start();
+
+	void					computer_start();
+	void					computer_build_kernels();
+	void					computer_build_arguments();
+	void					computer_link_arguments();
+	void					computer_fill_arguments();
 
 	void 					timer_function();
 	void 					callback_function();

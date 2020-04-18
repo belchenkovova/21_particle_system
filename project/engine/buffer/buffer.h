@@ -3,7 +3,6 @@
 #include "engine/namespace.h"
 #include "engine/vbo/vbo.h"
 #include "engine/vao/vao.h"
-#include "engine/ebo/ebo.h"
 
 class						engine::buffer final : private engine::vao
 {
@@ -21,16 +20,10 @@ public :
 	void					save();
 	void					bind(bool state) const override;
 
-	void					use_indexing(int size);
-	ebo						&receive_indices();
-
 private :
 
 	bool					is_ready_to_use = false;
 	int 					size = 0;
-
-	bool					uses_indexing = false;
-	shared_ptr<ebo>			ebo = nullptr;
 };
 
 

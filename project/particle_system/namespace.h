@@ -13,16 +13,14 @@ namespace			particle_system
 	using			std::optional;
 	using			std::nullopt;
 	using			std::ifstream;
-
 	using			std::move;
 	using			std::fill;
 
-	using			json = nlohmann::json;
+	using			glm::vec3;
 
-	using			engine::point;
+	using			json = nlohmann::json;
 
 	class			object;
 	class			map;
-	class			renderers;
 	class			manager;
 }

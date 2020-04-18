@@ -9,18 +9,23 @@ class							engine::core final
 {
 public :
 
-	inline static point			initial_window_size;
+	inline static ivec2			initial_window_size;
 	inline static string		window_name;
-	inline static glm::vec3		background = glm::vec3(0.f, 0.f, 0.f);
+	inline static vec3			background = vec3(0.f, 0.f, 0.f);
 	inline static bool			use_blending = false;
 	inline static bool			use_multisampling = false;
+	inline static bool			use_depth_test = false;
 	inline static int			number_of_samples = 0;
 	inline static bool 			should_render = false;
+	inline static int 			point_size = 0;
 
 								core();
 								~core();
 
-	void 						attach_renderer(engine::renderer &renderer);
+	void 						attach_renderer(engine::renderer &renderer)
+	{
+		this->renderer = &renderer;
+	}
 
 	template					<typename ...t_args>
 	callback					&generate_callback(event::type type, t_args ...args)
@@ -40,16 +45,14 @@ public :
 
 	static void 				draw(draw_mode mode, const buffer &buffer);
 
-	class 						settings
+	[[nodiscard]]
+	static double 				time()
 	{
-	public :
-		static void				fill_polygon(bool state);
-		static void 			depth_test(bool state);
-		static void				point_size(int value);
-	};
+		return (glfwGetTime());
+	}
 
 	[[nodiscard]]
-	static point				read_window_size()
+	static ivec2				read_window_size()
 	{
 		return (window_size);
 	}
@@ -57,13 +60,12 @@ public :
 protected :
 
 	inline static int			instance_count = 0;
-	inline static point			window_size;
+	inline static ivec2			window_size;
 
 	GLFWwindow					*window = nullptr;
 	event						event;
 
-	using						renderer_refence = reference_wrapper<renderer>;
-	list<renderer_refence>		renderers;
+	class renderer				*renderer = nullptr;
 	list<callback>				callbacks;
 	list<timer>					timers;
 

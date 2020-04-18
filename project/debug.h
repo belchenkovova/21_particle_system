@@ -1,7 +1,7 @@
 #pragma once
 
 #pragma message "Debug version only"
-static const char	*decode_OpenGL_error(GLenum value)
+static inline const char	*decode_OpenGL_error(GLenum value)
 {
 	if (value == GL_INVALID_ENUM)
 		return ("Invalid enum");

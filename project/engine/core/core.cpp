@@ -34,8 +34,14 @@ using namespace		engine;
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
+
 	if (use_multisampling)
 		glEnable(GL_MULTISAMPLE);
+
+	if (use_depth_test)
+		glEnable(GL_DEPTH_TEST);
+
+	glPointSize(point_size);
 
 	glfwSetWindowUserPointer(window, this);
 	glfwSetKeyCallback(window, glfw_callback_key);
@@ -46,71 +52,4 @@ using namespace		engine;
 					core::~core()
 {
 	glfwTerminate();
-}
-
-void 				core::attach_renderer(engine::renderer &renderer)
-{
-	renderers.emplace_back(renderer);
-}
-
-void 				core::start()
-{
-	while (not glfwWindowShouldClose(window))
-	{
-		event.reset_if_needed();
-		glfwPollEvents();
-		launch_callbacks();
-		launch_timers();
-		if (should_render)
-		{
-			calculate_fps();
-
-			glClearColor(background.x, background.y, background.z, 1.f);
-			glClear(GL_COLOR_BUFFER_BIT);
-			glClear(GL_DEPTH_BUFFER_BIT);
-
-			for (auto &renderer : renderers)
-				renderer.get().render();
-
-			glfwSwapBuffers(window);
-
-			should_render = false;
-		}
-	}
-}
-
-void 				core::finish()
-{
-	glfwSetWindowShouldClose(window, GLFW_TRUE);
-}
-
-event				&core::receive_event()
-{
-	return (event);
-}
-
-void 				core::draw(draw_mode mode, const buffer &buffer)
-{
-	buffer.bind(true);
-	if (buffer.uses_indexing)
-		glDrawElements(static_cast<GLuint>(mode), buffer.ebo->read_size(), GL_UNSIGNED_INT, nullptr);
-	else
-		glDrawArrays(static_cast<GLuint>(mode), 0, buffer.size);
-	buffer.bind(false);
-}
-
-void 				core::calculate_fps()
-{
-	static int		number_of_frames = 0;
-	static double	last = 0;
-	static double	now = 0;
-
-	now = glfwGetTime();
-	number_of_frames++;
-	if (now - last >= 1.)
-	{
-		std::cerr << (double)number_of_frames / (now - last) << " frames/second" << std::endl;
-		number_of_frames = 0;
-		last = now;
-	}
 }

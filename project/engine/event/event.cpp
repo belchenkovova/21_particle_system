@@ -13,7 +13,7 @@ event::key				event::read_key() const
 	return (*key_value);
 }
 
-point					event::read_mouse() const
+ivec2					event::read_mouse() const
 {
 	revise_optional(mouse_value);
 	return (*mouse_value);

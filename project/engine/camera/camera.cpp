@@ -27,27 +27,27 @@ void				camera::rotate(const axis &axis, const sign &sign)
 	update();
 }
 
-glm::mat4			camera::receive_projection_matrix() const
+mat4				camera::receive_projection_matrix() const
 {
-	return (glm::perspective(
-		glm::radians(45.f),
+	return (perspective(
+		radians(45.f),
 		(float)core::read_window_size().x / (float)core::read_window_size().y,
 		near_plane, far_plane));
 }
 
-glm::mat4			camera::receive_view_matrix() const
+mat4				camera::receive_view_matrix() const
 {
-	return (glm::lookAt(position, position + front, up));
+	return (lookAt(position, position + front, up));
 }
 
 void				camera::update()
 {
-	glm::vec3		local_front;
+	vec3			local_front;
 
-	local_front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-	local_front.y = sin(glm::radians(pitch));
-	local_front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-	front = glm::normalize(local_front);
-	right = glm::normalize(glm::cross(front, up_const));
-	up = glm::normalize(glm::cross(right, front));
+	local_front.x = cos(radians(yaw)) * cos(radians(pitch));
+	local_front.y = sin(radians(pitch));
+	local_front.z = sin(radians(yaw)) * cos(radians(pitch));
+	front = normalize(local_front);
+	right = normalize(cross(front, up_const));
+	up = normalize(cross(right, front));
 }

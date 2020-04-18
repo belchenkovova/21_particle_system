@@ -6,7 +6,6 @@
 class 									engine::vao : public engine::object_wrapper<GLuint>
 {
 public :
-
 										vao();
 										~vao() override;
 

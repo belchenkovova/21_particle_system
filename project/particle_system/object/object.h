@@ -15,7 +15,7 @@ public :
 		consumer
 	};
 
-					object(type type, const glm::vec3 &position) :
+					object(type type, const vec3 &position) :
 					type_(type), position(position) {}
 					~object() = default;
 
@@ -26,7 +26,7 @@ public :
 	}
 
 	[[nodiscard]]
-	glm::vec3		read_position() const
+	vec3			read_position() const
 	{
 		return (position);
 	}
@@ -34,5 +34,5 @@ public :
 private :
 
 	const enum type	type_;
-	const glm::vec3	position;
+	const vec3		position;
 };
