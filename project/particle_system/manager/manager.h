@@ -8,11 +8,13 @@ class						particle_system::manager
 public :
 
 	static inline int		number_of_particles = 0;
-	static inline int		number_of_objects = 0;
 	static inline vec3		particle_color;
 
-							manager(engine::core &engine, computer::core &computer);
+							manager(engine::core &engine, computer::core &computer) :
+							engine(engine), computer(computer) {}
 							~manager() = default;
+
+	void					build(const string &source = "");
 
 	[[nodiscard]]
 	engine::renderer		&receive_renderer()
@@ -20,15 +22,12 @@ public :
 		return (renderer);
 	}
 
-	void					parse(const string &source)
-	{
-		map.emplace(source);
-	}
-
 private :
 
 	engine::core			&engine;
 	computer::core			&computer;
+
+	int						number_of_objects = 0;
 
 	class 					renderer final : public engine::renderer
 	{
@@ -90,9 +89,9 @@ private :
 		computer::argument	xorshift_state;
 	}						arguments;
 
-	void					engine_start();
+	void					engine_build();
 
-	void					computer_start();
+	void					computer_build();
 	void					computer_build_kernels();
 	void					computer_build_arguments();
 	void					computer_link_arguments();

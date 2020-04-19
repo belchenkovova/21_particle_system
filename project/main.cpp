@@ -8,7 +8,7 @@ public :
 					final() = default;
 					~final() = default;
 
-	static void		setup()
+	static void		setup_static()
 	{
 		engine::core::initial_window_size = engine::ivec2(1280, 720);
 		engine::core::window_name = "Particle System";
@@ -29,18 +29,21 @@ public :
 		computer::core::use_OpenGL = true;
 
 		particle_system::manager::number_of_particles = 50000;
-		particle_system::manager::number_of_objects = 5;
 		particle_system::manager::particle_color = engine::vec3(1.f, 0.f, 0.f);
 	}
 
-	void			start()
+	void			setup_dynamic(const std::string &source = "")
 	{
 		engine.emplace();
 		computer.emplace();
 		system.emplace(*engine, *computer);
 
 		engine->attach_renderer(system->receive_renderer());
+		system->build(source);
+	}
 
+	void			run()
+	{
 		engine->start();
 	}
 
@@ -61,8 +64,9 @@ int					main()
 	{
 		final		final;
 
-		final::setup();
-		final.start();
+		final.setup_static();
+		final.setup_dynamic();
+		final.run();
 		return (0);
 	}
 	catch (std::exception &exception)

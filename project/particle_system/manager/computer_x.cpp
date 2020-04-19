@@ -2,7 +2,7 @@
 
 using namespace			particle_system;
 
-void					manager::computer_start()
+void					manager::computer_build()
 {
 	computer_build_kernels();
 	computer_build_arguments();
@@ -229,10 +229,6 @@ void					manager::computer_fill_arguments()
 	arguments.number_of_objects.write(&number_of_objects);
 	arguments.particle_color.write(&particle_color.x);
 
-#pragma message "Default scene"
-	if (!map)
-		parse("maps/demo_a.json");
-
 	object::type		type_data[number_of_objects];
 	float				position_data[number_of_objects * 3];
 	float				power_data[number_of_objects * 3];
@@ -240,14 +236,14 @@ void					manager::computer_fill_arguments()
 	fill(type_data, type_data + number_of_objects, object::type::empty);
 	fill(position_data, position_data + number_of_objects, 0.f);
 
-	for (int i = 0; i < map->size() and i < number_of_objects; i++)
+	for (int i = 0; i < map->size(); i++)
 		type_data[i] = map->at(i).read_type();
 
-	for (int i = 0; i < map->size() and i < number_of_objects; i++)
+	for (int i = 0; i < map->size(); i++)
 		for (int j = 0; j < 3; j++)
 			position_data[i * 3 + j] = map->at(i).read_position()[j];
 
-	for (int i = 0; i < map->size() and i < number_of_objects; i++)
+	for (int i = 0; i < map->size(); i++)
 			power_data[i] = map->at(i).read_power();
 
 	arguments.object_type.write(&type_data);

@@ -63,11 +63,10 @@ set(PARTICLE_SYSTEM
 
 	project/particle_system/manager/renderer.cpp
 
-	project/particle_system/manager/manager.cpp
+	project/particle_system/manager/build.cpp
 	project/particle_system/manager/function_x.cpp
 	project/particle_system/manager/engine_x.cpp
-	project/particle_system/manager/computer_x.cpp
-	)
+	project/particle_system/manager/computer_x.cpp)
 
 add_executable(21_particle_system
 	${MAIN}
