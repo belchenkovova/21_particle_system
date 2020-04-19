@@ -18,6 +18,7 @@ public :
 	inline static int			number_of_samples = 0;
 	inline static bool 			should_render = false;
 	inline static int 			point_size = 0;
+	inline static bool			print_fps = false;
 
 								core();
 								~core();

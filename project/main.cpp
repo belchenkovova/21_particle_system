@@ -1,14 +1,54 @@
 #include "engine/engine.h"
 #include "computer/computer.h"
 #include "particle_system/particle_system.h"
+#include "external/CLI11.hpp"
 
-class				final
+class					final
 {
 public :
-					final() = default;
-					~final() = default;
+						final() = default;
+						~final() = default;
 
-	static void		setup_static()
+	static bool			process_options(int argc, char **argv)
+	{
+
+		auto		app = CLI::App("");
+
+		app.set_help_flag();
+
+		auto		flag_help = app.add_flag("--help");
+		auto		flag_fps = app.add_flag("--fps");
+
+		try
+		{
+			app.parse(argc, argv);
+		}
+		catch (const CLI::ParseError &e)
+		{
+			throw (common::exception("Final : Invalid flags, use --help"));
+		}
+
+		if (*flag_help)
+		{
+			std::cout
+				<< std::endl
+				<< "Particle system " << std::endl
+				<< std::endl
+				<< "Flags : " << std::endl
+				<< "--fps : Print FPS" << std::endl
+				<< std::endl
+				<< "Keys : " << std::endl
+				<< std::endl;
+			return (false);
+
+		}
+
+		engine::core::print_fps = *flag_fps ? true : false;
+
+		return (true);
+	}
+
+	static void			setup_static()
 	{
 		engine::core::initial_window_size = engine::ivec2(1280, 720);
 		engine::core::window_name = "Particle System";
@@ -55,11 +95,14 @@ private :
 	system_type		system;
 };
 
-int					main()
+int					main(int argc, char **argv)
 {
 	try
 	{
 		final		final;
+
+		if (!final.process_options(argc, argv))
+			return (0);
 
 		final.setup_static();
 		final.setup_dynamic();

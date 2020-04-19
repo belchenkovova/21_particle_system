@@ -13,7 +13,8 @@ void 				core::start()
 		launch_timers();
 		if (should_render)
 		{
-			calculate_fps();
+			if (print_fps)
+				calculate_fps();
 
 			glClearColor(background.x, background.y, background.z, 1.f);
 			glClear(GL_COLOR_BUFFER_BIT);

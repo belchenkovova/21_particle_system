@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.15)
-project(21_particle_system)
+project(particle_system)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Winline")
@@ -68,7 +68,8 @@ set(PARTICLE_SYSTEM
 	project/particle_system/manager/engine_x.cpp
 	project/particle_system/manager/computer_x.cpp)
 
-add_executable(21_particle_system
+add_executable(particle_system
+	project/external/cxxopts.hpp
 	${MAIN}
 	${COMMON}
 	${ENGINE}
