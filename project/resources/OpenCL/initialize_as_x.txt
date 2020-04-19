@@ -22,6 +22,24 @@ kernel void				initialize_as_null(
 }
 
 
+static int				SameSide(vector3 p1, vector3 p2, vector3 a, vector3 b)
+{
+    const vector3		cp1 = vector3_cross(vector3_subtract(b, a), vector3_subtract(p1, a));
+    const vector3		cp2 = vector3_cross(vector3_subtract(b, a), vector3_subtract(p2, a));
+
+    return (vector3_dot(cp1, cp2) >= 0);
+}
+
+static int				PointInTriangle(vector3 p, vector3 a, vector3 b, vector3 c)
+{
+    if (!SameSide(p, a, b, c))
+    	return (0);
+    if (!SameSide(p, b, a, c))
+    	return (0);
+	if (!SameSide(p, c, a, b))
+		return (0);
+    return (1);
+}
 
 kernel void				initialize_as_cube(
 						constant vector3 *global_color,
@@ -45,6 +63,33 @@ kernel void				initialize_as_cube(
 		born_by_emitter,
 		global_id);
     is_alive[global_id] = 1;
+
+    double				a;
+    double				b;
+
+    vector3				v1 = {-100, -100, 0};
+    vector3				v2 = {0, 100, 0};
+    vector3				v3 = {100, -100, 0};
+    vector3				temp;
+
+	while (1)
+	{
+		a = xorshift_next_float(state + global_id);
+		b = xorshift_next_float(state + global_id);
+
+		position[global_id] = v1;
+
+		temp = vector3_multiply(vector3_subtract(v2, v1), a);
+		position[global_id] = vector3_add(position[global_id], temp);
+
+		temp = vector3_multiply(vector3_subtract(v3, v1), b);
+		position[global_id] = vector3_add(position[global_id], temp);
+
+		if (PointInTriangle(position[global_id], v1, v2, v3))
+			break ;
+	}
+
+    return ;
 
 	const int			axis = xorshift_next_in_range(state + global_id, AXIS_X, AXIS_Z);
 	const int			side = xorshift_next_in_range(state + global_id, SIDE_LEFT, SIDE_RIGHT);

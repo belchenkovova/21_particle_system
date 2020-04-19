@@ -4,15 +4,15 @@ using namespace			particle_system;
 
 void 					manager::function_render()
 {
-	kernels.attractor_execute.run();
-
-	kernels.repeller_execute.run();
-
-	kernels.emitter_start.run();
-	kernels.emitter_execute.run();
-	kernels.emitter_finish.run();
-
-	kernels.consumer_execute.run();
+//	kernels.attractor_execute.run();
+//
+//	kernels.repeller_execute.run();
+//
+//	kernels.emitter_start.run();
+//	kernels.emitter_execute.run();
+//	kernels.emitter_finish.run();
+//
+//	kernels.consumer_execute.run();
 
 	arguments.position.acquire();
 	kernels.particle_update.run();

@@ -1,4 +1,48 @@
 Source
+#define PI_ON_2							6.28318530718
+
+#define MIN(a, b)						(a < b ? a : b)
+#define MAX(a, b)						(a > b ? a : b)
+#define CLAMP(x, min, max)				(x < min) ? min : (max < x) ? max : x
+#define SQUARE(x)						((x) * (x))
+#define VALUE_OR(a, b)					(a ? a : b)
+
+#define XORSHIFT_TYPE					unsigned int
+#define XORSHIFT_SEED					42u
+#define XORSHIFT_MAX					4294967295u
+
+#define INITIALIZATION_CUBE_SIDE		1000
+
+#define INITIALIZATION_SPHERE_RADIUS	500
+
+#define PARTICLE_FINAL_COLOR_R			1.f
+#define PARTICLE_FINAL_COLOR_G			1.f
+#define PARTICLE_FINAL_COLOR_B			1.f
+#define PARTICLE_COLOR_FACTOR			(1 / 10.f)
+
+#define AXIS_X							0
+#define AXIS_Y							1
+#define AXIS_Z							2
+
+#define SIDE_LEFT						0
+#define SIDE_RIGHT						1
+
+#define ATTRACTOR_POWER					500.f
+#define ATTRACTOR_LOWER					80
+#define ATTRACTOR_HIGHER				150
+
+#define REPELLER_POWER					1000.f
+#define REPELLER_LOWER					80
+#define REPELLER_HIGHER					800
+
+#define EMITTER_POWER					10
+#define EMITTER_PUSH					1.f
+
+#define CONSUMER_POWER					100
+#define CONSUMER_ZONE_X					20
+#define CONSUMER_ZONE_Y					20
+#define CONSUMER_ZONE_Z					20
+
 typedef struct
 {
 	float			x;
@@ -9,6 +53,14 @@ typedef struct
 static vector3		vector3_empty()
 {
 	return ((vector3){0, 0, 0});
+}
+
+static vector3		vector3_or(vector3 main, vector3 alternative)
+{
+	if (main.x || main.y || main.z)
+		return (main);
+	else
+		return (alternative);
 }
 
 static vector3		vector3_add(vector3 a, vector3 b)
@@ -46,6 +98,21 @@ static vector3		vector3_normalize(vector3 v)
 	return (vector3_divide(v, vector3_length(v)));
 }
 
+static float		vector3_dot(vector3 a, vector3 b)
+{
+	return (a.x * b.x + a.y * b.y + a.z * b.z);
+}
+
+static vector3		vector3_cross(vector3 a, vector3 b)
+{
+	return
+	{
+		a.y * b.z - a.z * b.y,
+		a.z * b.x - a.x * b.z,
+		a.x * b.y - a.y * b.x
+	};
+}
+
 static void			vector3_print(vector3 v)
 {
 	printf("{%f, %f, %f}", v.x, v.y, v.z);
@@ -59,21 +126,11 @@ typedef struct
 	float			w;
 }					vector4;
 
-#define MIN(a, b)			(a < b ? a : b)
-#define MAX(a, b)			(a > b ? a : b)
-#define CLAMP(x, min, max)	(x < min) ? min : (max < x) ? max : x
-
-#define OBJECT_SIZE			((vector3){20, 20, 20})
-
-
-typedef enum
+static vector4		vector4_empty()
 {
-	object_type_empty,
-	object_type_attractor,
-	object_type_repeller,
-	object_type_emitter,
-	object_type_consumer
-}					object_type;
+	return ((vector4){0, 0, 0, 0});
+}
+
 
 static void				particle_reset_target(
 						constant vector3 *global_color,
@@ -85,12 +142,12 @@ static void				particle_reset_target(
 						global int *born_by_emitter,
 						int id)
 {
-	is_alive[id] = 1;
+	is_alive[id] = 0;
 	born_by_emitter[id] = -1;
 	position[id] = vector3_empty();
 	velocity[id] = vector3_empty();
 	acceleration[id] = vector3_empty();
-	color[id] = (vector4){global_color->x, global_color->y, global_color->z, 1};
+	color[id] = (vector4){global_color->x, global_color->y, global_color->z, 0};
 }
 
 kernel void				particle_reset(
@@ -120,6 +177,7 @@ static float			distribute_float(float start, float finish, float ratio)
 
 kernel void				particle_update(
 						constant vector3 *global_color,
+						global char *is_alive,
 						global vector3 *position,
 						global vector3 *velocity,
 						global vector3 *acceleration,
@@ -130,84 +188,28 @@ kernel void				particle_update(
 	const vector3		change = vector3_add(velocity[global_id], acceleration[global_id]);
 
 	position[global_id] = vector3_add(position[global_id], change);
-	velocity[global_id] = vector3_add(vector3_multiply(velocity[global_id], 1), acceleration[global_id]);
+	velocity[global_id] = vector3_add(velocity[global_id], acceleration[global_id]);
 	acceleration[global_id] = vector3_multiply(acceleration[global_id], 0.f);
 
-	const vector3		finish_color = {1, 1, 1};
-
-	const float			length = vector3_length(velocity[global_id]);
-	const float			ratio = CLAMP(length / 10, 0, 1);
-
-	color[global_id].x = distribute_float(global_color->x, finish_color.x, ratio);
-	color[global_id].y = distribute_float(global_color->y, finish_color.y, ratio);
-	color[global_id].z = distribute_float(global_color->z, finish_color.z, ratio);
-	color[global_id].w = 1;
-}
-
-kernel void			consumer_execute(
-					global int *number_of_objects,
-					global object_type *object_type,
-                    global vector3 *object_position,
-                    global char *is_alive,
-                    global vector3 *position,
-					global vector3 *velocity,
-					global vector3 *acceleration,
-					global vector4 *color,
-					global int *born_by_emitter)
-{
-	const int		global_id = get_global_id(0);
-
-	const vector3	half_object_size = vector3_divide(OBJECT_SIZE, 2);
-	vector3			min;
-	vector3			max;
-
-	float			how_close;
-	float			velocity_multiplier;
-
-	for (int object_i = 0; object_i < *number_of_objects; object_i++)
+	if (is_alive[global_id])
 	{
-		if (object_type[object_i] != object_type_consumer)
-			continue ;
+		const vector3		finish_color =
+		{
+			PARTICLE_FINAL_COLOR_R,
+			PARTICLE_FINAL_COLOR_G,
+			PARTICLE_FINAL_COLOR_B
+		};
 
-		if (is_alive[global_id] == 0)
-        	continue ;
+		const float			length = vector3_length(velocity[global_id]);
+		const float			ratio = CLAMP(length * PARTICLE_COLOR_FACTOR, 0, 1);
 
-//					///////////////////////////////////////////////////////////
-//					Gravity field
-//					///////////////////////////////////////////////////////////
-
-    how_close = vector3_length(vector3_subtract(object_position[object_i], position[global_id]));
-    how_close = 1 - MIN(how_close / 200, 1);
-
-    velocity_multiplier = 1 - 0.08 * how_close;
-
-    velocity[global_id] = vector3_multiply(velocity[global_id], velocity_multiplier);
-
-//					///////////////////////////////////////////////////////////
-//					Consuming
-//					///////////////////////////////////////////////////////////
-
-		min = vector3_subtract(object_position[object_i], half_object_size);
-        max = vector3_add(object_position[object_i], half_object_size);
-
-		if (position[global_id].x < min.x || position[global_id].x > max.x)
-			continue ;
-		if (position[global_id].y < min.y || position[global_id].y > max.y)
-			continue ;
-		if (position[global_id].z < min.z || position[global_id].z > max.z)
-			continue ;
-
-		is_alive[global_id] = 0;
-		particle_reset_target(
-			position,
-			is_alive,
-			velocity,
-			acceleration,
-			color,
-			born_by_emitter,
-			global_id);
+		color[global_id].x = distribute_float(global_color->x, finish_color.x, ratio);
+		color[global_id].y = distribute_float(global_color->y, finish_color.y, ratio);
+		color[global_id].z = distribute_float(global_color->z, finish_color.z, ratio);
+		color[global_id].w = 1;
 	}
+	else
+		color[global_id] = vector4_empty();
 }
-
 
 

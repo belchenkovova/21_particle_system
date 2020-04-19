@@ -53,6 +53,21 @@ static vector3		vector3_normalize(vector3 v)
 	return (vector3_divide(v, vector3_length(v)));
 }
 
+static float		vector3_dot(vector3 a, vector3 b)
+{
+	return (a.x * b.x + a.y * b.y + a.z * b.z);
+}
+
+static vector3		vector3_cross(vector3 a, vector3 b)
+{
+	return ((vector3)
+	{
+		a.y * b.z - a.z * b.y,
+		a.z * b.x - a.x * b.z,
+		a.x * b.y - a.y * b.x
+	});
+}
+
 static void			vector3_print(vector3 v)
 {
 	printf("{%f, %f, %f}", v.x, v.y, v.z);
