@@ -19,67 +19,69 @@ void					manager::computer_build()
 void					manager::computer_build_kernels()
 {
 	kernels.xorshift_seed = computer.generate_kernel();
+	kernels.xorshift_seed.add_source("project/resources/OpenCL/macros.txt");
 	kernels.xorshift_seed.add_source("project/resources/OpenCL/xorshift.txt");
 	kernels.xorshift_seed.build("xorshift_seed", number_of_particles);
 
 	kernels.particle_reset = computer.generate_kernel();
+	kernels.particle_reset.add_source("project/resources/OpenCL/macros.txt");
 	kernels.particle_reset.add_source("project/resources/OpenCL/vector3.txt");
 	kernels.particle_reset.add_source("project/resources/OpenCL/vector4.txt");
-	kernels.particle_reset.add_source("project/resources/OpenCL/macros.txt");
 	kernels.particle_reset.add_source("project/resources/OpenCL/particle_x.txt");
 	kernels.particle_reset.build("particle_reset", number_of_particles);
 
 	kernels.particle_update = computer.generate_kernel();
+	kernels.particle_update.add_source("project/resources/OpenCL/macros.txt");
 	kernels.particle_update.add_source("project/resources/OpenCL/vector3.txt");
 	kernels.particle_update.add_source("project/resources/OpenCL/vector4.txt");
-	kernels.particle_update.add_source("project/resources/OpenCL/macros.txt");
 	kernels.particle_update.add_source("project/resources/OpenCL/particle_x.txt");
 	kernels.particle_update.build("particle_update", number_of_particles);
 
 	kernels.initialize_as_null = computer.generate_kernel();
+	kernels.initialize_as_null.add_source("project/resources/OpenCL/macros.txt");
 	kernels.initialize_as_null.add_source("project/resources/OpenCL/xorshift.txt");
 	kernels.initialize_as_null.add_source("project/resources/OpenCL/vector3.txt");
 	kernels.initialize_as_null.add_source("project/resources/OpenCL/vector4.txt");
-	kernels.initialize_as_null.add_source("project/resources/OpenCL/macros.txt");
 	kernels.initialize_as_null.add_source("project/resources/OpenCL/particle_x.txt");
 	kernels.initialize_as_null.add_source("project/resources/OpenCL/initialize_as_x.txt");
 	kernels.initialize_as_null.build("initialize_as_null", number_of_particles);
 
 	kernels.initialize_as_cube = computer.generate_kernel();
+	kernels.initialize_as_cube.add_source("project/resources/OpenCL/macros.txt");
 	kernels.initialize_as_cube.add_source("project/resources/OpenCL/xorshift.txt");
 	kernels.initialize_as_cube.add_source("project/resources/OpenCL/vector3.txt");
 	kernels.initialize_as_cube.add_source("project/resources/OpenCL/vector4.txt");
-	kernels.initialize_as_cube.add_source("project/resources/OpenCL/macros.txt");
 	kernels.initialize_as_cube.add_source("project/resources/OpenCL/particle_x.txt");
 	kernels.initialize_as_cube.add_source("project/resources/OpenCL/initialize_as_x.txt");
 	kernels.initialize_as_cube.build("initialize_as_cube", number_of_particles);
 
 	kernels.initialize_as_sphere = computer.generate_kernel();
+	kernels.initialize_as_sphere.add_source("project/resources/OpenCL/macros.txt");
 	kernels.initialize_as_sphere.add_source("project/resources/OpenCL/xorshift.txt");
 	kernels.initialize_as_sphere.add_source("project/resources/OpenCL/vector3.txt");
 	kernels.initialize_as_sphere.add_source("project/resources/OpenCL/vector4.txt");
-	kernels.initialize_as_sphere.add_source("project/resources/OpenCL/macros.txt");
 	kernels.initialize_as_sphere.add_source("project/resources/OpenCL/particle_x.txt");
 	kernels.initialize_as_sphere.add_source("project/resources/OpenCL/initialize_as_x.txt");
 	kernels.initialize_as_sphere.build("initialize_as_sphere", number_of_particles);
 
 	kernels.attractor_execute = computer.generate_kernel();
+	kernels.attractor_execute.add_source("project/resources/OpenCL/macros.txt");
 	kernels.attractor_execute.add_source("project/resources/OpenCL/vector3.txt");
 	kernels.attractor_execute.add_source("project/resources/OpenCL/vector4.txt");
-	kernels.attractor_execute.add_source("project/resources/OpenCL/macros.txt");
 	kernels.attractor_execute.add_source("project/resources/OpenCL/object.txt");
 	kernels.attractor_execute.add_source("project/resources/OpenCL/attractor_x.txt");
 	kernels.attractor_execute.build("attractor_execute", number_of_particles);
 
 	kernels.repeller_execute = computer.generate_kernel();
+	kernels.repeller_execute.add_source("project/resources/OpenCL/macros.txt");
 	kernels.repeller_execute.add_source("project/resources/OpenCL/vector3.txt");
 	kernels.repeller_execute.add_source("project/resources/OpenCL/vector4.txt");
-	kernels.repeller_execute.add_source("project/resources/OpenCL/macros.txt");
 	kernels.repeller_execute.add_source("project/resources/OpenCL/object.txt");
 	kernels.repeller_execute.add_source("project/resources/OpenCL/repeller_x.txt");
 	kernels.repeller_execute.build("repeller_execute", number_of_particles);
 
 	kernels.emitter_start = computer.generate_kernel();
+	kernels.emitter_start.add_source("project/resources/OpenCL/macros.txt");
 	kernels.emitter_start.add_source("project/resources/OpenCL/xorshift.txt");
 	kernels.emitter_start.add_source("project/resources/OpenCL/vector3.txt");
 	kernels.emitter_start.add_source("project/resources/OpenCL/vector4.txt");
@@ -88,6 +90,7 @@ void					manager::computer_build_kernels()
 	kernels.emitter_start.build("emitter_start", 1);
 
 	kernels.emitter_finish = computer.generate_kernel();
+	kernels.emitter_finish.add_source("project/resources/OpenCL/macros.txt");
 	kernels.emitter_finish.add_source("project/resources/OpenCL/xorshift.txt");
 	kernels.emitter_finish.add_source("project/resources/OpenCL/vector3.txt");
 	kernels.emitter_finish.add_source("project/resources/OpenCL/vector4.txt");
@@ -96,6 +99,7 @@ void					manager::computer_build_kernels()
 	kernels.emitter_finish.build("emitter_finish", number_of_particles);
 
 	kernels.emitter_execute = computer.generate_kernel();
+	kernels.emitter_execute.add_source("project/resources/OpenCL/macros.txt");
 	kernels.emitter_execute.add_source("project/resources/OpenCL/xorshift.txt");
 	kernels.emitter_execute.add_source("project/resources/OpenCL/vector3.txt");
 	kernels.emitter_execute.add_source("project/resources/OpenCL/vector4.txt");
@@ -104,9 +108,9 @@ void					manager::computer_build_kernels()
 	kernels.emitter_execute.build("emitter_execute", number_of_particles);
 
 	kernels.consumer_execute = computer.generate_kernel();
+	kernels.consumer_execute.add_source("project/resources/OpenCL/macros.txt");
 	kernels.consumer_execute.add_source("project/resources/OpenCL/vector3.txt");
 	kernels.consumer_execute.add_source("project/resources/OpenCL/vector4.txt");
-	kernels.consumer_execute.add_source("project/resources/OpenCL/macros.txt");
 	kernels.consumer_execute.add_source("project/resources/OpenCL/object.txt");
 	kernels.consumer_execute.add_source("project/resources/OpenCL/particle_x.txt");
 	kernels.consumer_execute.add_source("project/resources/OpenCL/consumer_x.txt");

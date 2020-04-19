@@ -9,7 +9,6 @@ kernel void			attractor_execute(
 					global vector3 *acceleration)
 {
 	const int		global_id = get_global_id(0);
-	const float		basic_power = 500.f;
 
 	vector3			direction;
 	vector3			force;
@@ -24,8 +23,8 @@ kernel void			attractor_execute(
 		direction = vector3_subtract(object_position[object_i], position[global_id]);
 		distance = vector3_length(direction);
 
-		distance = CLAMP(distance, 80, 150);
-		strength = basic_power * object_power[object_i] / SQUARE(distance);
+		distance = CLAMP(distance, ATTRACTOR_LOWER, ATTRACTOR_HIGHER);
+		strength = ATTRACTOR_POWER * object_power[object_i] / SQUARE(distance);
 
 		force = vector3_normalize(direction);
 		force = vector3_multiply(force, strength);

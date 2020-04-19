@@ -1,7 +1,43 @@
-#define MIN(a, b)			(a < b ? a : b)
-#define MAX(a, b)			(a > b ? a : b)
-#define CLAMP(x, min, max)	(x < min) ? min : (max < x) ? max : x
-#define SQUARE(x)			((x) * (x))
-#define VALUE_OR(a, b)		(a ? a : b)
+#define PI_ON_2							6.28318530718
 
-#define OBJECT_SIZE			((vector3){20, 20, 20})
+#define MIN(a, b)						(a < b ? a : b)
+#define MAX(a, b)						(a > b ? a : b)
+#define CLAMP(x, min, max)				(x < min) ? min : (max < x) ? max : x
+#define SQUARE(x)						((x) * (x))
+#define VALUE_OR(a, b)					(a ? a : b)
+
+#define XORSHIFT_TYPE					unsigned int
+#define XORSHIFT_SEED					42u
+#define XORSHIFT_MAX					4294967295u
+
+#define INITIALIZATION_CUBE_SIDE		1000
+
+#define INITIALIZATION_SPHERE_RADIUS	500
+
+#define PARTICLE_FINAL_COLOR_R			1.f
+#define PARTICLE_FINAL_COLOR_G			1.f
+#define PARTICLE_FINAL_COLOR_B			1.f
+#define PARTICLE_COLOR_FACTOR			(1 / 10.f)
+
+#define AXIS_X							0
+#define AXIS_Y							1
+#define AXIS_Z							2
+
+#define SIDE_LEFT						0
+#define SIDE_RIGHT						1
+
+#define ATTRACTOR_POWER					500.f
+#define ATTRACTOR_LOWER					80
+#define ATTRACTOR_HIGHER				150
+
+#define REPELLER_POWER					1000.f
+#define REPELLER_LOWER					80
+#define REPELLER_HIGHER					800
+
+#define EMITTER_POWER					10
+#define EMITTER_PUSH					1.f
+
+#define CONSUMER_POWER					100
+#define CONSUMER_ZONE_X					20
+#define CONSUMER_ZONE_Y					20
+#define CONSUMER_ZONE_Z					20

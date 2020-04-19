@@ -1,6 +1,3 @@
-#define EMISSION_POWER	10
-#define EMISSION_FORCE	1
-
 kernel void				emitter_start(
 						global int *number_of_particles,
 						global int *number_of_objects,
@@ -24,7 +21,7 @@ kernel void				emitter_start(
 			if (is_alive[particle_i] == 0)
 			{
 				born_by_emitter[particle_i] = object_i;
-				if (++counter == EMISSION_POWER * object_power[object_i])
+				if (++counter == EMITTER_POWER * object_power[object_i])
 					break ;
 			}
 	}
@@ -59,7 +56,7 @@ kernel void				emitter_execute(
 		velocity[global_id].y = xorshift_next_float(state + global_id) - 0.5f;
 		velocity[global_id].z = xorshift_next_float(state + global_id) - 0.5f;
 		velocity[global_id] = vector3_normalize(velocity[global_id]);
-		velocity[global_id] = vector3_multiply(velocity[global_id], EMISSION_FORCE);
+		velocity[global_id] = vector3_multiply(velocity[global_id], EMITTER_PUSH);
 
 		acceleration[global_id] = vector3_empty();
 	}

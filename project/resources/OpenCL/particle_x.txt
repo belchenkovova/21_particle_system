@@ -54,15 +54,20 @@ kernel void				particle_update(
 	const vector3		change = vector3_add(velocity[global_id], acceleration[global_id]);
 
 	position[global_id] = vector3_add(position[global_id], change);
-	velocity[global_id] = vector3_add(vector3_multiply(velocity[global_id], 0.9999), acceleration[global_id]);
+	velocity[global_id] = vector3_add(velocity[global_id], acceleration[global_id]);
 	acceleration[global_id] = vector3_multiply(acceleration[global_id], 0.f);
 
 	if (is_alive[global_id])
 	{
-		const vector3		finish_color = {1, 1, 1};
+		const vector3		finish_color =
+		{
+			PARTICLE_FINAL_COLOR_R,
+			PARTICLE_FINAL_COLOR_G,
+			PARTICLE_FINAL_COLOR_B
+		};
 
 		const float			length = vector3_length(velocity[global_id]);
-		const float			ratio = CLAMP(length / 10, 0, 1);
+		const float			ratio = CLAMP(length * PARTICLE_COLOR_FACTOR, 0, 1);
 
 		color[global_id].x = distribute_float(global_color->x, finish_color.x, ratio);
 		color[global_id].y = distribute_float(global_color->y, finish_color.y, ratio);
