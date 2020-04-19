@@ -40,6 +40,10 @@ namespace						engine
 	using						std::forward_as_tuple;
 	using						std::min;
 	using						std::max;
+	using						std::cerr;
+	using						std::cout;
+	using						std::endl;
+	using						std::flush;
 
 	using						glm::lookAt;
 	using						glm::perspective;
