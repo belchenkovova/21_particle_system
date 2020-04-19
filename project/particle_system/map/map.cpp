@@ -7,63 +7,76 @@ using namespace			particle_system;
 	auto				stream = ifstream(source);
 	json				json;
 
-	auto				parse_type = [](const json::iterator &iterator) -> object::type
-	{
-		if (not iterator.value().is_string())
-			throw (common::exception("Particle System, Map : Object type is not a string"));
-
-		auto			value = iterator.value().get<string>();
-
-		if (value == "attractor")
-			return (object::type::attractor);
-		else if (value == "repeller")
-			return (object::type::repeller);
-		else if (value == "emitter")
-			return (object::type::emitter);
-		else if (value == "consumer")
-			return (object::type::consumer);
-		else
-			throw (common::exception("Particle System, Map : Bad object type"));
-	};
-
-	auto				parse_position = [](const json::iterator &iterator) -> vec3
-	{
-		auto			parse_float = [](const nlohmann::json &json) -> optional<float>
-		{
-			if (not json.is_number_float())
-				return nullopt;
-			return (json.get<float>());
-		};
-
-		if (not iterator.value().is_array())
-			throw (common::exception("Particle System, Map : Object position is not an array"));
-
-		vec3			result;
-
-		for (int i = 0; i < 3; i++)
-			if (auto	value = parse_float(iterator->at(i)); not value)
-				throw (common::exception("Particle System, Map : Object position has bad content"));
-			else
-				result[i] = *value;
-
-		return (result);
-	};
-
 	stream >> json;
 
 	for (const auto& [key, value] : json.items())
 	{
 		auto			type_iterator = value.find("type");
 		auto			position_iterator = value.find("position");
+		auto			power_iterator = value.find("power");
 
 		if (type_iterator == value.end())
 			throw (common::exception("Particle System, Map : Object type is not defined"));
 		if (position_iterator == value.end())
 			throw (common::exception("Particle System, Map : Object position is not defined"));
 
-		auto			type = parse_type(type_iterator);
-		auto			position = parse_position(position_iterator);
+		auto			type = parse_string(type_iterator.value());
+		auto			position = parse_vec3(position_iterator.value());
+		optional<float>	power;
 
-		emplace_back(type, position);
+		if (not type)
+			throw (common::exception("Particle System, Map : Bad object type"));
+		if (not position)
+			throw (common::exception("Particle System, Map : Bad object position"));
+
+		if (power_iterator != value.end())
+			power = parse_float(power_iterator.value());
+
+		emplace_back(string_to_object_type(*type), *position, power.value_or(1.f));
 	}
+}
+
+object::type		map::string_to_object_type(const string &string)
+{
+	if (string == "empty")
+		return (object::type::empty);
+	else if (string == "attractor")
+		return (object::type::attractor);
+	else if (string == "repeller")
+		return (object::type::repeller);
+	else if (string == "emitter")
+		return (object::type::emitter);
+	else if (string == "consumer")
+		return (object::type::consumer);
+	else
+		throw (common::exception("Particle System, Map : Bad object type"));
+}
+
+optional<string>	map::parse_string(const nlohmann::json &json)
+{
+	if (json.is_string())
+		return (json.get<string>());
+	else
+		return {};
+}
+
+optional<float>		map::parse_float(const nlohmann::json &json)
+{
+	if (json.is_number_float())
+		return (json.get<float>());
+	else
+		return {};
+}
+
+optional<vec3>		map::parse_vec3(const nlohmann::json &json)
+{
+	vec3			result;
+
+	for (int i = 0; i < 3; i++)
+		if (auto value = parse_float(json.at(i)); not value)
+			return {};
+		else
+			result[i] = *value;
+
+	return (result);
 }

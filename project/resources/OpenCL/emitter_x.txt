@@ -6,6 +6,7 @@ kernel void				emitter_start(
 						global int *number_of_objects,
 						global object_type *object_type,
 						global vector3 *object_position,
+						global float *object_power,
 						global char *is_alive,
                         global int *born_by_emitter)
 {
@@ -23,7 +24,7 @@ kernel void				emitter_start(
 			if (is_alive[particle_i] == 0)
 			{
 				born_by_emitter[particle_i] = object_i;
-				if (++counter == EMISSION_POWER)
+				if (++counter == EMISSION_POWER * object_power[object_i])
 					break ;
 			}
 	}

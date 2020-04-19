@@ -120,6 +120,7 @@ void					manager::computer_build_arguments()
 	arguments.particle_color = kernels.initialize_as_null.generate_argument<float, 3>(1, computer::memory_management::read);
 	arguments.object_type = kernels.initialize_as_null.generate_argument<int>(number_of_objects);
 	arguments.object_position = kernels.initialize_as_null.generate_argument<float, 3>(number_of_objects);
+	arguments.object_power = kernels.initialize_as_null.generate_argument<float>(number_of_objects);
 	arguments.is_alive = kernels.initialize_as_null.generate_argument<char>(number_of_particles);
 	arguments.position = kernels.initialize_as_null.generate_argument(renderer.buffer.receive_attribute(0));
 	arguments.velocity = kernels.initialize_as_null.generate_argument<float, 3>(number_of_particles);
@@ -177,6 +178,7 @@ void					manager::computer_link_arguments()
 	kernels.attractor_execute.link_argument(arguments.number_of_objects);
 	kernels.attractor_execute.link_argument(arguments.object_type);
 	kernels.attractor_execute.link_argument(arguments.object_position);
+	kernels.attractor_execute.link_argument(arguments.object_power);
 	kernels.attractor_execute.link_argument(arguments.is_alive);
 	kernels.attractor_execute.link_argument(arguments.position);
 	kernels.attractor_execute.link_argument(arguments.velocity);
@@ -185,6 +187,7 @@ void					manager::computer_link_arguments()
 	kernels.repeller_execute.link_argument(arguments.number_of_objects);
 	kernels.repeller_execute.link_argument(arguments.object_type);
 	kernels.repeller_execute.link_argument(arguments.object_position);
+	kernels.repeller_execute.link_argument(arguments.object_power);
 	kernels.repeller_execute.link_argument(arguments.is_alive);
 	kernels.repeller_execute.link_argument(arguments.position);
 	kernels.repeller_execute.link_argument(arguments.velocity);
@@ -194,6 +197,7 @@ void					manager::computer_link_arguments()
 	kernels.emitter_start.link_argument(arguments.number_of_objects);
 	kernels.emitter_start.link_argument(arguments.object_type);
 	kernels.emitter_start.link_argument(arguments.object_position);
+	kernels.emitter_start.link_argument(arguments.object_power);
 	kernels.emitter_start.link_argument(arguments.is_alive);
 	kernels.emitter_start.link_argument(arguments.born_by_emitter);
 
@@ -231,6 +235,7 @@ void					manager::computer_fill_arguments()
 
 	object::type		type_data[number_of_objects];
 	float				position_data[number_of_objects * 3];
+	float				power_data[number_of_objects * 3];
 
 	fill(type_data, type_data + number_of_objects, object::type::empty);
 	fill(position_data, position_data + number_of_objects, 0.f);
@@ -242,6 +247,10 @@ void					manager::computer_fill_arguments()
 		for (int j = 0; j < 3; j++)
 			position_data[i * 3 + j] = map->at(i).read_position()[j];
 
+	for (int i = 0; i < map->size() and i < number_of_objects; i++)
+			power_data[i] = map->at(i).read_power();
+
 	arguments.object_type.write(&type_data);
 	arguments.object_position.write(&position_data);
+	arguments.object_power.write(&power_data);
 }

@@ -80,6 +80,7 @@ private :
 		computer::argument	particle_color;
 		computer::argument	object_type;
 		computer::argument	object_position;
+		computer::argument	object_power;
 		computer::argument	is_alive;
 		computer::argument	position;
 		computer::argument	velocity;

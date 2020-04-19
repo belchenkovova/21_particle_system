@@ -10,6 +10,14 @@ static vector3		vector3_empty()
 	return ((vector3){0, 0, 0});
 }
 
+static vector3		vector3_or(vector3 main, vector3 alternative)
+{
+	if (main.x || main.y || main.z)
+		return (main);
+	else
+		return (alternative);
+}
+
 static vector3		vector3_add(vector3 a, vector3 b)
 {
 	return ((vector3){a.x + b.x, a.y + b.y, a.z + b.z});

@@ -1,11 +1,12 @@
 [
 	{
-		"type" : "attractor",
-		"position" : [-200.0, 0.0, 0.0]
+		"type" : "consumer",
+		"position" : [-300.0, 0.0, 0.0]
 	},
 
 	{
-		"type" : "repeller",
-		"position" : [200.0, 0.0, 0.0]
+		"type" : "emitter",
+		"position" : [100.0, 0.0, 0.0],
+		"power" : 1.0
 	}
 ]

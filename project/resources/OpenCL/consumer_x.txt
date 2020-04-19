@@ -3,6 +3,7 @@ kernel void			consumer_execute(
 					constant vector3 *global_color,
 					global object_type *object_type,
                     global vector3 *object_position,
+                    global float *object_power,
                     global char *is_alive,
                     global vector3 *position,
 					global vector3 *velocity,
@@ -32,7 +33,7 @@ kernel void			consumer_execute(
 //					///////////////////////////////////////////////////////////
 
     how_close = vector3_length(vector3_subtract(object_position[object_i], position[global_id]));
-    how_close = 1 - MIN(how_close / 200, 1);
+    how_close = 1 - MIN(how_close / (100 * object_power[object_i]), 1);
 
     velocity_multiplier = 1 - 0.08 * how_close;
 
