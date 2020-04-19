@@ -12,7 +12,7 @@ void					manager::computer_start()
 	arguments.position.acquire();
 	kernels.xorshift_seed.run();
 	kernels.particle_reset.run();
-	kernels.initialize_as_null.run();
+	kernels.initialize_as_cube.run();
 	arguments.position.release();
 }
 

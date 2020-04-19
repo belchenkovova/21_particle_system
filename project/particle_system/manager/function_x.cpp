@@ -4,13 +4,9 @@ using namespace			particle_system;
 
 void 					manager::function_render()
 {
-	arguments.position.acquire();
-
 	kernels.attractor_execute.run();
 
 	kernels.repeller_execute.run();
-
-	kernels.particle_update.run();
 
 	kernels.emitter_start.run();
 	kernels.emitter_execute.run();
@@ -18,7 +14,10 @@ void 					manager::function_render()
 
 	kernels.consumer_execute.run();
 
+	arguments.position.acquire();
+	kernels.particle_update.run();
 	arguments.position.release();
+
 	engine::core::should_render = true;
 }
 
