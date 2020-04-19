@@ -1,38 +1,22 @@
-[
+{
+	"settings" :
 	{
-		"type" : "attractor",
-		"position" : [200.0, 200.0, 0.0],
-		"power" : 0.0
+		"number_of_particles" : 10000,
+		"particle_color" : "blue"
 	},
 
-	{
-		"type" : "attractor",
-		"position" : [-200.0, 200.0, 0.0],
-		"power" :  0.0
-	},
+	"objects" :
+	[
+		{
+			"type" : "attractor",
+			"position" : [-100.0, 0.0, 0.0],
+			"power" :  1.0
+		},
 
-	{
-		"type" : "attractor",
-		"position" : [200.0, -200.0, 0.0],
-		"power" :  0.0
-	},
-
-	{
-		"type" : "attractor",
-		"position" : [-200.0, -200.0, 0.0],
-		"power" :  0.0
-	},
-
-	{
-		"type" : "attractor",
-		"position" : [-100.0, 0.0, 0.0],
-		"power" :  1.0
-	},
-
-
-	{
-		"type" : "attractor",
-		"position" : [100.0, 0.0, 0.0],
-		"power" :  1.0
-	}
-]
+		{
+			"type" : "attractor",
+			"position" : [100.0, 0.0, 0.0],
+			"power" :  1.0
+		}
+	]
+}

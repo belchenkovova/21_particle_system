@@ -2,7 +2,7 @@
 
 using namespace		particle_system;
 
-					manager::renderer::renderer()
+void				manager::renderer::build(int number_of_particles)
 {
 	program.attach_shader(engine::shader::type::vertex, "project/resources/OpenGL/vertex.glsl");
 	program.attach_shader(engine::shader::type::fragment, "project/resources/OpenGL/fragment.glsl");

@@ -27,9 +27,6 @@ public :
 		engine::camera::far_plane = 5000.f;
 
 		computer::core::use_OpenGL = true;
-
-		particle_system::manager::number_of_particles = 50000;
-		particle_system::manager::particle_color = engine::vec3(1.f, 0.f, 0.f);
 	}
 
 	void			setup_dynamic(const std::string &source = "")

@@ -7,9 +7,6 @@ class						particle_system::manager
 {
 public :
 
-	static inline int		number_of_particles = 0;
-	static inline vec3		particle_color;
-
 							manager(engine::core &engine, computer::core &computer) :
 							engine(engine), computer(computer) {}
 							~manager() = default;
@@ -28,13 +25,16 @@ private :
 	computer::core			&computer;
 
 	int						number_of_objects = 0;
+	int						number_of_particles = 0;
+	vec3					particle_color = vec3(0, 0, 0);
 
 	class 					renderer final : public engine::renderer
 	{
 	public :
-							renderer();
+							renderer() = default;
 							~renderer() override = default;
 
+		void				build(int number_of_particles);
 		void 				render() override;
 
 		using				engine::renderer::program;
