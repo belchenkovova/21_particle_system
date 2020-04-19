@@ -12,7 +12,7 @@ void					manager::computer_start()
 	arguments.position.acquire();
 	kernels.xorshift_seed.run();
 	kernels.particle_reset.run();
-	kernels.initialize_as_cube.run();
+	kernels.initialize_as_null.run();
 	arguments.position.release();
 }
 
@@ -70,6 +70,14 @@ void					manager::computer_build_kernels()
 	kernels.attractor_execute.add_source("project/resources/OpenCL/object.txt");
 	kernels.attractor_execute.add_source("project/resources/OpenCL/attractor_x.txt");
 	kernels.attractor_execute.build("attractor_execute", number_of_particles);
+
+	kernels.repeller_execute = computer.generate_kernel();
+	kernels.repeller_execute.add_source("project/resources/OpenCL/vector3.txt");
+	kernels.repeller_execute.add_source("project/resources/OpenCL/vector4.txt");
+	kernels.repeller_execute.add_source("project/resources/OpenCL/macros.txt");
+	kernels.repeller_execute.add_source("project/resources/OpenCL/object.txt");
+	kernels.repeller_execute.add_source("project/resources/OpenCL/repeller_x.txt");
+	kernels.repeller_execute.build("repeller_execute", number_of_particles);
 
 	kernels.emitter_start = computer.generate_kernel();
 	kernels.emitter_start.add_source("project/resources/OpenCL/xorshift.txt");
@@ -173,6 +181,14 @@ void					manager::computer_link_arguments()
 	kernels.attractor_execute.link_argument(arguments.position);
 	kernels.attractor_execute.link_argument(arguments.velocity);
 	kernels.attractor_execute.link_argument(arguments.acceleration);
+
+	kernels.repeller_execute.link_argument(arguments.number_of_objects);
+	kernels.repeller_execute.link_argument(arguments.object_type);
+	kernels.repeller_execute.link_argument(arguments.object_position);
+	kernels.repeller_execute.link_argument(arguments.is_alive);
+	kernels.repeller_execute.link_argument(arguments.position);
+	kernels.repeller_execute.link_argument(arguments.velocity);
+	kernels.repeller_execute.link_argument(arguments.acceleration);
 
 	kernels.emitter_start.link_argument(arguments.number_of_particles);
 	kernels.emitter_start.link_argument(arguments.number_of_objects);

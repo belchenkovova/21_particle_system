@@ -1,4 +1,4 @@
-kernel void			attractor_execute(
+kernel void			repeller_execute(
 					global int *number_of_objects,
 					global object_type *object_type,
                     global vector3 *object_position,
@@ -8,7 +8,7 @@ kernel void			attractor_execute(
 					global vector3 *acceleration)
 {
 	const int		global_id = get_global_id(0);
-	const float		time = 2.f;
+	const float		time = -2.f;
 
 	vector3			direction;
 	vector3			force;
@@ -17,16 +17,12 @@ kernel void			attractor_execute(
 
 	for (int object_i = 0; object_i < *number_of_objects; object_i++)
     {
-    	if (object_type[object_i] != object_type_attractor && object_type[object_i] != object_type_consumer)
+    	if (object_type[object_i] != object_type_repeller)
     		continue ;
 
 		direction = vector3_subtract(object_position[object_i], position[global_id]);
 
 		distance_squared = vector3_length_squared(direction);
-
-		if (distance_squared > 100)
-			continue ;
-
 		distance_squared = CLAMP(distance_squared, 15, 80);
 		strength = time / distance_squared;
 

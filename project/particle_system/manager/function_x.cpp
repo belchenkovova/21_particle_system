@@ -8,6 +8,8 @@ void 					manager::function_render()
 
 	kernels.attractor_execute.run();
 
+	kernels.repeller_execute.run();
+
 	kernels.particle_update.run();
 
 	kernels.emitter_start.run();

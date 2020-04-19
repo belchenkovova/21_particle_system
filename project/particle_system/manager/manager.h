@@ -65,6 +65,7 @@ private :
 		computer::kernel	initialize_as_sphere;
 		computer::kernel	particle_update;
 		computer::kernel	attractor_execute;
+		computer::kernel	repeller_execute;
 		computer::kernel	emitter_start;
 		computer::kernel	emitter_finish;
 		computer::kernel	emitter_execute;

@@ -1,0 +1,11 @@
+[
+	{
+		"type" : "consumer",
+		"position" : [-300.0, 0.0, 0.0]
+	},
+
+	{
+		"type" : "attractor",
+		"position" : [100.0, 0.0, 0.0]
+	}
+]
