@@ -2,7 +2,9 @@
 	"settings" :
 	{
 		"number_of_particles" : 50000,
-		"particle_color" : "red"
+		"start_color" : "red",
+		"finish_color" : "white",
+		"initialization" : "sphere"
 	},
 
 	"objects" :

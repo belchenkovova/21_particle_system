@@ -6,28 +6,38 @@
 #include "external/json.hpp"
 
 
-namespace			particle_system
+namespace				particle_system
 {
-	using			std::string;
-	using			std::vector;
-	using			std::optional;
-	using			std::nullopt;
-	using			std::ifstream;
-	using			std::move;
-	using			std::fill;
+	using				std::string;
+	using				std::vector;
+	using				std::optional;
+	using				std::nullopt;
+	using				std::ifstream;
+	using				std::move;
+	using				std::fill;
 
-	using			glm::vec3;
+	using				glm::vec3;
 
-	using			json = nlohmann::json;
+	using				json = nlohmann::json;
 
-	class			settings
+	enum class			initialization
 	{
-	public:
-		int			number_of_particles = 10000;
-		vec3		particle_color = vec3(1.f, 0.f, 0.f);
+		null,
+		sphere,
+		cube,
+		tetrahedron
 	};
 
-	class			object;
-	class			map;
-	class			manager;
+	class				settings
+	{
+	public:
+		int				number_of_particles = 10000;
+		vec3			start_color = vec3(1.f, 1.f, 1.f);
+		vec3			finish_color = vec3(1.f, 1.f, 1.f);
+		initialization	initialization = initialization::sphere;
+	};
+
+	class				object;
+	class				map;
+	class				manager;
 }

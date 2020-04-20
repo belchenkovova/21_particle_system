@@ -66,10 +66,10 @@ set(PARTICLE_SYSTEM
 	project/particle_system/manager/build.cpp
 	project/particle_system/manager/function_x.cpp
 	project/particle_system/manager/engine_x.cpp
-	project/particle_system/manager/computer_x.cpp)
+	project/particle_system/manager/computer_x.cpp
+	project/particle_system/manager/initialize.cpp)
 
 add_executable(particle_system
-	project/external/cxxopts.hpp
 	${MAIN}
 	${COMMON}
 	${ENGINE}

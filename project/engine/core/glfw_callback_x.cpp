@@ -14,7 +14,7 @@ void 				core::glfw_callback_key(GLFWwindow *window, int key, int code, int acti
 		core->event.type_value = event::type::key_hold;
 	else
 		return ;
-	core->event.key_value = static_cast<event::key>(key);
+	core->event.key_value = static_cast<enum key>(key);
 }
 
 void 				core::glfw_callback_mouse_movement(GLFWwindow *window, double x, double y)

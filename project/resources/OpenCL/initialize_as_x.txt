@@ -4,7 +4,7 @@
 
 
 kernel void				initialize_as_null(
-						constant vector3 *global_color,
+						constant vector3 *start_color,
 						global char *is_alive,
 						global vector3 *position,
                         global vector3 *velocity,
@@ -15,7 +15,7 @@ kernel void				initialize_as_null(
 	const int			global_id = get_global_id(0);
 
 	particle_reset_target(
-		global_color,
+		start_color,
 		is_alive,
 		position,
 		velocity,
@@ -33,7 +33,7 @@ kernel void				initialize_as_null(
 
 
 kernel void				initialize_as_sphere(
-						constant vector3 *global_color,
+						constant vector3 *start_color,
 						global char *is_alive,
 						global vector3 *position,
 						global vector3 *velocity,
@@ -45,7 +45,7 @@ kernel void				initialize_as_sphere(
 	const int			global_id = get_global_id(0);
 
 	particle_reset_target(
-		global_color,
+		start_color,
 		is_alive,
 		position,
 		velocity,
@@ -72,7 +72,7 @@ kernel void				initialize_as_sphere(
 
 
 kernel void				initialize_as_cube(
-						constant vector3 *global_color,
+						constant vector3 *start_color,
 						global char *is_alive,
 						global vector3 *position,
 						global vector3 *velocity,
@@ -84,7 +84,7 @@ kernel void				initialize_as_cube(
 	const int			global_id = get_global_id(0);
 
 	particle_reset_target(
-		global_color,
+		start_color,
 		is_alive,
 		position,
 		velocity,
@@ -156,7 +156,7 @@ static int				is_point_inside_triangle(vector3 p, vector3 a, vector3 b, vector3 
 }
 
 kernel void				initialize_as_tetrahedron(
-						constant vector3 *global_color,
+						constant vector3 *start_color,
 						global char *is_alive,
 						global vector3 *position,
 						global vector3 *velocity,
@@ -168,7 +168,7 @@ kernel void				initialize_as_tetrahedron(
 	const int			global_id = get_global_id(0);
 
 	particle_reset_target(
-		global_color,
+		start_color,
 		is_alive,
 		position,
 		velocity,

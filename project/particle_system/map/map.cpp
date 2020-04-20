@@ -38,7 +38,7 @@ void					map::parse_settings(const nlohmann::json &json)
 
 	for (;;)
 	{
-		auto			iterator = json.find("particle_color");
+		auto			iterator = json.find("start_color");
 		if (iterator == json.end())
 			break ;
 
@@ -46,7 +46,35 @@ void					map::parse_settings(const nlohmann::json &json)
 		if (not value)
 			break ;
 
-		settings.particle_color = string_to_color(*value);
+		settings.start_color = string_to_color(*value);
+		break ;
+	}
+
+	for (;;)
+	{
+		auto			iterator = json.find("finish_color");
+		if (iterator == json.end())
+			break ;
+
+		auto			value = parse_string(iterator.value());
+		if (not value)
+			break ;
+
+		settings.finish_color = string_to_color(*value);
+		break ;
+	}
+
+	for (;;)
+	{
+		auto			iterator = json.find("initialization");
+		if (iterator == json.end())
+			break ;
+
+		auto			value = parse_string(iterator.value());
+		if (not value)
+			break ;
+
+		settings.initialization = string_to_initialization(*value);
 		break ;
 	}
 }
@@ -80,6 +108,20 @@ void					map::parse_objects(const nlohmann::json &json)
 	}
 }
 
+initialization		map::string_to_initialization(const string &string)
+{
+	if (string == "null")
+		return (initialization::null);
+	else if (string == "sphere")
+		return (initialization::sphere);
+	else if (string == "cube")
+		return (initialization::cube);
+	else if (string == "tetrahedron")
+		return (initialization::tetrahedron);
+	else
+		throw (common::exception("Particle System, Map : Bad initialization method"));
+}
+
 object::type		map::string_to_object_type(const string &string)
 {
 	if (string == "empty")
@@ -98,40 +140,43 @@ object::type		map::string_to_object_type(const string &string)
 
 vec3				map::string_to_color(const string &string)
 {
+	vec3			result_in_255;
+
 	if (string == "white")
-		return {255, 255, 255};
+		result_in_255 = vec3(255, 255, 255);
 	else if (string == "silver")
-		return {192, 192, 192};
+		result_in_255 = vec3(192, 192, 192);
 	else if (string == "gray")
-		return {128, 128, 128};
+		result_in_255 = vec3(128, 128, 128);
 	else if (string == "black")
-		return {0, 0, 0};
+		result_in_255 = vec3(0, 0, 0);
 	else if (string == "red")
-		return {255, 0, 0};
+		result_in_255 = vec3(255, 0, 0);
 	else if (string == "maroon")
-		return {128, 0, 0};
+		result_in_255 = vec3(128, 0, 0);
 	else if (string == "yellow")
-		return {255, 255, 0};
+		result_in_255 = vec3(255, 255, 0);
 	else if (string == "olive")
-		return {128, 128, 0};
+		result_in_255 = vec3(128, 128, 0);
 	else if (string == "lime")
-		return {0, 255, 0};
+		result_in_255 = vec3(0, 255, 0);
 	else if (string == "green")
-		return {0, 128, 0};
+		result_in_255 = vec3(0, 128, 0);
 	else if (string == "aqua")
-		return {0, 255, 255};
+		result_in_255 = vec3(0, 255, 255);
 	else if (string == "teal")
-		return {0, 128, 128};
+		result_in_255 = vec3(0, 128, 128);
 	else if (string == "blue")
-		return {0, 0, 255};
+		result_in_255 = vec3(0, 0, 255);
 	else if (string == "navy")
-		return {0, 0, 128};
+		result_in_255 = vec3(0, 0, 128);
 	else if (string == "fuchsia")
-		return {255, 0, 255};
+		result_in_255 = vec3(255, 0, 255);
 	else if (string == "purple")
-		return {128, 0, 128};
+		result_in_255 = vec3(128, 0, 128);
 	else
 		throw (common::exception("Particle System, Map : Bad color"));
+	return (result_in_255 / 255.f);
 }
 
 optional<int>		map::parse_int(const nlohmann::json &json)

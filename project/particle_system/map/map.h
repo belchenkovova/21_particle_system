@@ -29,6 +29,7 @@ private :
 	void					parse_settings(const nlohmann::json &json);
 	void					parse_objects(const nlohmann::json &json);
 
+	static initialization	string_to_initialization(const string &string);
 	static object::type		string_to_object_type(const string &string);
 	static vec3				string_to_color(const string &string);
 

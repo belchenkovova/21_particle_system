@@ -7,7 +7,7 @@ event::type				event::read_type() const
 	return (type_value);
 }
 
-event::key				event::read_key() const
+enum key				event::read_key() const
 {
 	revise_optional(key_value);
 	return (*key_value);

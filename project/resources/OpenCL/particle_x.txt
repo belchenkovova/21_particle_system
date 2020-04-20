@@ -1,5 +1,5 @@
 static void				particle_reset_target(
-						constant vector3 *global_color,
+						constant vector3 *start_color,
 						global char *is_alive,
 						global vector3 *position,
 						global vector3 *velocity,
@@ -13,11 +13,11 @@ static void				particle_reset_target(
 	position[id] = vector3_empty();
 	velocity[id] = vector3_empty();
 	acceleration[id] = vector3_empty();
-	color[id] = (vector4){global_color->x, global_color->y, global_color->z, 0};
+	color[id] = vector4_empty();
 }
 
 kernel void				particle_reset(
-						constant vector3 *global_color,
+						constant vector3 *start_color,
 						global char *is_alive,
 						global vector3 *position,
 						global vector3 *velocity,
@@ -26,7 +26,7 @@ kernel void				particle_reset(
 						global int *born_by_emitter)
 {
 	particle_reset_target(
-		global_color,
+		start_color,
 		is_alive,
 		position,
 		velocity,
@@ -42,7 +42,8 @@ static float			distribute_float(float start, float finish, float ratio)
 }
 
 kernel void				particle_update(
-						constant vector3 *global_color,
+						constant vector3 *start_color,
+						constant vector3 *finish_color,
 						global char *is_alive,
 						global vector3 *position,
 						global vector3 *velocity,
@@ -51,24 +52,20 @@ kernel void				particle_update(
 {
 	const int			global_id = get_global_id(0);
 
+	if (!is_alive[global_id])
+		return ;
+
 	const vector3		change = vector3_add(velocity[global_id], acceleration[global_id]);
 
 	position[global_id] = vector3_add(position[global_id], change);
 	velocity[global_id] = vector3_add(velocity[global_id], acceleration[global_id]);
 	acceleration[global_id] = vector3_multiply(acceleration[global_id], 0.f);
 
-	if (is_alive[global_id])
-	{
-		const vector3		finish_color = PARTICLE_FINAL_COLOR;
+	const float			length = vector3_length(velocity[global_id]);
+	const float			ratio = CLAMP(length * PARTICLE_COLOR_FACTOR, 0, 1);
 
-		const float			length = vector3_length(velocity[global_id]);
-		const float			ratio = CLAMP(length * PARTICLE_COLOR_FACTOR, 0, 1);
-
-		color[global_id].x = distribute_float(global_color->x, finish_color.x, ratio);
-		color[global_id].y = distribute_float(global_color->y, finish_color.y, ratio);
-		color[global_id].z = distribute_float(global_color->z, finish_color.z, ratio);
-		color[global_id].w = 1;
-	}
-	else
-		color[global_id] = vector4_empty();
+	color[global_id].x = distribute_float(start_color->x, finish_color->x, ratio);
+	color[global_id].y = distribute_float(start_color->y, finish_color->y, ratio);
+	color[global_id].z = distribute_float(start_color->z, finish_color->z, ratio);
+	color[global_id].w = 1;
 }

@@ -9,10 +9,9 @@ void					manager::computer_build()
 	computer_link_arguments();
 	computer_fill_arguments();
 
-	arguments.position.acquire();
 	kernels.xorshift_seed.run();
+	arguments.position.acquire();
 	kernels.particle_reset.run();
-	kernels.initialize_as_tetrahedron.run();
 	arguments.position.release();
 }
 
@@ -130,7 +129,8 @@ void					manager::computer_build_arguments()
 {
 	arguments.number_of_particles = kernels.initialize_as_null.generate_argument<int>(1, computer::memory_management::read);
 	arguments.number_of_objects = kernels.initialize_as_null.generate_argument<int>(1, computer::memory_management::read);
-	arguments.particle_color = kernels.initialize_as_null.generate_argument<float, 3>(1, computer::memory_management::read);
+	arguments.start_color = kernels.initialize_as_null.generate_argument<float, 3>(1, computer::memory_management::read);
+	arguments.finish_color = kernels.initialize_as_null.generate_argument<float, 3>(1, computer::memory_management::read);
 	arguments.object_type = kernels.initialize_as_null.generate_argument<int>(number_of_objects);
 	arguments.object_position = kernels.initialize_as_null.generate_argument<float, 3>(number_of_objects);
 	arguments.object_power = kernels.initialize_as_null.generate_argument<float>(number_of_objects);
@@ -147,7 +147,7 @@ void					manager::computer_link_arguments()
 {
 	kernels.xorshift_seed.link_argument(arguments.xorshift_state);
 
-	kernels.initialize_as_null.link_argument(arguments.particle_color);
+	kernels.initialize_as_null.link_argument(arguments.start_color);
 	kernels.initialize_as_null.link_argument(arguments.is_alive);
 	kernels.initialize_as_null.link_argument(arguments.position);
 	kernels.initialize_as_null.link_argument(arguments.velocity);
@@ -155,7 +155,7 @@ void					manager::computer_link_arguments()
 	kernels.initialize_as_null.link_argument(arguments.color);
 	kernels.initialize_as_null.link_argument(arguments.born_by_emitter);
 
-	kernels.initialize_as_sphere.link_argument(arguments.particle_color);
+	kernels.initialize_as_sphere.link_argument(arguments.start_color);
 	kernels.initialize_as_sphere.link_argument(arguments.is_alive);
 	kernels.initialize_as_sphere.link_argument(arguments.position);
 	kernels.initialize_as_sphere.link_argument(arguments.velocity);
@@ -164,7 +164,7 @@ void					manager::computer_link_arguments()
 	kernels.initialize_as_sphere.link_argument(arguments.xorshift_state);
 	kernels.initialize_as_sphere.link_argument(arguments.born_by_emitter);
 
-	kernels.initialize_as_cube.link_argument(arguments.particle_color);
+	kernels.initialize_as_cube.link_argument(arguments.start_color);
 	kernels.initialize_as_cube.link_argument(arguments.is_alive);
 	kernels.initialize_as_cube.link_argument(arguments.position);
 	kernels.initialize_as_cube.link_argument(arguments.velocity);
@@ -173,7 +173,7 @@ void					manager::computer_link_arguments()
 	kernels.initialize_as_cube.link_argument(arguments.xorshift_state);
 	kernels.initialize_as_cube.link_argument(arguments.born_by_emitter);
 
-	kernels.initialize_as_tetrahedron.link_argument(arguments.particle_color);
+	kernels.initialize_as_tetrahedron.link_argument(arguments.start_color);
 	kernels.initialize_as_tetrahedron.link_argument(arguments.is_alive);
 	kernels.initialize_as_tetrahedron.link_argument(arguments.position);
 	kernels.initialize_as_tetrahedron.link_argument(arguments.velocity);
@@ -182,7 +182,7 @@ void					manager::computer_link_arguments()
 	kernels.initialize_as_tetrahedron.link_argument(arguments.xorshift_state);
 	kernels.initialize_as_tetrahedron.link_argument(arguments.born_by_emitter);
 
-	kernels.particle_reset.link_argument(arguments.particle_color);
+	kernels.particle_reset.link_argument(arguments.start_color);
 	kernels.particle_reset.link_argument(arguments.is_alive);
 	kernels.particle_reset.link_argument(arguments.position);
 	kernels.particle_reset.link_argument(arguments.velocity);
@@ -190,7 +190,8 @@ void					manager::computer_link_arguments()
 	kernels.particle_reset.link_argument(arguments.color);
 	kernels.particle_reset.link_argument(arguments.born_by_emitter);
 
-	kernels.particle_update.link_argument(arguments.particle_color);
+	kernels.particle_update.link_argument(arguments.start_color);
+	kernels.particle_update.link_argument(arguments.finish_color);
 	kernels.particle_update.link_argument(arguments.is_alive);
 	kernels.particle_update.link_argument(arguments.position);
 	kernels.particle_update.link_argument(arguments.velocity);
@@ -234,7 +235,7 @@ void					manager::computer_link_arguments()
 	kernels.emitter_execute.link_argument(arguments.xorshift_state);
 
 	kernels.consumer_execute.link_argument(arguments.number_of_objects);
-	kernels.consumer_execute.link_argument(arguments.particle_color);
+	kernels.consumer_execute.link_argument(arguments.start_color);
 	kernels.consumer_execute.link_argument(arguments.object_type);
 	kernels.consumer_execute.link_argument(arguments.object_position);
 	kernels.consumer_execute.link_argument(arguments.is_alive);
@@ -249,7 +250,8 @@ void					manager::computer_fill_arguments()
 {
 	arguments.number_of_particles.write(&number_of_particles);
 	arguments.number_of_objects.write(&number_of_objects);
-	arguments.particle_color.write(&particle_color.x);
+	arguments.start_color.write(&start_color.x);
+	arguments.finish_color.write(&finish_color.x);
 
 	object::type		type_data[number_of_objects];
 	float				position_data[number_of_objects * 3];

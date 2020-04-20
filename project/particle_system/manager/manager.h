@@ -26,7 +26,8 @@ private :
 
 	int						number_of_objects = 0;
 	int						number_of_particles = 0;
-	vec3					particle_color = vec3(0, 0, 0);
+	vec3					start_color = vec3(0, 0, 0);
+	vec3					finish_color = vec3(0, 0, 0);
 
 	class 					renderer final : public engine::renderer
 	{
@@ -77,7 +78,8 @@ private :
 	public :
 		computer::argument	number_of_particles;
 		computer::argument	number_of_objects;
-		computer::argument	particle_color;
+		computer::argument	start_color;
+		computer::argument	finish_color;
 		computer::argument	object_type;
 		computer::argument	object_position;
 		computer::argument	object_power;
@@ -100,6 +102,8 @@ private :
 
 	void 					function_render();
 	void 					function_key();
+
+	void					initialize(initialization method);
 
 	engine::timer			*timer = nullptr;
 };
