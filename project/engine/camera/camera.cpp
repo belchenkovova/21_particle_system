@@ -20,10 +20,18 @@ void				camera::move(const axis &axis, const sign &sign)
 
 void				camera::rotate(const axis &axis, const sign &sign)
 {
+	auto			add_if_safe = [](float *target, float value, float range)
+	{
+		const float	temp = *target + value;
+
+		if (temp > -1 * range and temp < range)
+			*target = temp;
+	};
+
 	if (axis == axis::x)
-		pitch += (float)sign * rotation_speed;
+		add_if_safe(&pitch, (float)sign * rotation_speed, 90.f);
 	else if (axis == axis::y)
-		yaw += -1.f * (float)sign * rotation_speed;
+		add_if_safe(&yaw, -1.f * (float)sign * rotation_speed, 180.f);
 	update();
 }
 
