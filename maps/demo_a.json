@@ -1,8 +1,8 @@
 {
 	"settings" :
 	{
-		"number_of_particles" : 10000,
-		"particle_color" : "blue"
+		"number_of_particles" : 50000,
+		"particle_color" : "red"
 	},
 
 	"objects" :
@@ -10,13 +10,13 @@
 		{
 			"type" : "attractor",
 			"position" : [-100.0, 0.0, 0.0],
-			"power" :  1.0
+			"power" :  1.5
 		},
 
 		{
 			"type" : "attractor",
 			"position" : [100.0, 0.0, 0.0],
-			"power" :  1.0
+			"power" :  1.5
 		}
 	]
 }

@@ -13,7 +13,7 @@ kernel void			consumer_execute(
 {
 	const int		global_id = get_global_id(0);
 
-	const vector3	consumer_zone = {CONSUMER_ZONE_X, CONSUMER_ZONE_Y, CONSUMER_ZONE_Z};
+	const vector3	consumer_zone = {CONSUMER_ZONE};
 	vector3			min;
 	vector3			max;
 

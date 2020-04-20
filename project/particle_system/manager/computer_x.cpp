@@ -12,7 +12,7 @@ void					manager::computer_build()
 	arguments.position.acquire();
 	kernels.xorshift_seed.run();
 	kernels.particle_reset.run();
-	kernels.initialize_as_sphere.run();
+	kernels.initialize_as_tetrahedron.run();
 	arguments.position.release();
 }
 
@@ -46,6 +46,15 @@ void					manager::computer_build_kernels()
 	kernels.initialize_as_null.add_source("project/resources/OpenCL/initialize_as_x.txt");
 	kernels.initialize_as_null.build("initialize_as_null", number_of_particles);
 
+	kernels.initialize_as_sphere = computer.generate_kernel();
+	kernels.initialize_as_sphere.add_source("project/resources/OpenCL/macros.txt");
+	kernels.initialize_as_sphere.add_source("project/resources/OpenCL/xorshift.txt");
+	kernels.initialize_as_sphere.add_source("project/resources/OpenCL/vector3.txt");
+	kernels.initialize_as_sphere.add_source("project/resources/OpenCL/vector4.txt");
+	kernels.initialize_as_sphere.add_source("project/resources/OpenCL/particle_x.txt");
+	kernels.initialize_as_sphere.add_source("project/resources/OpenCL/initialize_as_x.txt");
+	kernels.initialize_as_sphere.build("initialize_as_sphere", number_of_particles);
+
 	kernels.initialize_as_cube = computer.generate_kernel();
 	kernels.initialize_as_cube.add_source("project/resources/OpenCL/macros.txt");
 	kernels.initialize_as_cube.add_source("project/resources/OpenCL/xorshift.txt");
@@ -55,14 +64,14 @@ void					manager::computer_build_kernels()
 	kernels.initialize_as_cube.add_source("project/resources/OpenCL/initialize_as_x.txt");
 	kernels.initialize_as_cube.build("initialize_as_cube", number_of_particles);
 
-	kernels.initialize_as_sphere = computer.generate_kernel();
-	kernels.initialize_as_sphere.add_source("project/resources/OpenCL/macros.txt");
-	kernels.initialize_as_sphere.add_source("project/resources/OpenCL/xorshift.txt");
-	kernels.initialize_as_sphere.add_source("project/resources/OpenCL/vector3.txt");
-	kernels.initialize_as_sphere.add_source("project/resources/OpenCL/vector4.txt");
-	kernels.initialize_as_sphere.add_source("project/resources/OpenCL/particle_x.txt");
-	kernels.initialize_as_sphere.add_source("project/resources/OpenCL/initialize_as_x.txt");
-	kernels.initialize_as_sphere.build("initialize_as_sphere", number_of_particles);
+	kernels.initialize_as_tetrahedron = computer.generate_kernel();
+	kernels.initialize_as_tetrahedron.add_source("project/resources/OpenCL/macros.txt");
+	kernels.initialize_as_tetrahedron.add_source("project/resources/OpenCL/xorshift.txt");
+	kernels.initialize_as_tetrahedron.add_source("project/resources/OpenCL/vector3.txt");
+	kernels.initialize_as_tetrahedron.add_source("project/resources/OpenCL/vector4.txt");
+	kernels.initialize_as_tetrahedron.add_source("project/resources/OpenCL/particle_x.txt");
+	kernels.initialize_as_tetrahedron.add_source("project/resources/OpenCL/initialize_as_x.txt");
+	kernels.initialize_as_tetrahedron.build("initialize_as_tetrahedron", number_of_particles);
 
 	kernels.attractor_execute = computer.generate_kernel();
 	kernels.attractor_execute.add_source("project/resources/OpenCL/macros.txt");
@@ -146,6 +155,15 @@ void					manager::computer_link_arguments()
 	kernels.initialize_as_null.link_argument(arguments.color);
 	kernels.initialize_as_null.link_argument(arguments.born_by_emitter);
 
+	kernels.initialize_as_sphere.link_argument(arguments.particle_color);
+	kernels.initialize_as_sphere.link_argument(arguments.is_alive);
+	kernels.initialize_as_sphere.link_argument(arguments.position);
+	kernels.initialize_as_sphere.link_argument(arguments.velocity);
+	kernels.initialize_as_sphere.link_argument(arguments.acceleration);
+	kernels.initialize_as_sphere.link_argument(arguments.color);
+	kernels.initialize_as_sphere.link_argument(arguments.xorshift_state);
+	kernels.initialize_as_sphere.link_argument(arguments.born_by_emitter);
+
 	kernels.initialize_as_cube.link_argument(arguments.particle_color);
 	kernels.initialize_as_cube.link_argument(arguments.is_alive);
 	kernels.initialize_as_cube.link_argument(arguments.position);
@@ -155,14 +173,14 @@ void					manager::computer_link_arguments()
 	kernels.initialize_as_cube.link_argument(arguments.xorshift_state);
 	kernels.initialize_as_cube.link_argument(arguments.born_by_emitter);
 
-	kernels.initialize_as_sphere.link_argument(arguments.particle_color);
-	kernels.initialize_as_sphere.link_argument(arguments.is_alive);
-	kernels.initialize_as_sphere.link_argument(arguments.position);
-	kernels.initialize_as_sphere.link_argument(arguments.velocity);
-	kernels.initialize_as_sphere.link_argument(arguments.acceleration);
-	kernels.initialize_as_sphere.link_argument(arguments.color);
-	kernels.initialize_as_sphere.link_argument(arguments.xorshift_state);
-	kernels.initialize_as_sphere.link_argument(arguments.born_by_emitter);
+	kernels.initialize_as_tetrahedron.link_argument(arguments.particle_color);
+	kernels.initialize_as_tetrahedron.link_argument(arguments.is_alive);
+	kernels.initialize_as_tetrahedron.link_argument(arguments.position);
+	kernels.initialize_as_tetrahedron.link_argument(arguments.velocity);
+	kernels.initialize_as_tetrahedron.link_argument(arguments.acceleration);
+	kernels.initialize_as_tetrahedron.link_argument(arguments.color);
+	kernels.initialize_as_tetrahedron.link_argument(arguments.xorshift_state);
+	kernels.initialize_as_tetrahedron.link_argument(arguments.born_by_emitter);
 
 	kernels.particle_reset.link_argument(arguments.particle_color);
 	kernels.particle_reset.link_argument(arguments.is_alive);

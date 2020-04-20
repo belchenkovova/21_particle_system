@@ -59,12 +59,7 @@ kernel void				particle_update(
 
 	if (is_alive[global_id])
 	{
-		const vector3		finish_color =
-		{
-			PARTICLE_FINAL_COLOR_R,
-			PARTICLE_FINAL_COLOR_G,
-			PARTICLE_FINAL_COLOR_B
-		};
+		const vector3		finish_color = PARTICLE_FINAL_COLOR;
 
 		const float			length = vector3_length(velocity[global_id]);
 		const float			ratio = CLAMP(length * PARTICLE_COLOR_FACTOR, 0, 1);

@@ -1,3 +1,8 @@
+//						///////////////////////////////////////////////////////
+//						NULL
+//						///////////////////////////////////////////////////////
+
+
 kernel void				initialize_as_null(
 						constant vector3 *global_color,
 						global char *is_alive,
@@ -22,24 +27,49 @@ kernel void				initialize_as_null(
 }
 
 
-static int				SameSide(vector3 p1, vector3 p2, vector3 a, vector3 b)
-{
-    const vector3		cp1 = vector3_cross(vector3_subtract(b, a), vector3_subtract(p1, a));
-    const vector3		cp2 = vector3_cross(vector3_subtract(b, a), vector3_subtract(p2, a));
+//						///////////////////////////////////////////////////////
+//						SPHERE
+//						///////////////////////////////////////////////////////
 
-    return (vector3_dot(cp1, cp2) >= 0);
+
+kernel void				initialize_as_sphere(
+						constant vector3 *global_color,
+						global char *is_alive,
+						global vector3 *position,
+						global vector3 *velocity,
+						global vector3 *acceleration,
+						global vector4 *color,
+						global xorshift_state *state,
+						global int *born_by_emitter)
+{
+	const int			global_id = get_global_id(0);
+
+	particle_reset_target(
+		global_color,
+		is_alive,
+		position,
+		velocity,
+		acceleration,
+		color,
+		born_by_emitter,
+		global_id);
+	is_alive[global_id] = 1;
+
+	const float			theta = xorshift_next_float(state + global_id) * PI_ON_2;
+	const float			v = xorshift_next_float(state + global_id);
+	const float			phi = acos((2 * v) - 1);
+
+	position[global_id].x = INITIALIZATION_SPHERE_RADIUS * sin(phi) * cos(theta);
+	position[global_id].y = INITIALIZATION_SPHERE_RADIUS * sin(phi) * sin(theta);
+	position[global_id].z = INITIALIZATION_SPHERE_RADIUS * cos(phi);
 }
 
-static int				PointInTriangle(vector3 p, vector3 a, vector3 b, vector3 c)
-{
-    if (!SameSide(p, a, b, c))
-    	return (0);
-    if (!SameSide(p, b, a, c))
-    	return (0);
-	if (!SameSide(p, c, a, b))
-		return (0);
-    return (1);
-}
+
+
+//						///////////////////////////////////////////////////////
+//						CUBE
+//						///////////////////////////////////////////////////////
+
 
 kernel void				initialize_as_cube(
 						constant vector3 *global_color,
@@ -64,35 +94,8 @@ kernel void				initialize_as_cube(
 		global_id);
     is_alive[global_id] = 1;
 
-    double				a;
-    double				b;
-
-    vector3				v1 = {-100, -100, 0};
-    vector3				v2 = {0, 100, 0};
-    vector3				v3 = {100, -100, 0};
-    vector3				temp;
-
-	while (1)
-	{
-		a = xorshift_next_float(state + global_id);
-		b = xorshift_next_float(state + global_id);
-
-		position[global_id] = v1;
-
-		temp = vector3_multiply(vector3_subtract(v2, v1), a);
-		position[global_id] = vector3_add(position[global_id], temp);
-
-		temp = vector3_multiply(vector3_subtract(v3, v1), b);
-		position[global_id] = vector3_add(position[global_id], temp);
-
-		if (PointInTriangle(position[global_id], v1, v2, v3))
-			break ;
-	}
-
-    return ;
-
 	const int			axis = xorshift_next_in_range(state + global_id, AXIS_X, AXIS_Z);
-	const int			side = xorshift_next_in_range(state + global_id, SIDE_LEFT, SIDE_RIGHT);
+	const int			side = xorshift_next_in_range(state + global_id, 0, 1);
 
 	const float			random_a = xorshift_next_float(state + global_id) * INITIALIZATION_CUBE_SIDE;
 	const float			random_b = xorshift_next_float(state + global_id) * INITIALIZATION_CUBE_SIDE;
@@ -126,7 +129,33 @@ kernel void				initialize_as_cube(
 	position[global_id].z -= INITIALIZATION_CUBE_SIDE / 2;
 }
 
-kernel void				initialize_as_sphere(
+
+//						///////////////////////////////////////////////////////
+//						TETRAHEDRON
+//						///////////////////////////////////////////////////////
+
+
+
+static int				is_same_side(vector3 p1, vector3 p2, vector3 a, vector3 b)
+{
+    const vector3		cp1 = vector3_cross(vector3_subtract(b, a), vector3_subtract(p1, a));
+    const vector3		cp2 = vector3_cross(vector3_subtract(b, a), vector3_subtract(p2, a));
+
+    return (vector3_dot(cp1, cp2) >= 0);
+}
+
+static int				is_point_inside_triangle(vector3 p, vector3 a, vector3 b, vector3 c)
+{
+    if (!is_same_side(p, a, b, c))
+    	return (0);
+    if (!is_same_side(p, b, a, c))
+    	return (0);
+	if (!is_same_side(p, c, a, b))
+		return (0);
+    return (1);
+}
+
+kernel void				initialize_as_tetrahedron(
 						constant vector3 *global_color,
 						global char *is_alive,
 						global vector3 *position,
@@ -147,13 +176,60 @@ kernel void				initialize_as_sphere(
 		color,
 		born_by_emitter,
 		global_id);
-	is_alive[global_id] = 1;
+    is_alive[global_id] = 1;
 
-	const float			theta = xorshift_next_float(state + global_id) * PI_ON_2;
-	const float			v = xorshift_next_float(state + global_id);
-	const float			phi = acos((2 * v) - 1);
+	int					side = xorshift_next_in_range(state + global_id, 0, 3);
 
-	position[global_id].x = INITIALIZATION_SPHERE_RADIUS * sin(phi) * cos(theta);
-	position[global_id].y = INITIALIZATION_SPHERE_RADIUS * sin(phi) * sin(theta);
-	position[global_id].z = INITIALIZATION_SPHERE_RADIUS * cos(phi);
+	vector3				v1;
+    vector3				v2;
+    vector3				v3;
+
+	switch (side)
+	{
+		case 0 :
+    		v1 = (vector3)INITIALIZATION_TETRAHEDRON_A;
+    		v2 = (vector3)INITIALIZATION_TETRAHEDRON_B;
+    		v3 = (vector3)INITIALIZATION_TETRAHEDRON_C;
+    		break ;
+		case 1 :
+			v1 = (vector3)INITIALIZATION_TETRAHEDRON_A;
+			v2 = (vector3)INITIALIZATION_TETRAHEDRON_B;
+			v3 = (vector3)INITIALIZATION_TETRAHEDRON_D;
+			break ;
+		case 2 :
+			v1 = (vector3)INITIALIZATION_TETRAHEDRON_A;
+			v2 = (vector3)INITIALIZATION_TETRAHEDRON_C;
+			v3 = (vector3)INITIALIZATION_TETRAHEDRON_D;
+			break ;
+		case 3 :
+			v1 = (vector3)INITIALIZATION_TETRAHEDRON_B;
+			v2 = (vector3)INITIALIZATION_TETRAHEDRON_C;
+			v3 = (vector3)INITIALIZATION_TETRAHEDRON_D;
+			break ;
+    	default :
+    		return ;
+    }
+
+
+    vector3				temp;
+
+    double				a;
+    double				b;
+
+	while (1)
+	{
+		a = xorshift_next_float(state + global_id);
+		b = xorshift_next_float(state + global_id);
+
+		position[global_id] = v1;
+
+		temp = vector3_multiply(vector3_subtract(v2, v1), a);
+		position[global_id] = vector3_add(position[global_id], temp);
+
+		temp = vector3_multiply(vector3_subtract(v3, v1), b);
+		position[global_id] = vector3_add(position[global_id], temp);
+
+		if (is_point_inside_triangle(position[global_id], v1, v2, v3))
+			break ;
+	}
 }

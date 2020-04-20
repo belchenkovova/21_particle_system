@@ -60,8 +60,9 @@ private :
 		computer::kernel	xorshift_seed;
 		computer::kernel	particle_reset;
 		computer::kernel	initialize_as_null;
-		computer::kernel	initialize_as_cube;
 		computer::kernel	initialize_as_sphere;
+		computer::kernel	initialize_as_cube;
+		computer::kernel	initialize_as_tetrahedron;
 		computer::kernel	particle_update;
 		computer::kernel	attractor_execute;
 		computer::kernel	repeller_execute;
