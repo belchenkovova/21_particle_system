@@ -3,7 +3,7 @@
 #include "engine/namespace.h"
 #include "engine/callback/callback.h"
 
-class				engine::timer final : private engine::functor
+class				engine::timer final : public engine::functor
 {
 public :
 
@@ -14,14 +14,23 @@ public :
 	{}
 					~timer() override = default;
 
-	void 			test(float new_time);
-
-	using			functor::block;
+	void 			test(float now)
+	{
+		if (is_blocked())
+			return ;
+		if (period <= 0.f)
+			throw (common::exception("Engine, Timer : Bad period value"));
+		if (now - last >= period)
+		{
+			functor::run();
+			last = now;
+		}
+	}
 
 private :
 
 	const float		period = 0.f;
-	float			old_time = 0.f;
+	float			last = 0.f;
 };
 
 

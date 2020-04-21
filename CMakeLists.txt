@@ -48,10 +48,8 @@ set(ENGINE
 
 	project/engine/camera/camera.cpp
 
-	project/engine/functor/functor.cpp
-	project/engine/timer/timer.cpp
 	project/engine/event/event.cpp
-	project/engine/callback/callback.cpp)
+	)
 
 set(COMPUTER
 	project/computer/core/core.cpp

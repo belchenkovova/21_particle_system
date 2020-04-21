@@ -15,3 +15,11 @@ void 				core::launch_timers()
 	for (auto &timer : timers)
 		timer.test(time);
 }
+
+void 				core::launch_timeouts()
+{
+	const float		time = core::time();
+
+	for (auto &timeout : timeouts)
+		timeout.test(time);
+}

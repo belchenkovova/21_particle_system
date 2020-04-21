@@ -31,7 +31,7 @@ void				camera::rotate(const axis &axis, const sign &sign)
 	if (axis == axis::x)
 		add_if_safe(&pitch, (float)sign * rotation_speed, 90.f);
 	else if (axis == axis::y)
-		add_if_safe(&yaw, -1.f * (float)sign * rotation_speed, 180.f);
+		yaw += -1.f * (float)sign * rotation_speed;
 	update();
 }
 

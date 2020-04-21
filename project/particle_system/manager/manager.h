@@ -100,12 +100,20 @@ private :
 	void					computer_link_arguments();
 	void					computer_fill_arguments();
 
-	void 					function_render();
-	void 					function_key();
+	void 					function_work();
+	void 					function_key_start();
+	void 					function_key_finish();
+	void					function_wait_for_work();
+	void					function_wait_for_another_key();
+
+	engine::timer			*timer_work = nullptr;
+	engine::timeout			*timeout_for_work = nullptr;
+	engine::timeout			*timeout_for_another_key = nullptr;
+
+	bool					was_camera_input = false;
+	bool					was_key_input = false;
 
 	void					initialize(initialization method);
-
-	engine::timer			*timer = nullptr;
 };
 
 

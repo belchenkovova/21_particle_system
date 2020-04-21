@@ -4,6 +4,7 @@
 #include "engine/renderer/renderers.h"
 #include "engine/timer/timer.h"
 #include "engine/callback/callback.h"
+#include "engine/timeout/timeout.h"
 
 class							engine::core final
 {
@@ -29,15 +30,21 @@ public :
 	}
 
 	template					<typename ...t_args>
-	callback					&generate_callback(event::type type, t_args ...args)
+	callback					&generate_callback(t_args ...args)
 	{
-		return (callbacks.emplace_back(type, args...));
+		return (callbacks.emplace_back(args...));
 	}
 
 	template					<typename ...t_args>
-	timer						&generate_timer(float period, t_args ...args)
+	timer						&generate_timer(t_args ...args)
 	{
-		return (timers.emplace_back(period, args...));
+		return (timers.emplace_back(args...));
+	}
+
+	template					<typename ...t_args>
+	timeout						&generate_timeout(t_args ...args)
+	{
+		return (timeouts.emplace_back(args...));
 	}
 
 	void 						start();
@@ -69,6 +76,7 @@ protected :
 	class renderer				*renderer = nullptr;
 	list<callback>				callbacks;
 	list<timer>					timers;
+	list<timeout>				timeouts;
 
 	static void 				glfw_callback_key(GLFWwindow *window, int key, int code, int action, int mode);
 	static void 				glfw_callback_mouse_movement(GLFWwindow *window, double x, double y);
@@ -76,6 +84,7 @@ protected :
 
 	void 						launch_callbacks();
 	void 						launch_timers();
+	void 						launch_timeouts();
 
 	static void 				calculate_fps();
 };

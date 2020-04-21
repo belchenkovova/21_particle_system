@@ -5,7 +5,7 @@
 #include "engine/event/event.h"
 
 
-class					engine::callback final : private engine::functor
+class					engine::callback final : public engine::functor
 {
 public :
 
@@ -14,7 +14,11 @@ public :
 						engine::functor(function, args...), type(type) {}
 						~callback() override = default;
 
-	void				test(event::type type);
+	void				test(event::type type)
+	{
+		if (not is_blocked() and this->type == type)
+			functor::run();
+	}
 
 private :
 

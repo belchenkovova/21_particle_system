@@ -11,6 +11,7 @@ void 				core::start()
 		glfwPollEvents();
 		launch_callbacks();
 		launch_timers();
+		launch_timeouts();
 		if (should_render)
 		{
 			if (print_fps)

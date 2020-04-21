@@ -23,4 +23,7 @@ void				manager::initialize(initialization method)
 	}
 
 	arguments.position.release();
+
+	timeout_for_work->use();
+	function_work();
 }

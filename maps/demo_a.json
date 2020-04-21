@@ -1,7 +1,7 @@
 {
 	"settings" :
 	{
-		"number_of_particles" : 50000,
+		"number_of_particles" : 20000,
 		"start_color" : "red",
 		"finish_color" : "white",
 		"initialization" : "sphere"

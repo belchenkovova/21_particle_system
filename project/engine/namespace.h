@@ -180,6 +180,7 @@ namespace						engine
 	class						timer;
 	class						event;
 	class						callback;
+	class						timeout;
 
 	class						renderer;
 }
