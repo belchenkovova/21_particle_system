@@ -1,2 +1,5 @@
 cmake-build-debug
 .idea
+build/.depend
+build/.object
+build/particle_system

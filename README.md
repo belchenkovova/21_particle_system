@@ -1,3 +1,5 @@
+![](wallpaper.png)
+
 # Particle system
 
 Goal of this project is to create particle system, using OpenCL and OpenGL.
