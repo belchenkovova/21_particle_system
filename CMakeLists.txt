@@ -19,8 +19,7 @@ link_libraries(
 	"-framework OpenGL"
 	"-framework OpenCL"
 	GLFW
-	GLEW
-	SOIL)
+	GLEW)
 
 set(MAIN
 	project/main.cpp)

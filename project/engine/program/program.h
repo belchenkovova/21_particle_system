@@ -20,14 +20,14 @@ public :
 	{
 		auto				uniform = uniforms.find(name);
 
-		use(true); DEBUG_GL
-		if (uniform == uniforms.end()) DEBUG_GL
+		use(true);
+		if (uniform == uniforms.end())
 			tie(uniform, ignore) = uniforms.emplace(
 				piecewise_construct,
 				forward_as_tuple(name),
 				forward_as_tuple(name, object));
-		uniform->second.upload(data); DEBUG_GL
-		use(false); DEBUG_GL
+		uniform->second.upload(data);
+		use(false);
 	}
 
 private :

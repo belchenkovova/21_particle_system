@@ -51,13 +51,13 @@ public :
 
 	static void			setup_static()
 	{
-		engine::core::initial_window_size = engine::ivec2(2560, 1920);
+		engine::core::initial_window_size = engine::ivec2(1280, 720);
 		engine::core::window_name = "Particle System";
 		engine::core::background = engine::vec3(.1f, .1f, .1f);
 		engine::core::use_multisampling = true;
 		engine::core::use_blending = true;
 		engine::core::use_depth_test = true;
-		engine::core::number_of_samples = 2;
+		engine::core::number_of_samples = 4;
 		engine::core::point_size = 1;
 		engine::core::should_render = true;
 

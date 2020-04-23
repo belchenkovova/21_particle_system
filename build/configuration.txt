@@ -1,0 +1,52 @@
+compiler(clang++)
+project(particle_system)
+executable(particle_system)
+
+add_flag(OBJECT
+	'`pkg-config --cflags glew`'
+	'`pkg-config --cflags glfw3`')
+
+add_flag(EXECUTABLE
+	'`pkg-config --libs glew`'
+    '`pkg-config --libs glfw3`')
+
+add_flag(COMMON -std=c++1z)
+
+add_source(
+	../project/main.cpp
+	../project/common/exception.cpp
+	../project/common/read_file.cpp
+	../project/engine/core/core.cpp
+	../project/engine/core/calculate_fps.cpp
+	../project/engine/core/draw.cpp
+	../project/engine/core/finish.cpp
+	../project/engine/core/start.cpp
+	../project/engine/core/glfw_callback_x.cpp
+	../project/engine/core/launch_x.cpp
+	../project/engine/core/receive_event.cpp
+	../project/engine/shader/shader.cpp
+	../project/engine/uniform/uniform.cpp
+	../project/engine/program/program.cpp
+	../project/engine/vao/vao.cpp
+	../project/engine/buffer/buffer.cpp
+	../project/engine/camera/camera.cpp
+	../project/engine/event/event.cpp
+	../project/computer/core/core.cpp
+	../project/computer/kernel/kernel.cpp
+	../project/computer/argument/argument.cpp
+	../project/particle_system/map/map.cpp
+	../project/particle_system/manager/renderer.cpp
+	../project/particle_system/manager/build.cpp
+	../project/particle_system/manager/function_x.cpp
+	../project/particle_system/manager/engine_x.cpp
+	../project/particle_system/manager/computer_x.cpp
+	../project/particle_system/manager/initialize.cpp)
+
+include_directory(
+    ../project/)
+
+link_library(
+	glfw
+	glew
+	'-framework OpenGL'
+	'-framework OpenCL')
