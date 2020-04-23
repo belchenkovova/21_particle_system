@@ -131,9 +131,9 @@ void					manager::computer_build_arguments()
 	arguments.number_of_objects = kernels.initialize_as_null.generate_argument<int>(1, computer::memory_management::read);
 	arguments.start_color = kernels.initialize_as_null.generate_argument<float, 3>(1, computer::memory_management::read);
 	arguments.finish_color = kernels.initialize_as_null.generate_argument<float, 3>(1, computer::memory_management::read);
-	arguments.object_type = kernels.initialize_as_null.generate_argument<int>(number_of_objects);
-	arguments.object_position = kernels.initialize_as_null.generate_argument<float, 3>(number_of_objects);
-	arguments.object_power = kernels.initialize_as_null.generate_argument<float>(number_of_objects);
+	arguments.object_type = kernels.initialize_as_null.generate_argument<int>(number_of_objects, computer::memory_management::read);
+	arguments.object_position = kernels.initialize_as_null.generate_argument<float, 3>(number_of_objects, computer::memory_management::read);
+	arguments.object_power = kernels.initialize_as_null.generate_argument<float>(number_of_objects, computer::memory_management::read);
 	arguments.is_alive = kernels.initialize_as_null.generate_argument<char>(number_of_particles);
 	arguments.position = kernels.initialize_as_null.generate_argument(renderer.buffer.receive_attribute(0));
 	arguments.velocity = kernels.initialize_as_null.generate_argument<float, 3>(number_of_particles);
@@ -238,6 +238,7 @@ void					manager::computer_link_arguments()
 	kernels.consumer_execute.link_argument(arguments.start_color);
 	kernels.consumer_execute.link_argument(arguments.object_type);
 	kernels.consumer_execute.link_argument(arguments.object_position);
+	kernels.consumer_execute.link_argument(arguments.object_power);
 	kernels.consumer_execute.link_argument(arguments.is_alive);
 	kernels.consumer_execute.link_argument(arguments.position);
 	kernels.consumer_execute.link_argument(arguments.velocity);

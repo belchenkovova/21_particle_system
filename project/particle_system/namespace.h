@@ -15,6 +15,7 @@ namespace				particle_system
 	using				std::ifstream;
 	using				std::move;
 	using				std::fill;
+	using				std::filesystem::exists;
 
 	using				glm::vec3;
 

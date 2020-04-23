@@ -6,6 +6,8 @@
 #define SQUARE(x)						((x) * (x))
 #define VALUE_OR(a, b)					(a ? a : b)
 
+#define UNPACK_VECTOR3(v)				v.x, v.y, v.z
+
 #define XORSHIFT_TYPE					unsigned int
 #define XORSHIFT_SEED					42u
 #define XORSHIFT_MAX					4294967295u
@@ -33,7 +35,7 @@
 #define REPELLER_LOWER					80
 #define REPELLER_HIGHER					800
 
-#define EMITTER_POWER					10
+#define EMITTER_POWER					50
 #define EMITTER_PUSH					1.f
 
 #define CONSUMER_POWER					100

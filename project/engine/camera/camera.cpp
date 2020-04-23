@@ -38,7 +38,7 @@ void				camera::rotate(const axis &axis, const sign &sign)
 mat4				camera::receive_projection_matrix() const
 {
 	return (perspective(
-		radians(45.f),
+		radians(30.f),
 		(float)core::read_window_size().x / (float)core::read_window_size().y,
 		near_plane, far_plane));
 }

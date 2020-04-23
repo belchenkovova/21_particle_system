@@ -1,0 +1,36 @@
+{
+	"settings" :
+	{
+		"number_of_particles" : 100000,
+		"start_color" : "red",
+		"finish_color" : "white",
+		"initialization" : "cube"
+	},
+
+	"objects" :
+	[
+		{
+			"type" : "attractor",
+			"position" : [-300.0, 0.0, 0.0],
+			"power" : 1.2
+		},
+
+		{
+			"type" : "attractor",
+			"position" : [300.0, 0.0, 0.0],
+			"power" :  1.2
+		},
+
+		{
+			"type" : "attractor",
+			"position" : [0.0, -300.0, 0.0],
+			"power" :  1.2
+		},
+
+		{
+			"type" : "attractor",
+			"position" : [0.0, 300.0, 0.0],
+			"power" :  1.2
+		}
+	]
+}

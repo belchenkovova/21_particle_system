@@ -1,9 +1,9 @@
 kernel void			consumer_execute(
-					global int *number_of_objects,
-					constant vector3 *global_color,
-					global object_type *object_type,
-                    global vector3 *object_position,
-                    global float *object_power,
+					constant int *number_of_objects,
+					constant vector3 *start_color,
+					constant object_type *object_type,
+                    constant vector3 *object_position,
+                    constant float *object_power,
                     global char *is_alive,
                     global vector3 *position,
 					global vector3 *velocity,
@@ -13,7 +13,7 @@ kernel void			consumer_execute(
 {
 	const int		global_id = get_global_id(0);
 
-	const vector3	consumer_zone = {CONSUMER_ZONE};
+	const vector3	consumer_zone = CONSUMER_ZONE;
 	vector3			min;
 	vector3			max;
 
@@ -32,12 +32,12 @@ kernel void			consumer_execute(
 //					Gravity field
 //					///////////////////////////////////////////////////////////
 
-    how_close = vector3_length(vector3_subtract(object_position[object_i], position[global_id]));
-    how_close = 1 - MIN(how_close / (CONSUMER_POWER * object_power[object_i]), 1);
+    	how_close = vector3_length(vector3_subtract(object_position[object_i], position[global_id]));
+    	how_close = 1 - MIN(how_close / CONSUMER_POWER, 1);
 
-    velocity_multiplier = 1 - 0.08 * how_close;
+    	velocity_multiplier = 1 - 0.08 * how_close;
 
-    velocity[global_id] = vector3_multiply(velocity[global_id], velocity_multiplier);
+    	velocity[global_id] = vector3_multiply(velocity[global_id], velocity_multiplier);
 
 //					///////////////////////////////////////////////////////////
 //					Consuming
@@ -54,7 +54,7 @@ kernel void			consumer_execute(
 			continue ;
 
 		particle_reset_target(
-			global_color,
+			start_color,
 			is_alive,
 			position,
 			velocity,

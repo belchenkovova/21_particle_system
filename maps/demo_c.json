@@ -1,11 +1,40 @@
-[
+{
+	"settings" :
 	{
-		"type" : "consumer",
-		"position" : [-300.0, 0.0, 0.0]
+		"number_of_particles" : 1000000,
+		"start_color" : "red",
+		"finish_color" : "white",
+		"initialization" : "null"
 	},
 
-	{
-		"type" : "attractor",
-		"position" : [100.0, 0.0, 0.0]
-	}
-]
+	"objects" :
+	[
+		{
+			"type" : "emitter",
+			"position" : [0.0, 600.0, 0.0]
+		},
+
+		{
+			"type" : "attractor",
+			"position" : [-100.0, 0.0, 0.0],
+			"power" :  5.0
+		},
+
+		{
+			"type" : "attractor",
+			"position" : [100.0, -200.0, 0.0],
+			"power" :  5.0
+		},
+
+		{
+			"type" : "consumer",
+			"position" : [0.0, -100.0, 0.0]
+		},
+
+		{
+			"type" : "attractor",
+			"position" : [0.0, -100.0, 0.0],
+			"power" : 1.5
+		}
+	]
+}

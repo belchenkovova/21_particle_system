@@ -6,7 +6,6 @@
 class						particle_system::manager
 {
 public :
-
 							manager(engine::core &engine, computer::core &computer) :
 							engine(engine), computer(computer) {}
 							~manager() = default;
@@ -54,6 +53,7 @@ private :
 	}						renderer;
 
 	optional<class map>		map;
+	const string			default_source = "maps/default.json";
 
 	class
 	{

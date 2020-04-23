@@ -4,8 +4,12 @@ using namespace		particle_system;
 
 void				manager::build(const string &source)
 {
-#pragma message "Default scene"
-	map.emplace(source.empty() ? "maps/demo_a.json" : source);
+	if (source.empty() and not exists(default_source))
+		throw (common::exception("Particle System, Manager : Default map is not present"));
+	else if (not source.empty() and not exists(source))
+		throw (common::exception("Particle System, Manager : Bad map file"));
+
+	map.emplace(source.empty() ? default_source : source);
 
 	auto 			objects = map->receive_objects();
 	auto 			settings = map->receive_settings();

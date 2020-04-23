@@ -1,8 +1,8 @@
 kernel void			attractor_execute(
-					global int *number_of_objects,
-					global object_type *object_type,
-                    global vector3 *object_position,
-                    global float *object_power,
+					constant int *number_of_objects,
+					constant object_type *object_type,
+                    constant vector3 *object_position,
+                    constant float *object_power,
                     global char *is_alive,
 					global vector3 *position,
 					global vector3 *velocity,
@@ -17,7 +17,7 @@ kernel void			attractor_execute(
 
 	for (int object_i = 0; object_i < *number_of_objects; object_i++)
     {
-    	if (object_type[object_i] != object_type_attractor && object_type[object_i] != object_type_consumer)
+    	if (object_type[object_i] != object_type_attractor)
     		continue ;
 
 		direction = vector3_subtract(object_position[object_i], position[global_id]);

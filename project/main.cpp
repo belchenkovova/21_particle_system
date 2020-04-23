@@ -9,12 +9,13 @@ public :
 						final() = default;
 						~final() = default;
 
-	static bool			process_options(int argc, char **argv)
+	bool				process_options(int argc, char **argv)
 	{
-
 		auto		app = CLI::App("");
 
 		app.set_help_flag();
+
+		app.add_option("--map", map_file);
 
 		auto		flag_help = app.add_flag("--help");
 		auto		flag_fps = app.add_flag("--fps");
@@ -50,7 +51,7 @@ public :
 
 	static void			setup_static()
 	{
-		engine::core::initial_window_size = engine::ivec2(1280, 720);
+		engine::core::initial_window_size = engine::ivec2(2560, 1920);
 		engine::core::window_name = "Particle System";
 		engine::core::background = engine::vec3(.1f, .1f, .1f);
 		engine::core::use_multisampling = true;
@@ -60,23 +61,23 @@ public :
 		engine::core::point_size = 1;
 		engine::core::should_render = true;
 
-		engine::camera::start_position = engine::vec3(0.f, 0.f, 1500.f);
+		engine::camera::start_position = engine::vec3(0.f, 0.f, 2500.f);
 		engine::camera::movement_speed = 10.f;
 		engine::camera::rotation_speed = .3f;
 		engine::camera::near_plane = 10.f;
-		engine::camera::far_plane = 5000.f;
+		engine::camera::far_plane = 20000.f;
 
 		computer::core::use_OpenGL = true;
 	}
 
-	void			setup_dynamic(const std::string &source = "")
+	void			setup_dynamic()
 	{
 		engine.emplace();
 		computer.emplace();
 		system.emplace(*engine, *computer);
 
 		engine->attach_renderer(system->receive_renderer());
-		system->build(source);
+		system->build(map_file);
 	}
 
 	void			run()
@@ -89,6 +90,8 @@ private :
 	using			engine_type = std::optional<engine::core>;
 	using			computer_type = std::optional<computer::core>;
 	using			system_type = std::optional<particle_system::manager>;
+
+	std::string		map_file;
 
 	engine_type		engine;
 	computer_type	computer;

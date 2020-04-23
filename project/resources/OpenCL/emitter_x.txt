@@ -1,9 +1,9 @@
 kernel void				emitter_start(
-						global int *number_of_particles,
-						global int *number_of_objects,
-						global object_type *object_type,
-						global vector3 *object_position,
-						global float *object_power,
+						constant int *number_of_particles,
+						constant int *number_of_objects,
+						constant object_type *object_type,
+						constant vector3 *object_position,
+						constant float *object_power,
 						global char *is_alive,
                         global int *born_by_emitter)
 {
@@ -16,14 +16,18 @@ kernel void				emitter_start(
 		if (object_type[object_i] != object_type_emitter)
 			continue ;
 
+
+
 		counter = 0;
 		for (; particle_i < *number_of_particles; particle_i++)
+		{
 			if (is_alive[particle_i] == 0)
 			{
 				born_by_emitter[particle_i] = object_i;
 				if (++counter == EMITTER_POWER * object_power[object_i])
 					break ;
 			}
+		}
 	}
 }
 
@@ -39,7 +43,7 @@ kernel void				emitter_finish(
 }
 
 kernel void				emitter_execute(
-						global vector3 *object_position,
+						constant vector3 *object_position,
 						global vector3 *position,
                         global vector3 *velocity,
                         global vector3 *acceleration,
