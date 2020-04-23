@@ -1,9 +1,10 @@
 {
 	"settings" :
 	{
-		"number_of_particles" : 50000,
-		"start_color" : "red",
-		"finish_color" : "white",
+		"number_of_particles" : 200000,
+		"start_color" : "dark gray",
+		"finish_color" : "red",
+		"background" : "dark gray",
 		"initialization" : "sphere"
 	},
 
@@ -12,19 +13,19 @@
 		{
 			"type" : "attractor",
 			"position" : [-200.0, 0.0, 0.0],
-			"power" : 2.0
+			"power" : 4.0
 		},
 
 		{
 			"type" : "repeller",
 			"position" : [200.0, 200.0, 0.0],
-			"power" : 1.5
+			"power" : 3.0
 		},
 
 		{
 			"type" : "repeller",
 			"position" : [200.0, -200.0, 0.0],
-			"power" : 1.5
+			"power" : 3.0
 		}
 	]
 }

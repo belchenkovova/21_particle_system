@@ -18,6 +18,7 @@ void				manager::build(const string &source)
 	number_of_particles = settings.number_of_particles;
 	start_color = settings.start_color;
 	finish_color = settings.finish_color;
+	engine::core::background = settings.background;
 
 	renderer.build(number_of_particles);
 

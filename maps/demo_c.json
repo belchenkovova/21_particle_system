@@ -1,9 +1,10 @@
 {
 	"settings" :
 	{
-		"number_of_particles" : 1000000,
-		"start_color" : "red",
-		"finish_color" : "white",
+		"number_of_particles" : 200000,
+		"start_color" : "blue",
+		"finish_color" : "fuchsia",
+		"background" : "dark gray",
 		"initialization" : "null"
 	},
 

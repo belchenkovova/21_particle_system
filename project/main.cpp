@@ -53,7 +53,6 @@ public :
 	{
 		engine::core::initial_window_size = engine::ivec2(1280, 720);
 		engine::core::window_name = "Particle System";
-		engine::core::background = engine::vec3(.1f, .1f, .1f);
 		engine::core::use_multisampling = true;
 		engine::core::use_blending = true;
 		engine::core::use_depth_test = true;
