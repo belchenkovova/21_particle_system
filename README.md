@@ -28,6 +28,8 @@ To run the program :
 ```
 Program takes several optional flags :
 
+```--demo=[demo letter]``` : choose a demo map (a-d)
+
 ```--map=[map file]``` : specify JSON file used by program as map
 
 ```--resolution=[width],[height]``` : set resolution of window
