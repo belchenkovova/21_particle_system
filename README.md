@@ -36,9 +36,16 @@ Program takes several optional flags :
 
 ```--fps``` : display FPS
 
-```--fast``` : lowers quality, increases performance
+```--fast``` : lower quality, increase performance
 
-```--help``` : some info about the program, list flags and map of keys
+```--help``` : get list flags and keys
+
+## Features
+
+* Free camera 
+* Color interpolation according to particle's speed
+* Initialization of particles in shape of tetrahedron
+* Additional objects : emitter, consumer
 
 ## References
 

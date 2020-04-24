@@ -42,9 +42,21 @@ public :
 				<< "Particle system " << std::endl
 				<< std::endl
 				<< "Flags : " << std::endl
-				<< "--fps : Print FPS" << std::endl
+				<< "--demo=[demo letter] : choose a demo map (a-d)" << std::endl
+				<< "--map=[map file] : specify JSON file used by program as map" << std::endl
+				<< "--resolution=[width],[height] : set resolution of window" << std::endl
+				<< "--fps : display FPS" << std::endl
+				<< "--fast : lower quality, increase performance" << std::endl
+				<< "--help : get list flags and keys" << std::endl
 				<< std::endl
 				<< "Keys : " << std::endl
+				<< "w/a/s/d/q/e : camera position control" << std::endl
+				<< "arrows : camera direction control" << std::endl
+				<< "enter : pause/continue particle system movement" << std::endl
+				<< "1 : initialize particles as sphere" << std::endl
+				<< "2 : initialize particles as cube" << std::endl
+				<< "3 : initialize particles as tetrahedron" << std::endl
+				<< "0 : initialize particles as invisible" << std::endl
 				<< std::endl;
 			return (false);
 		}
@@ -82,9 +94,8 @@ public :
 
 	void						setup_static()
 	{
-		engine::core::initial_window_size =
-			resolution ? *resolution : engine::ivec2(1280, 720);
-		engine::core::window_name = "Particle System";
+		engine::core::initial_window_size = resolution ? *resolution : engine::ivec2(1280, 720);
+		engine::core::window_name = "Particle system";
 		engine::core::use_multisampling = true;
 		engine::core::use_blending = true;
 		engine::core::use_depth_test = true;
@@ -146,7 +157,7 @@ int								main(int argc, char **argv)
 	}
 	catch (std::exception &exception)
 	{
-		std::cerr << "Particle System : Exiting with uncaught exception" << std::endl;
+		std::cerr << "Particle system error" << std::endl;
 		std::cerr << exception.what() << std::endl;
 		return (1);
 	}
