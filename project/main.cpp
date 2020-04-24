@@ -51,12 +51,12 @@ public :
 				<< std::endl
 				<< "Keys : " << std::endl
 				<< "w/a/s/d/q/e : camera position control" << std::endl
-				<< "arrows : camera direction control" << std::endl
+				<< "left/right/up/down : camera direction control" << std::endl
 				<< "enter : pause/continue particle system movement" << std::endl
 				<< "1 : initialize particles as sphere" << std::endl
 				<< "2 : initialize particles as cube" << std::endl
 				<< "3 : initialize particles as tetrahedron" << std::endl
-				<< "0 : initialize particles as invisible" << std::endl
+				<< "0 : hide all particles" << std::endl
 				<< std::endl;
 			return (false);
 		}
