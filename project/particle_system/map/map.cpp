@@ -7,7 +7,14 @@ using namespace			particle_system;
 	auto				stream = ifstream(source);
 	json				json;
 
-	stream >> json;
+	try
+	{
+		stream >> json;
+	}
+	catch (...)
+	{
+		throw (common::exception("Particle System, Map : Bad JSON file"));
+	}
 
 	auto				settings = json.find("settings");
 	auto				objects = json.find("objects");
