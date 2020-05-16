@@ -20,6 +20,7 @@ public :
 	inline static bool 			should_render = false;
 	inline static int 			point_size = 0;
 	inline static bool			print_fps = false;
+	inline static bool			reset_fps = false;
 
 								core();
 								~core();

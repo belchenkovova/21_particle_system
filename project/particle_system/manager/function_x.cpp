@@ -105,6 +105,7 @@ void					manager::function_wait_for_work()
 {
 	timer_work->block_reserved(false);
 	engine::core::should_render = true;
+	engine::core::reset_fps = true;
 }
 
 void					manager::function_wait_for_another_key()

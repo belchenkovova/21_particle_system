@@ -25,6 +25,7 @@ public :
 
 		auto					flag_help = app.add_flag("--help");
 		auto					flag_fps = app.add_flag("--fps");
+		auto					flag_fast = app.add_flag("--fast");
 
 		try
 		{
@@ -61,7 +62,8 @@ public :
 			return (false);
 		}
 
-		engine::core::print_fps = *flag_fps ? true : false;
+		fps = *flag_fps ? true : false;
+		fast = *flag_fast ? true : false;
 
 		if (not demo_string.empty())
 			map = "maps/demo_" + demo_string + ".json";
@@ -96,12 +98,14 @@ public :
 	{
 		engine::core::initial_window_size = resolution ? *resolution : engine::ivec2(1280, 720);
 		engine::core::window_name = "Particle system";
-		engine::core::use_multisampling = true;
 		engine::core::use_blending = true;
 		engine::core::use_depth_test = true;
-		engine::core::number_of_samples = 16;
 		engine::core::point_size = 1;
 		engine::core::should_render = true;
+
+		engine::core::print_fps = fps;
+		engine::core::use_multisampling = not fast;
+		engine::core::number_of_samples = 16;
 
 		engine::camera::start_position = engine::vec3(0.f, 0.f, 2500.f);
 		engine::camera::movement_speed = 10.f;
@@ -139,6 +143,9 @@ private :
 	engine_type					engine;
 	computer_type				computer;
 	system_type					system;
+
+	bool						fps = false;
+	bool						fast = false;
 };
 
 int								main(int argc, char **argv)
