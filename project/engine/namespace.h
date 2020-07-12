@@ -19,6 +19,7 @@
 namespace						engine
 {
 	using						std::string;
+	using						std::to_string;
 	using						std::vector;
 	using						std::list;
 	using						std::shared_ptr;
