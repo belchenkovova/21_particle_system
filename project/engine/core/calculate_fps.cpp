@@ -23,9 +23,6 @@ void 				core::calculate_fps()
 	now = time();
 	number_of_frames++;
 
-	if (now > 20)
-		std::terminate();
-
 	if (now - last >= 1.)
 	{
 		auto		fps = (int)(number_of_frames / (now - last));
