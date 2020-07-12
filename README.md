@@ -11,6 +11,7 @@ Just a little nice-looking project.
 
 Install these packages with BREW :
 ```
+brew install pkg-config
 brew install glew
 brew install glfw
 ```
