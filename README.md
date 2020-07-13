@@ -45,8 +45,8 @@ Program takes several optional flags :
 
 * Free camera 
 * Color interpolation according to particle's speed
-* Initialization of particles in shape of tetrahedron
-* Additional objects : emitter, consumer
+* Initialization of particles in shape of sphere, cube and tetrahedron
+* Special objects : emitter, consumer
 
 ## References
 
