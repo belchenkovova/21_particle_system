@@ -47,6 +47,7 @@ Program takes several optional flags :
 * Color interpolation according to particle's speed
 * Initialization of particles in shape of sphere, cube and tetrahedron
 * Special objects : emitter, consumer
+* Map files
 
 ## References
 
