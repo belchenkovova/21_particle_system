@@ -38,7 +38,7 @@ namespace				particle_system
 	public :
 
 		template		<typename ...args_type>
-						color(args_type ...args) : vec3(args...) {}
+		explicit		color(args_type ...args) : vec3(args...) {}
 	};
 
 	class				settings
@@ -50,6 +50,8 @@ namespace				particle_system
 		color			background = color(0.f, 0.f, 0.f);
 		initialization	initialization = initialization::sphere;
 	};
+
+	inline bool			fast = false;
 
 	class				object;
 	class				map;

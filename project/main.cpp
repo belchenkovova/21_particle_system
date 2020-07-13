@@ -105,7 +105,7 @@ public :
 
 		engine::core::print_fps = fps;
 		engine::core::use_multisampling = not fast;
-		engine::core::number_of_samples = 16;
+		engine::core::number_of_samples = 4;
 
 		engine::camera::start_position = engine::vec3(0.f, 0.f, 2500.f);
 		engine::camera::movement_speed = 10.f;
@@ -114,6 +114,8 @@ public :
 		engine::camera::far_plane = 20000.f;
 
 		computer::core::use_OpenGL = true;
+
+		particle_system::fast = fast;
 	}
 
 	void						setup_dynamic()

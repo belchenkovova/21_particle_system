@@ -9,13 +9,17 @@ void 					manager::function_work()
 	kernels.attractor_execute.run();
 	kernels.repeller_execute.run();
 
-	kernels.emitter_start.run();
-	kernels.emitter_execute.run();
-	kernels.emitter_finish.run();
+	if (not fast)
+	{
+		kernels.emitter_start.run();
+		kernels.emitter_execute.run();
+		kernels.emitter_finish.run();
+	}
 
 	kernels.particle_update.run();
 
-	kernels.consumer_execute.run();
+	if (not fast)
+		kernels.consumer_execute.run();
 
 	arguments.position.release();
 
