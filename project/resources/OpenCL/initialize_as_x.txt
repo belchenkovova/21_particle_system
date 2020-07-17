@@ -5,22 +5,30 @@
 
 kernel void				initialize_as_null(
 						constant vector3 *start_color,
+						constant int *life_duration_min,
+						constant int *life_duration_max,
 						global char *is_alive,
+						global int *life_timer,
 						global vector3 *position,
                         global vector3 *velocity,
                         global vector3 *acceleration,
                         global vector4 *color,
+                        global xorshift_state *state,
 						global int *born_by_emitter)
 {
 	const int			global_id = get_global_id(0);
 
 	particle_reset_target(
 		start_color,
+		life_duration_min,
+		life_duration_max,
+		life_timer,
 		is_alive,
 		position,
 		velocity,
 		acceleration,
 		color,
+		state,
 		born_by_emitter,
 		global_id);
 	is_alive[global_id] = 0;
@@ -34,7 +42,10 @@ kernel void				initialize_as_null(
 
 kernel void				initialize_as_sphere(
 						constant vector3 *start_color,
+						constant int *life_duration_min,
+						constant int *life_duration_max,
 						global char *is_alive,
+						global int *life_timer,
 						global vector3 *position,
 						global vector3 *velocity,
 						global vector3 *acceleration,
@@ -46,11 +57,15 @@ kernel void				initialize_as_sphere(
 
 	particle_reset_target(
 		start_color,
+		life_duration_min,
+		life_duration_max,
 		is_alive,
+		life_timer,
 		position,
 		velocity,
 		acceleration,
 		color,
+		state,
 		born_by_emitter,
 		global_id);
 	is_alive[global_id] = 1;
@@ -73,7 +88,10 @@ kernel void				initialize_as_sphere(
 
 kernel void				initialize_as_cube(
 						constant vector3 *start_color,
+						constant int *life_duration_min,
+						constant int *life_duration_max,
 						global char *is_alive,
+						global int *life_timer,
 						global vector3 *position,
 						global vector3 *velocity,
 						global vector3 *acceleration,
@@ -85,11 +103,15 @@ kernel void				initialize_as_cube(
 
 	particle_reset_target(
 		start_color,
+		life_duration_min,
+		life_duration_max,
 		is_alive,
+		life_timer,
 		position,
 		velocity,
 		acceleration,
 		color,
+		state,
 		born_by_emitter,
 		global_id);
     is_alive[global_id] = 1;
@@ -134,8 +156,6 @@ kernel void				initialize_as_cube(
 //						TETRAHEDRON
 //						///////////////////////////////////////////////////////
 
-
-
 static int				is_same_side(vector3 p1, vector3 p2, vector3 a, vector3 b)
 {
     const vector3		cp1 = vector3_cross(vector3_subtract(b, a), vector3_subtract(p1, a));
@@ -157,7 +177,10 @@ static int				is_point_inside_triangle(vector3 p, vector3 a, vector3 b, vector3 
 
 kernel void				initialize_as_tetrahedron(
 						constant vector3 *start_color,
+						constant int *life_duration_min,
+						constant int *life_duration_max,
 						global char *is_alive,
+						global int *life_timer,
 						global vector3 *position,
 						global vector3 *velocity,
 						global vector3 *acceleration,
@@ -169,11 +192,15 @@ kernel void				initialize_as_tetrahedron(
 
 	particle_reset_target(
 		start_color,
+		life_duration_min,
+		life_duration_max,
 		is_alive,
+		life_timer,
 		position,
 		velocity,
 		acceleration,
 		color,
+		state,
 		born_by_emitter,
 		global_id);
     is_alive[global_id] = 1;

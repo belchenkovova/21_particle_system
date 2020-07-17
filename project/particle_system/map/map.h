@@ -70,6 +70,19 @@ private :
 	}
 
 	template				<>
+	optional<ivec2>			parse<ivec2>(const nlohmann::json &json)
+	{
+		ivec2				result;
+
+		for (int i = 0; i < 2; i++)
+			if (auto value = parse<int>(json.at(i)); not value)
+				return {};
+			else
+				result[i] = *value;
+		return (result);
+	}
+
+	template				<>
 	optional<vec3>			parse<vec3>(const nlohmann::json &json)
 	{
 		vec3				result;

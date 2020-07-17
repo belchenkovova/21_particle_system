@@ -22,6 +22,7 @@ namespace				particle_system
 	using				std::is_same;
 
 	using				glm::vec3;
+	using				glm::ivec2;
 
 	using				json = nlohmann::json;
 
@@ -49,6 +50,7 @@ namespace				particle_system
 		color			finish_color = color(1.f, 1.f, 1.f);
 		color			background = color(0.f, 0.f, 0.f);
 		initialization	initialization = initialization::sphere;
+		ivec2			life_duration = ivec2(-1, -1);
 	};
 
 	inline bool			fast = false;

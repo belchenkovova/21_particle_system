@@ -27,6 +27,8 @@ private :
 	int						number_of_particles = 0;
 	vec3					start_color = vec3(0, 0, 0);
 	vec3					finish_color = vec3(0, 0, 0);
+	int						life_duration_min = 0;
+	int						life_duration_max = 0;
 
 	class 					renderer final : public engine::renderer
 	{
@@ -80,10 +82,13 @@ private :
 		computer::argument	number_of_objects;
 		computer::argument	start_color;
 		computer::argument	finish_color;
+		computer::argument	life_duration_min;
+		computer::argument	life_duration_max;
 		computer::argument	object_type;
 		computer::argument	object_position;
 		computer::argument	object_power;
 		computer::argument	is_alive;
+		computer::argument	life_timer;
 		computer::argument	position;
 		computer::argument	velocity;
 		computer::argument	acceleration;

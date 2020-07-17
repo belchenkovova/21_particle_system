@@ -3,7 +3,6 @@ kernel void			repeller_execute(
 					constant object_type *object_type,
                     constant vector3 *object_position,
                     constant float *object_power,
-                    global char *is_alive,
 					global vector3 *position,
 					global vector3 *velocity,
 					global vector3 *acceleration)

@@ -1,14 +1,18 @@
 kernel void			consumer_execute(
 					constant int *number_of_objects,
 					constant vector3 *start_color,
+					constant int *life_duration_min,
+					constant int *life_duration_max,
 					constant object_type *object_type,
                     constant vector3 *object_position,
                     constant float *object_power,
                     global char *is_alive,
+                    global int *life_timer,
                     global vector3 *position,
 					global vector3 *velocity,
 					global vector3 *acceleration,
 					global vector4 *color,
+					global xorshift_state *state,
 					global int *born_by_emitter)
 {
 	const int		global_id = get_global_id(0);
@@ -55,12 +59,16 @@ kernel void			consumer_execute(
 
 		particle_reset_target(
 			start_color,
+			life_duration_min,
+			life_duration_max,
 			is_alive,
+			life_timer,
 			position,
 			velocity,
 			acceleration,
 			color,
 			born_by_emitter,
+			state,
 			global_id);
 	}
 }

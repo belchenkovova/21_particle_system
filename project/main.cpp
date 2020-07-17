@@ -31,7 +31,7 @@ public :
 		{
 			app.parse(argc, argv);
 		}
-		catch (const CLI::ParseError &e)
+		catch (const CLI::ParseError &)
 		{
 			throw (common::exception("Final : Invalid flags, use --help"));
 		}

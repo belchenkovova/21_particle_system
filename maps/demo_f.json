@@ -1,0 +1,26 @@
+{
+	"settings" :
+	{
+		"number_of_particles" : 100000,
+		"start_color" : "red",
+		"finish_color" : "white",
+		"background" : "dark gray",
+		"initialization" : "null",
+		"life_duration" : [50, 200]
+	},
+
+	"objects" :
+	[
+		{
+			"type" : "emitter",
+			"position" : [0.0, 200.0, 0.0],
+			"power" :  3.0
+		},
+
+		{
+			"type" : "repeller",
+			"position" : [0.0, 300.0, 0.0],
+			"power" :  1.0
+		}
+	]
+}

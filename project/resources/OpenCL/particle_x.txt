@@ -1,14 +1,19 @@
 static void				particle_reset_target(
 						constant vector3 *start_color,
+						constant int *life_duration_min,
+						constant int *life_duration_max,
 						global char *is_alive,
+						global int *life_timer,
 						global vector3 *position,
 						global vector3 *velocity,
 						global vector3 *acceleration,
 						global vector4 *color,
+						global xorshift_state *state,
 						global int *born_by_emitter,
 						int id)
 {
 	is_alive[id] = 0;
+	life_timer[id] = xorshift_next_in_range(state, *life_duration_min, *life_duration_max);
 	born_by_emitter[id] = -1;
 	position[id] = vector3_empty();
 	velocity[id] = vector3_empty();
@@ -18,20 +23,28 @@ static void				particle_reset_target(
 
 kernel void				particle_reset(
 						constant vector3 *start_color,
+						constant int *life_duration_min,
+						constant int *life_duration_max,
 						global char *is_alive,
+						global int *life_timer,
 						global vector3 *position,
 						global vector3 *velocity,
 						global vector3 *acceleration,
 						global vector4 *color,
+						global xorshift_state *state,
 						global int *born_by_emitter)
 {
 	particle_reset_target(
 		start_color,
+		life_duration_min,
+		life_duration_max,
 		is_alive,
+		life_timer,
 		position,
 		velocity,
 		acceleration,
 		color,
+		state,
 		born_by_emitter,
 		get_global_id(0));
 }
@@ -44,16 +57,41 @@ static float			distribute_float(float start, float finish, float ratio)
 kernel void				particle_update(
 						constant vector3 *start_color,
 						constant vector3 *finish_color,
+						constant int *life_duration_min,
+						constant int *life_duration_max,
 						global char *is_alive,
+						global int *life_timer,
 						global vector3 *position,
 						global vector3 *velocity,
 						global vector3 *acceleration,
-						global vector4 *color)
+						global vector4 *color,
+						global xorshift_state *state,
+						global int *born_by_emitter)
 {
 	const int			global_id = get_global_id(0);
 
 	if (!is_alive[global_id])
 		return ;
+
+	if (life_timer[global_id] > 0)
+		life_timer[global_id]--;
+	else if (life_timer[global_id] == 0)
+	{
+		particle_reset_target(
+			start_color,
+			life_duration_min,
+			life_duration_max,
+			is_alive,
+			life_timer,
+			position,
+			velocity,
+			acceleration,
+			color,
+			state,
+			born_by_emitter,
+			global_id);
+		return ;
+	}
 
 	const vector3		change = vector3_add(velocity[global_id], acceleration[global_id]);
 

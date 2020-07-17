@@ -34,6 +34,7 @@ void					map::parse_settings(const nlohmann::json &json)
 	parse_and_write(json, "finish_color", settings.finish_color);
 	parse_and_write(json, "background", settings.background);
 	parse_and_write(json, "initialization", settings.initialization);
+	parse_and_write(json, "life_duration", settings.life_duration);
 }
 
 void					map::parse_objects(const nlohmann::json &json)

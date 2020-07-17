@@ -24,6 +24,7 @@ void					manager::computer_build_kernels()
 
 	kernels.particle_reset = computer.generate_kernel();
 	kernels.particle_reset.add_source("project/resources/OpenCL/macros.txt");
+	kernels.particle_reset.add_source("project/resources/OpenCL/xorshift.txt");
 	kernels.particle_reset.add_source("project/resources/OpenCL/vector3.txt");
 	kernels.particle_reset.add_source("project/resources/OpenCL/vector4.txt");
 	kernels.particle_reset.add_source("project/resources/OpenCL/particle_x.txt");
@@ -31,6 +32,7 @@ void					manager::computer_build_kernels()
 
 	kernels.particle_update = computer.generate_kernel();
 	kernels.particle_update.add_source("project/resources/OpenCL/macros.txt");
+	kernels.particle_update.add_source("project/resources/OpenCL/xorshift.txt");
 	kernels.particle_update.add_source("project/resources/OpenCL/vector3.txt");
 	kernels.particle_update.add_source("project/resources/OpenCL/vector4.txt");
 	kernels.particle_update.add_source("project/resources/OpenCL/particle_x.txt");
@@ -117,6 +119,7 @@ void					manager::computer_build_kernels()
 
 	kernels.consumer_execute = computer.generate_kernel();
 	kernels.consumer_execute.add_source("project/resources/OpenCL/macros.txt");
+	kernels.consumer_execute.add_source("project/resources/OpenCL/xorshift.txt");
 	kernels.consumer_execute.add_source("project/resources/OpenCL/vector3.txt");
 	kernels.consumer_execute.add_source("project/resources/OpenCL/vector4.txt");
 	kernels.consumer_execute.add_source("project/resources/OpenCL/object.txt");
@@ -131,10 +134,13 @@ void					manager::computer_build_arguments()
 	arguments.number_of_objects = kernels.initialize_as_null.generate_argument<int>(1, computer::memory_management::read);
 	arguments.start_color = kernels.initialize_as_null.generate_argument<float, 3>(1, computer::memory_management::read);
 	arguments.finish_color = kernels.initialize_as_null.generate_argument<float, 3>(1, computer::memory_management::read);
+	arguments.life_duration_min = kernels.initialize_as_null.generate_argument<int>(1, computer::memory_management::read);
+	arguments.life_duration_max = kernels.initialize_as_null.generate_argument<int>(1, computer::memory_management::read);
 	arguments.object_type = kernels.initialize_as_null.generate_argument<int>(number_of_objects, computer::memory_management::read);
 	arguments.object_position = kernels.initialize_as_null.generate_argument<float, 3>(number_of_objects, computer::memory_management::read);
 	arguments.object_power = kernels.initialize_as_null.generate_argument<float>(number_of_objects, computer::memory_management::read);
 	arguments.is_alive = kernels.initialize_as_null.generate_argument<char>(number_of_particles);
+	arguments.life_timer = kernels.initialize_as_null.generate_argument<int>(number_of_particles);
 	arguments.position = kernels.initialize_as_null.generate_argument(renderer.buffer.receive_attribute(0));
 	arguments.velocity = kernels.initialize_as_null.generate_argument<float, 3>(number_of_particles);
 	arguments.acceleration = kernels.initialize_as_null.generate_argument<float, 3>(number_of_particles);
@@ -148,15 +154,22 @@ void					manager::computer_link_arguments()
 	kernels.xorshift_seed.link_argument(arguments.xorshift_state);
 
 	kernels.initialize_as_null.link_argument(arguments.start_color);
+	kernels.initialize_as_null.link_argument(arguments.life_duration_min);
+	kernels.initialize_as_null.link_argument(arguments.life_duration_max);
 	kernels.initialize_as_null.link_argument(arguments.is_alive);
+	kernels.initialize_as_null.link_argument(arguments.life_timer);
 	kernels.initialize_as_null.link_argument(arguments.position);
 	kernels.initialize_as_null.link_argument(arguments.velocity);
 	kernels.initialize_as_null.link_argument(arguments.acceleration);
 	kernels.initialize_as_null.link_argument(arguments.color);
+	kernels.initialize_as_null.link_argument(arguments.xorshift_state);
 	kernels.initialize_as_null.link_argument(arguments.born_by_emitter);
 
 	kernels.initialize_as_sphere.link_argument(arguments.start_color);
+	kernels.initialize_as_sphere.link_argument(arguments.life_duration_min);
+	kernels.initialize_as_sphere.link_argument(arguments.life_duration_max);
 	kernels.initialize_as_sphere.link_argument(arguments.is_alive);
+	kernels.initialize_as_sphere.link_argument(arguments.life_timer);
 	kernels.initialize_as_sphere.link_argument(arguments.position);
 	kernels.initialize_as_sphere.link_argument(arguments.velocity);
 	kernels.initialize_as_sphere.link_argument(arguments.acceleration);
@@ -165,7 +178,10 @@ void					manager::computer_link_arguments()
 	kernels.initialize_as_sphere.link_argument(arguments.born_by_emitter);
 
 	kernels.initialize_as_cube.link_argument(arguments.start_color);
+	kernels.initialize_as_cube.link_argument(arguments.life_duration_min);
+	kernels.initialize_as_cube.link_argument(arguments.life_duration_max);
 	kernels.initialize_as_cube.link_argument(arguments.is_alive);
+	kernels.initialize_as_cube.link_argument(arguments.life_timer);
 	kernels.initialize_as_cube.link_argument(arguments.position);
 	kernels.initialize_as_cube.link_argument(arguments.velocity);
 	kernels.initialize_as_cube.link_argument(arguments.acceleration);
@@ -174,7 +190,10 @@ void					manager::computer_link_arguments()
 	kernels.initialize_as_cube.link_argument(arguments.born_by_emitter);
 
 	kernels.initialize_as_tetrahedron.link_argument(arguments.start_color);
+	kernels.initialize_as_tetrahedron.link_argument(arguments.life_duration_min);
+	kernels.initialize_as_tetrahedron.link_argument(arguments.life_duration_max);
 	kernels.initialize_as_tetrahedron.link_argument(arguments.is_alive);
+	kernels.initialize_as_tetrahedron.link_argument(arguments.life_timer);
 	kernels.initialize_as_tetrahedron.link_argument(arguments.position);
 	kernels.initialize_as_tetrahedron.link_argument(arguments.velocity);
 	kernels.initialize_as_tetrahedron.link_argument(arguments.acceleration);
@@ -183,26 +202,34 @@ void					manager::computer_link_arguments()
 	kernels.initialize_as_tetrahedron.link_argument(arguments.born_by_emitter);
 
 	kernels.particle_reset.link_argument(arguments.start_color);
+	kernels.particle_reset.link_argument(arguments.life_duration_min);
+	kernels.particle_reset.link_argument(arguments.life_duration_max);
 	kernels.particle_reset.link_argument(arguments.is_alive);
+	kernels.particle_reset.link_argument(arguments.life_timer);
 	kernels.particle_reset.link_argument(arguments.position);
 	kernels.particle_reset.link_argument(arguments.velocity);
 	kernels.particle_reset.link_argument(arguments.acceleration);
 	kernels.particle_reset.link_argument(arguments.color);
+	kernels.particle_reset.link_argument(arguments.xorshift_state);
 	kernels.particle_reset.link_argument(arguments.born_by_emitter);
 
 	kernels.particle_update.link_argument(arguments.start_color);
 	kernels.particle_update.link_argument(arguments.finish_color);
+	kernels.particle_update.link_argument(arguments.life_duration_min);
+	kernels.particle_update.link_argument(arguments.life_duration_max);
 	kernels.particle_update.link_argument(arguments.is_alive);
+	kernels.particle_update.link_argument(arguments.life_timer);
 	kernels.particle_update.link_argument(arguments.position);
 	kernels.particle_update.link_argument(arguments.velocity);
 	kernels.particle_update.link_argument(arguments.acceleration);
 	kernels.particle_update.link_argument(arguments.color);
+	kernels.particle_update.link_argument(arguments.xorshift_state);
+	kernels.particle_update.link_argument(arguments.born_by_emitter);
 
 	kernels.attractor_execute.link_argument(arguments.number_of_objects);
 	kernels.attractor_execute.link_argument(arguments.object_type);
 	kernels.attractor_execute.link_argument(arguments.object_position);
 	kernels.attractor_execute.link_argument(arguments.object_power);
-	kernels.attractor_execute.link_argument(arguments.is_alive);
 	kernels.attractor_execute.link_argument(arguments.position);
 	kernels.attractor_execute.link_argument(arguments.velocity);
 	kernels.attractor_execute.link_argument(arguments.acceleration);
@@ -211,7 +238,6 @@ void					manager::computer_link_arguments()
 	kernels.repeller_execute.link_argument(arguments.object_type);
 	kernels.repeller_execute.link_argument(arguments.object_position);
 	kernels.repeller_execute.link_argument(arguments.object_power);
-	kernels.repeller_execute.link_argument(arguments.is_alive);
 	kernels.repeller_execute.link_argument(arguments.position);
 	kernels.repeller_execute.link_argument(arguments.velocity);
 	kernels.repeller_execute.link_argument(arguments.acceleration);
@@ -236,14 +262,18 @@ void					manager::computer_link_arguments()
 
 	kernels.consumer_execute.link_argument(arguments.number_of_objects);
 	kernels.consumer_execute.link_argument(arguments.start_color);
+	kernels.consumer_execute.link_argument(arguments.life_duration_min);
+	kernels.consumer_execute.link_argument(arguments.life_duration_max);
 	kernels.consumer_execute.link_argument(arguments.object_type);
 	kernels.consumer_execute.link_argument(arguments.object_position);
 	kernels.consumer_execute.link_argument(arguments.object_power);
 	kernels.consumer_execute.link_argument(arguments.is_alive);
+	kernels.consumer_execute.link_argument(arguments.life_timer);
 	kernels.consumer_execute.link_argument(arguments.position);
 	kernels.consumer_execute.link_argument(arguments.velocity);
 	kernels.consumer_execute.link_argument(arguments.acceleration);
 	kernels.consumer_execute.link_argument(arguments.color);
+	kernels.consumer_execute.link_argument(arguments.xorshift_state);
 	kernels.consumer_execute.link_argument(arguments.born_by_emitter);
 }
 
@@ -253,6 +283,8 @@ void					manager::computer_fill_arguments()
 	arguments.number_of_objects.write(&number_of_objects);
 	arguments.start_color.write(&start_color.x);
 	arguments.finish_color.write(&finish_color.x);
+	arguments.life_duration_min.write(&life_duration_min);
+	arguments.life_duration_max.write(&life_duration_max);
 
 	object::type		type_data[number_of_objects];
 	float				position_data[number_of_objects * 3];

@@ -16,8 +16,6 @@ kernel void				emitter_start(
 		if (object_type[object_i] != object_type_emitter)
 			continue ;
 
-
-
 		counter = 0;
 		for (; particle_i < *number_of_particles; particle_i++)
 		{
