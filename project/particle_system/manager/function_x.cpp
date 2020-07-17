@@ -107,7 +107,7 @@ void 					manager::function_key_finish()
 
 void					manager::function_mouse_move()
 {
-	auto				mouse_position = engine.receive_event().read_mouse();
+	auto				mouse_position = engine.receive_event().read_mouse_position();
 	float				position_data[number_of_objects * 3];
 
 	static float		window_ratio = (float)engine::core::initial_window_size.x / engine::core::initial_window_size.y;
@@ -131,6 +131,52 @@ void					manager::function_mouse_move()
 
 	for (int i = 0; i < 3; i++)
 		position_data[controlled_object * 3 + i] = position[i];
+
+	arguments.object_position.write(&position_data);
+}
+
+void					manager::function_mouse_key()
+{
+	auto				key = engine.receive_event().read_key();
+
+	if (key == engine::key::mouse_left)
+		controlled_object--;
+	else if (key == engine::key::mouse_right)
+		controlled_object++;
+
+	if (controlled_object < 0)
+		controlled_object = number_of_objects - 1;
+	else if (controlled_object >= number_of_objects)
+		controlled_object= 0;
+}
+
+void					manager::function_mouse_scroll()
+{
+	auto				mouse_scroll = engine.receive_event().read_mouse_scroll();
+	float				position_data[number_of_objects * 3];
+
+	constexpr float		distance_multiplier = 25.f;
+	constexpr float		distance_min = 200.f;
+	constexpr float		distance_max = 5000.f;
+
+	assert(controlled_object < number_of_objects);
+	arguments.object_position.read(&position_data);
+
+	auto				&camera = renderer.camera;
+	vec3				position = vec3(0.f);
+
+	for (int i = 0; i < 3; i++)
+		position[i] = position_data[controlled_object * 3 + i];
+
+	position += camera.read_front() * mouse_scroll.y * distance_multiplier;
+
+	for (int i = 0; i < 3; i++)
+		position_data[controlled_object * 3 + i] = position[i];
+
+	if (camera.distance_to_point(position) < distance_min)
+		return ;
+	if (camera.distance_to_point(position) > distance_max)
+		return ;
 
 	arguments.object_position.write(&position_data);
 }

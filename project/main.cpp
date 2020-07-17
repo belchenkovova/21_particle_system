@@ -50,10 +50,14 @@ public :
 				<< "--fast : lower quality, increase performance" << std::endl
 				<< "--help : get list flags and keys" << std::endl
 				<< std::endl
-				<< "Keys : " << std::endl
+				<< "Controls : " << std::endl
 				<< "w/a/s/d/q/e : camera position control" << std::endl
 				<< "left/right/up/down : camera direction control" << std::endl
 				<< "enter : pause/continue particle system movement" << std::endl
+				<< "mouse movement : move selected object in xy axes" << std::endl
+				<< "mouse scroll : move selected object in z axis" << std::endl
+				<< "left mouse click : go to previous object" << std::endl
+				<< "right mouse click : go to next object" << std::endl
 				<< "1 : initialize particles as sphere" << std::endl
 				<< "2 : initialize particles as cube" << std::endl
 				<< "3 : initialize particles as tetrahedron" << std::endl

@@ -109,6 +109,8 @@ private :
 	void 					function_key_start();
 	void 					function_key_finish();
 	void					function_mouse_move();
+	void					function_mouse_key();
+	void					function_mouse_scroll();
 	void					function_wait_for_work();
 	void					function_wait_for_another_key();
 

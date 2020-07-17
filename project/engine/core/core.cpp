@@ -47,6 +47,7 @@ using namespace		engine;
 	glfwSetKeyCallback(window, glfw_callback_key);
 	glfwSetMouseButtonCallback(window, glfw_callback_mouse_key);
 	glfwSetCursorPosCallback(window, glfw_callback_mouse_movement);
+	glfwSetScrollCallback(window, glfw_callback_mouse_scroll);
 }
 
 					core::~core()

@@ -13,16 +13,24 @@ enum key				event::read_key() const
 	return (*key_value);
 }
 
-vec2					event::read_mouse() const
+vec2					event::read_mouse_position() const
 {
-	revise_optional(mouse_value);
-	return (*mouse_value);
+	revise_optional(mouse_position);
+	return (*mouse_position);
+}
+
+vec2					event::read_mouse_scroll() const
+{
+	revise_optional(mouse_scroll);
+	return (*mouse_scroll);
 }
 
 void					event::reset()
 {
 	type_value = type::none;
 	key_value = {};
+	mouse_position = {};
+	mouse_scroll = {};
 }
 
 void					event::reset_if_needed()

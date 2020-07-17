@@ -81,6 +81,7 @@ protected :
 	static void 				glfw_callback_key(GLFWwindow *window, int key, int code, int action, int mode);
 	static void 				glfw_callback_mouse_movement(GLFWwindow *window, double x, double y);
 	static void 				glfw_callback_mouse_key(GLFWwindow *window, int key, int action, int mode);
+	static void					glfw_callback_mouse_scroll(GLFWwindow* window, double x, double y);
 
 	void 						launch_callbacks();
 	void 						launch_timers();

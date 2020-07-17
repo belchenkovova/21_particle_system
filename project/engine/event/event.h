@@ -17,7 +17,8 @@ public :
 		mouse_move,
 		mouse_press,
 		mouse_release,
-		mouse_hold
+		mouse_hold,
+		mouse_scroll
 	};
 
 					event() = default;
@@ -28,14 +29,17 @@ public :
 	[[nodiscard]]
 	enum key		read_key() const;
 	[[nodiscard]]
-	vec2			read_mouse() const;
+	vec2			read_mouse_position() const;
+	[[nodiscard]]
+	vec2			read_mouse_scroll() const;
 
 private :
 
 	type			type_value{type::none};
 
 	optional<key>	key_value;
-	optional<vec2>	mouse_value;
+	optional<vec2>	mouse_position;
+	optional<vec2>	mouse_scroll;
 
 	void			reset();
 	void			reset_if_needed();

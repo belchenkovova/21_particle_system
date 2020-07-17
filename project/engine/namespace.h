@@ -170,7 +170,9 @@ namespace						engine
 		left = GLFW_KEY_LEFT,
 		up = GLFW_KEY_UP,
 		right = GLFW_KEY_RIGHT,
-		down = GLFW_KEY_DOWN
+		down = GLFW_KEY_DOWN,
+		mouse_left = GLFW_MOUSE_BUTTON_LEFT,
+		mouse_right = GLFW_MOUSE_BUTTON_RIGHT
 	};
 
 	class 						functor;

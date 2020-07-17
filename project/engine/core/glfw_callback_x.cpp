@@ -26,7 +26,7 @@ void 				core::glfw_callback_mouse_movement(GLFWwindow *window, double x, double
 	value -= vec2(0.5f, 0.5f);
 	value.y *= -1.f;
 
-	core->event.mouse_value = value;
+	core->event.mouse_position = value;
 	core->event.type_value = event::type::mouse_move;
 }
 
@@ -35,12 +35,19 @@ void 				core::glfw_callback_mouse_key(GLFWwindow *window, int key, int action, 
 	auto			*core = (engine::core *)glfwGetWindowUserPointer(window);
 
 	core->event.reset_if_needed();
-	if (key != GLFW_MOUSE_BUTTON_LEFT)
-		return ;
 	if (action == GLFW_PRESS)
 		core->event.type_value = event::type::mouse_press;
 	else if (action == GLFW_RELEASE)
 		core->event.type_value = event::type::mouse_release;
 	else if (action == GLFW_REPEAT)
 		core->event.type_value = event::type::mouse_hold;
+	core->event.key_value = static_cast<enum key>(key);
+}
+
+void				core::glfw_callback_mouse_scroll(GLFWwindow* window, double x, double y)
+{
+	auto			*core = (engine::core *)glfwGetWindowUserPointer(window);
+
+	core->event.mouse_scroll = vec2(x, y);
+	core->event.type_value = event::type::mouse_scroll;
 }
