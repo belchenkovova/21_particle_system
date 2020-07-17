@@ -5,7 +5,6 @@
 
 #include "external/json.hpp"
 
-
 namespace				particle_system
 {
 	using				std::string;

@@ -14,6 +14,7 @@
 #include "external/glm/gtc/matrix_transform.hpp"
 #include "external/glm/gtc/type_ptr.hpp"
 #include "external/glm/gtx/euler_angles.hpp"
+#include "external/glm/gtx/string_cast.hpp"
 #include "common/common.h"
 
 namespace						engine

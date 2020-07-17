@@ -108,8 +108,31 @@ void 					manager::function_key_finish()
 void					manager::function_mouse_move()
 {
 	auto				mouse_position = engine.receive_event().read_mouse();
+	float				position_data[number_of_objects * 3];
 
-	std::cerr << mouse_position.x << " " << mouse_position.y << std::endl;
+	static float		window_ratio = (float)engine::core::initial_window_size.x / engine::core::initial_window_size.y;
+	constexpr float		distance_multiplier = 0.535f;
+
+	assert(controlled_object < number_of_objects);
+	arguments.object_position.read(&position_data);
+
+	auto				&camera = renderer.camera;
+	vec3				position = vec3(0.f);
+
+	for (int i = 0; i < 3; i++)
+		position[i] = position_data[controlled_object * 3 + i];
+
+	const float			distance_to_camera = camera.distance_to_point(position);
+	const float			offset_multiplier = distance_multiplier * distance_to_camera;
+
+	position = camera.read_position() + camera.read_front() * distance_to_camera;
+	position += camera.read_right() * mouse_position.x * window_ratio * offset_multiplier;
+	position += camera.read_up() * mouse_position.y * offset_multiplier;
+
+	for (int i = 0; i < 3; i++)
+		position_data[controlled_object * 3 + i] = position[i];
+
+	arguments.object_position.write(&position_data);
 }
 
 void					manager::function_wait_for_work()

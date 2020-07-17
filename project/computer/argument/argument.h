@@ -20,6 +20,7 @@ public :
 	void						acquire();
 	void						release();
 
+	void						read(void *host_ptr);
 	void						write(void *host_ptr);
 
 private :

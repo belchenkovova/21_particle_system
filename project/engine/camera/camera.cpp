@@ -48,7 +48,7 @@ mat4				camera::receive_view_matrix() const
 	return (lookAt(position, position + front, up));
 }
 
-void				camera::update()
+void				camera::  update()
 {
 	vec3			local_front;
 

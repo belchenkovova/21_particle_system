@@ -25,6 +25,32 @@ public :
 	[[nodiscard]]
 	mat4					receive_view_matrix() const;
 
+	[[nodiscard]]
+	float					distance_to_point(const vec3 &point)
+	{
+		return (glm::dot(point - position, front));
+	}
+
+	[[nodiscard]] vec3		read_position() const
+	{
+		return (position);
+	}
+
+	[[nodiscard]] vec3		read_front() const
+	{
+		return (front);
+	}
+
+	[[nodiscard]] vec3		read_up() const
+	{
+		return (up);
+	}
+
+	[[nodiscard]] vec3		read_right() const
+	{
+		return (right);
+	}
+
 private :
 
 	const vec3				up_const = vec3(0.f, 1.f, 0.f);

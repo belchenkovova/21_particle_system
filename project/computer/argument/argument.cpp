@@ -46,6 +46,15 @@ void				argument::release()
 	queue->enqueueReleaseGLObjects(&vector);
 }
 
+void 				argument::read(void *host_ptr)
+{
+	if (not object)
+		throw (common::exception("Computer, Argument : Argument is not initialized"));
+	if (not size)
+		throw (common::exception("Computer, Argument : Size is not defined"));
+	queue->enqueueReadBuffer(*object, CL_TRUE, 0, *size, host_ptr);
+}
+
 void				argument::write(void *host_ptr)
 {
 	if (not object)

@@ -9,8 +9,8 @@ void					manager::computer_build()
 	computer_link_arguments();
 	computer_fill_arguments();
 
-	kernels.xorshift_seed.run();
 	arguments.position.acquire();
+	kernels.xorshift_seed.run();
 	kernels.particle_reset.run();
 	arguments.position.release();
 }

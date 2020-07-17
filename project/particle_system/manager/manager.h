@@ -112,6 +112,8 @@ private :
 	void					function_wait_for_work();
 	void					function_wait_for_another_key();
 
+	void					initialize(initialization method);
+
 	engine::timer			*timer_work = nullptr;
 	engine::timeout			*timeout_for_work = nullptr;
 	engine::timeout			*timeout_for_another_key = nullptr;
@@ -119,7 +121,7 @@ private :
 	bool					was_camera_input = false;
 	bool					was_key_input = false;
 
-	void					initialize(initialization method);
+	int						controlled_object = 0;
 };
 
 

@@ -20,9 +20,13 @@ void 				core::glfw_callback_key(GLFWwindow *window, int key, int code, int acti
 void 				core::glfw_callback_mouse_movement(GLFWwindow *window, double x, double y)
 {
 	auto			*core = (engine::core *)glfwGetWindowUserPointer(window);
+	vec2			value;
 
-	core->event.mouse_value = vec2(x / initial_window_size.x, y / initial_window_size.y);
-	*core->event.mouse_value -= vec2(0.5f, 0.5f);
+	value = vec2(x / initial_window_size.x, y / initial_window_size.y);
+	value -= vec2(0.5f, 0.5f);
+	value.y *= -1.f;
+
+	core->event.mouse_value = value;
 	core->event.type_value = event::type::mouse_move;
 }
 

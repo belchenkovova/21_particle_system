@@ -1,31 +1,25 @@
 {
 	"settings" :
 	{
-		"number_of_particles" : 100000,
+		"number_of_particles" : 200000,
 		"start_color" : "red",
 		"finish_color" : "white",
 		"background" : "dark gray",
-		"initialization" : "sphere"
+		"initialization" : "null",
+		"life_duration" : [150, 200]
 	},
 
 	"objects" :
 	[
 		{
-			"type" : "attractor",
-			"position" : [0.0, 200.0, 0.0],
-			"power" : 2.0
+			"type" : "emitter",
+			"position" : [0.0, 100.0, 0.0]
 		},
 
 		{
 			"type" : "attractor",
-			"position" : [-200.0, 0.0, 0.0],
-			"power" : 2.0
-		},
-
-		{
-			"type" : "attractor",
-			"position" : [200.0, 0.0, 0.0],
-			"power" : 2.0
+			"position" : [0.0, 0.0, 0.0],
+			"power" :  1.0
 		}
 	]
 }
