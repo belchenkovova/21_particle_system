@@ -44,7 +44,9 @@ Program takes several optional flags :
 ## Features
 
 * Free camera 
+* Control with mouse
 * Color interpolation according to particle's speed
+* Limit of particles lifetime
 * Initialization of particles in shape of sphere, cube and tetrahedron
 * Special objects : emitter, consumer
 * Map files
