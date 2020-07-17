@@ -13,7 +13,7 @@ enum key				event::read_key() const
 	return (*key_value);
 }
 
-ivec2					event::read_mouse() const
+vec2					event::read_mouse() const
 {
 	revise_optional(mouse_value);
 	return (*mouse_value);

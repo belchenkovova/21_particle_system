@@ -21,7 +21,8 @@ void 				core::glfw_callback_mouse_movement(GLFWwindow *window, double x, double
 {
 	auto			*core = (engine::core *)glfwGetWindowUserPointer(window);
 
-	core->event.mouse_value = ivec2(static_cast<int>(x), static_cast<int>(y));
+	core->event.mouse_value = vec2(x / initial_window_size.x, y / initial_window_size.y);
+	*core->event.mouse_value -= vec2(0.5f, 0.5f);
 	core->event.type_value = event::type::mouse_move;
 }
 

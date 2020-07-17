@@ -28,14 +28,14 @@ public :
 	[[nodiscard]]
 	enum key		read_key() const;
 	[[nodiscard]]
-	ivec2			read_mouse() const;
+	vec2			read_mouse() const;
 
 private :
 
 	type			type_value{type::none};
 
 	optional<key>	key_value;
-	optional<ivec2>	mouse_value;
+	optional<vec2>	mouse_value;
 
 	void			reset();
 	void			reset_if_needed();

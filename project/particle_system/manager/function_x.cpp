@@ -105,6 +105,13 @@ void 					manager::function_key_finish()
 	was_key_input = false;
 }
 
+void					manager::function_mouse_move()
+{
+	auto				mouse_position = engine.receive_event().read_mouse();
+
+	std::cerr << mouse_position.x << " " << mouse_position.y << std::endl;
+}
+
 void					manager::function_wait_for_work()
 {
 	timer_work->block_reserved(false);
