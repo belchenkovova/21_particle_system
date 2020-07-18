@@ -63,6 +63,8 @@ void 					manager::function_key_start()
 		initialize(initialization::tetrahedron);
 	else if (event.read_key() == engine::key::number_0)
 		initialize(initialization::null);
+	else if (event.read_key() == engine::key::letter_l)
+		control_lock = not control_lock;
 	else
 		return ;
 
@@ -107,6 +109,9 @@ void 					manager::function_key_finish()
 
 void					manager::function_mouse_move()
 {
+	if (control_lock)
+		return ;
+
 	auto				mouse_position = engine.receive_event().read_mouse_position();
 	float				position_data[number_of_objects * 3];
 
@@ -137,6 +142,9 @@ void					manager::function_mouse_move()
 
 void					manager::function_mouse_key()
 {
+	if (control_lock)
+		return ;
+
 	auto				key = engine.receive_event().read_key();
 
 	if (key == engine::key::mouse_left)
@@ -152,6 +160,9 @@ void					manager::function_mouse_key()
 
 void					manager::function_mouse_scroll()
 {
+	if (control_lock)
+		return ;
+
 	auto				mouse_scroll = engine.receive_event().read_mouse_scroll();
 	float				position_data[number_of_objects * 3];
 

@@ -6,7 +6,7 @@
 		"finish_color" : "white",
 		"background" : "dark gray",
 		"initialization" : "null",
-		"life_duration" : [50, 200]
+		"life_duration" : [1, 200]
 	},
 
 	"objects" :

@@ -124,6 +124,7 @@ private :
 	bool					was_key_input = false;
 
 	int						controlled_object = 0;
+	bool					control_lock = false;
 };
 
 

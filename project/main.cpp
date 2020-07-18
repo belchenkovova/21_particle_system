@@ -58,6 +58,7 @@ public :
 				<< "mouse scroll : move selected object in z axis" << std::endl
 				<< "left mouse click : go to previous object" << std::endl
 				<< "right mouse click : go to next object" << std::endl
+				<< "l : lock/unlock boject control" << std::endl
 				<< "1 : initialize particles as sphere" << std::endl
 				<< "2 : initialize particles as cube" << std::endl
 				<< "3 : initialize particles as tetrahedron" << std::endl
